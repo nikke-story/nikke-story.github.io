@@ -84,24 +84,35 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 .update-log-line{width:100%;}
 .update-log-line::after{content:""; display:block; height:1px; background:var(--border);}
 
-.update-modal-overlay{
+.update-modal-overlay, .guide-modal-overlay{
   display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100;
   align-items:center; justify-content:center; padding:20px;
 }
-.update-modal-overlay.open{display:flex;}
-.update-modal{
+.update-modal-overlay.open, .guide-modal-overlay.open{display:flex;}
+.update-modal, .guide-modal{
   width:max-content; max-width:min(92vw, 560px); max-height:80vh; overflow-y:auto;
   background:var(--bg-card); border:3px solid transparent; border-left:3px solid var(--accent-red);
   clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
   padding:20px;
 }
-.update-modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:16px;}
-.update-modal-head h3{font-family:var(--font-display); font-size:0.95rem; letter-spacing:0.08em; color:var(--accent-red); text-transform:uppercase;}
-.update-modal-close{
+.update-modal-head, .guide-modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:16px;}
+.update-modal-head h3, .guide-modal-head h3{font-family:var(--font-display); font-size:0.95rem; letter-spacing:0.08em; color:var(--accent-red); text-transform:uppercase;}
+.update-modal-close, .guide-modal-close{
   background:var(--bg-elevated); border:1px solid var(--border-strong); color:var(--text-primary);
   width:28px; height:28px; border-radius:50%; font-size:1.1rem; line-height:1; cursor:pointer; flex-shrink:0;
 }
-.update-modal-close:hover{border-color:var(--accent-red); color:var(--accent-red);}
+.update-modal-close:hover, .guide-modal-close:hover{border-color:var(--accent-red); color:var(--accent-red);}
+
+.guide-body{font-size:0.85rem; line-height:1.7; color:var(--text-secondary); width:min(80vw, 480px);}
+.guide-body .guide-lead{color:var(--text-primary); margin-bottom:14px;}
+.guide-body h4{font-family:var(--font-display); font-size:0.82rem; letter-spacing:0.04em; color:var(--text-primary); margin:22px 0 8px;}
+.guide-body h4:first-of-type{margin-top:0;}
+.guide-body p{margin-bottom:10px;}
+.guide-body ul{margin:8px 0 10px 20px;}
+.guide-body li{margin-bottom:4px;}
+.guide-body strong{color:var(--text-primary); font-weight:700;}
+.guide-body hr{border:none; border-top:1px solid var(--border); margin:18px 0;}
+.guide-body .tag, .guide-body .chip{margin:0 2px; vertical-align:middle;}
 
 /* Mini timeline look, echoing the main story spine: a vertical line with a colored dot per entry.
    The line (on the list) and every dot (on each item) both anchor to the exact same "left:8px"
@@ -441,6 +452,9 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
    (16:9, fetched directly via the video ID, no local image assets needed) next to its title,
    the whole row acting as one clickable link out to the video. */
 .content-video-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;}
+#contentsGrid .card-title{text-align:left;}
+#contentsGrid .card-desc{text-align:left; margin-top:0;}
+#contentsGrid .content-video-list{margin-top:16px;}
 .content-video-item a{
   display:flex; flex-direction:row; align-items:center; gap:6px; padding:6px; border-radius:6px;
   background:var(--bg-elevated); color:var(--text-secondary); font-size:0.78rem; font-weight:500;
@@ -448,6 +462,7 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
 }
 .content-video-item a:hover{color:var(--accent-red);}
 .yt-thumb{display:block; position:relative; width:100%; max-width:200px; flex-shrink:0; aspect-ratio:16/9; border-radius:4px; overflow:hidden; background:var(--bg-base);}
+.yt-thumb-blur img{filter:blur(3px); transform:scale(1.1);}
 .yt-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
 .yt-play{
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -547,15 +562,68 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
 
 <div class="bottom-cluster">
   <select class="progress-select" id="progressSelect">
-    <option value="" selected>진행도</option>
-    <option disabled>──────────</option>
+    <option value="" selected disabled>진행도</option>
     <option value="intro-jump">읽어주세요</option>
     <option value="archives-jump">[RECOMMENDED ARCHIVES]</option>
     <option value="contents-jump">[RECOMMENDED CONTENTS]</option>
-    <option disabled>──────────</option>
   </select>
+  <button class="theme-toggle" id="guideBtn" aria-label="이용 가이드" title="이용 가이드">?</button>
   <button class="theme-toggle" id="themeToggle">☀️</button>
   <button class="top-btn" id="topBtn">TOP</button>
+</div>
+
+<div class="guide-modal-overlay" id="guideModalOverlay">
+  <div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-label="NIKKE 스토리 가이드 이용 방법">
+    <div class="guide-modal-head">
+      <h3>이용 가이드</h3>
+      <button type="button" class="guide-modal-close" id="guideModalClose" aria-label="닫기">×</button>
+    </div>
+    <div class="guide-body">
+      <p class="guide-lead">처음 방문하셨다면 아래 내용을 먼저 확인해주세요.<br>이 가이드는 <strong>승리의 여신: NIKKE의 스토리를 어떤 순서로 감상하면 되는지</strong> 한눈에 확인할 수 있도록 구성되어 있습니다.</p>
+      <hr>
+      <h4>1. 기본적인 감상 방법</h4>
+      <p>각 카드는 메인 스토리와 이벤트 스토리 등을 감상 순서에 맞춰 배치하고 있으며, 카드에 표시된 태그를 통해 해당 콘텐츠의 특징을 확인할 수 있습니다.</p>
+      <ul>
+        <li><strong>필수</strong> — 스토리 이해를 위해 감상을 권장하는 콘텐츠</li>
+        <li><strong>선택</strong> — 본편 감상에 필수는 아니지만 감상하면 좋은 콘텐츠</li>
+        <li><strong>아카이브</strong> — 해당 콘텐츠의 아카이브 지원 여부를 표시</li>
+        <li><strong>더빙</strong> — 해당 콘텐츠의 더빙 지원 여부를 표시</li>
+      </ul>
+      <p>카드의 세부 설명도 함께 확인하면서 진행해주세요.</p>
+      <hr>
+      <h4>2. 「읽어주세요」 먼저 확인하기</h4>
+      <p>페이지를 처음 이용한다면 가장 먼저 <strong>[읽어주세요]</strong> 카드를 확인하는 것을 권장합니다.</p>
+      <p>여기에는 이 가이드의 기본적인 감상 기준과 함께,</p>
+      <ul>
+        <li>히스토리 순서와 실제 감상 순서의 차이</li>
+        <li>별도로 확인할 필요가 있는 스토리</li>
+      </ul>
+      <p>등의 중요한 내용이 정리되어 있습니다.</p>
+      <p>특히 <strong>필독 포인트</strong>에 있는 내용은 스토리를 보기 전에 확인하는 것이 좋습니다.</p>
+      <hr>
+      <h4>3. 진행도를 확인하면서 따라가기</h4>
+      <p>진행도를 선택하면 해당 위치로 이동할 수 있어 원하는 구간을 빠르게 찾을 수 있습니다.</p>
+      <hr>
+      <h4>4. 카드는 클릭해서 사용할 수 있습니다</h4>
+      <p>각 스토리 카드는 단순한 정보 표시뿐만 아니라 일부 기능을 제공합니다.</p>
+      <p>카드를 클릭하면 해당 카드에 마커를 남길 수 있으며 위치를 저장합니다.</p>
+      <p>다시 클릭하면 마커를 해제할 수 있습니다.</p>
+      <p>읽어주세요 카드는 클릭하여 내용을 펼치거나 접을 수도 있습니다.</p>
+      <hr>
+      <h4>5. OLD TALES 구간은 원하는 루트를 선택</h4>
+      <p>OLD TALES 구간은 31~32지와의 진행 순서에 따라 여러 감상 루트를 선택할 수 있습니다.</p>
+      <p>가이드에서는 각 루트를 별도로 안내하고 있으므로 해당 구간의 설명을 확인한 뒤 자신의 상황에 맞는 루트를 선택하면 됩니다.</p>
+      <hr>
+      <h4>6. 추천 아카이브</h4>
+      <p>[ RECOMMENDED ARCHIVES ]는 메인 스토리 진행과는 별도로, 감상하면 좋은 과거 이벤트를 모아둔 공간입니다.</p>
+      <p>현재 진행 중인 메인 스토리를 우선 따라가고 싶다면 나중에 감상해도 됩니다.</p>
+      <hr>
+      <h4>7. 추천 콘텐츠</h4>
+      <p>[ RECOMMENDED CONTENTS ]에는 공식적으로 공개된 영상 콘텐츠가 정리되어 있습니다.</p>
+      <p>이곳의 영상들은 <strong>메인 스토리 진행 순서에 포함되는 콘텐츠가 아니라 추가로 감상할 수 있는 추천 콘텐츠</strong>입니다.</p>
+      <p>카드를 클릭하면 해당 YouTube 영상으로 이동할 수 있습니다.</p>
+    </div>
+  </div>
 </div>
 
 <footer class="site-footer">
@@ -827,15 +895,15 @@ function renderArchive(){
    the main timeline and from Recommended Archives. Each series is one card (reusing the
    same event-card component), holding a small list of video thumbnails. */
 const CONTENT_SERIES = [
-  { title:"【전초기지, 오늘은 쉽니다】", videos:[
+  { title:"【전초기지, 오늘은 쉽니다】", desc:"21지 이후로 감상을 권장.", videos:[
     {label:"【전초기지, 오늘은 쉽니다 - 카운터스 편】", url:"https://youtu.be/4aL5EzTkX0s"},
-    {label:"【전초기지, 오늘은 쉽니다 - 마리안 편】", url:"https://youtu.be/vqh7x5YDyXo"},
+    {label:"【전초기지, 오늘은 쉽니다 - 마리안 편】", url:"https://youtu.be/vqh7x5YDyXo", blur:true},
     {label:"【전초기지, 오늘은 쉽니다 - 도로시 편】", url:"https://youtu.be/y-FM5w6wNZg"},
     {label:"【전초기지, 오늘은 쉽니다 - 달란트 편】", url:"https://youtu.be/A1PH5wRrcFQ"}
   ]},
-  { title:"《MINIKKE 작은 동화집》", videos:[
+  { title:"《MINIKKE 작은 동화집》", desc:"RED ASH 이후로 감상을 권장.", videos:[
     {label:"《MINIKKE 작은 동화집》 레드 후드 편 - 상", url:"https://youtu.be/UI3a4hrB9uU"},
-    {label:"《MINIKKE 작은 동화집》 레드 후드 편 - 하", url:"https://youtu.be/02ukcUDb8zQ"},
+    {label:"《MINIKKE 작은 동화집》 레드 후드 편 - 하", url:"https://youtu.be/02ukcUDb8zQ", blur:true},
     {label:"《MINIKKE 작은 동화집》 스노우 화이트 편 - 상", url:"https://youtu.be/lEbU6InyGL0"},
     {label:"《MINIKKE 작은 동화집》 스노우 화이트 편 - 하", url:"https://youtu.be/2-ePhm1l_nc"}
   ]}
@@ -851,11 +919,12 @@ function renderContents(){
       <div class="card-head">
         <span class="card-title">${series.title}</span>
       </div>
+      ${series.desc ? `<div class="card-desc">${series.desc}</div>` : ""}
       <ul class="content-video-list">
         ${series.videos.map(v=>`
           <li class="content-video-item">
             <a href="${v.url}" target="_blank" rel="noopener">
-              <span class="yt-thumb">
+              <span class="yt-thumb${v.blur ? ' yt-thumb-blur' : ''}">
                 <img src="https://i.ytimg.com/vi/${ytId(v.url)}/mqdefault.jpg" alt=""
                   onerror="this.onerror=null; this.src=this.src.includes('mqdefault') ? this.src.replace('mqdefault','hqdefault') : this.src.replace('hqdefault','default');">
                 <span class="yt-play">▶</span>
@@ -975,6 +1044,22 @@ function restoreCheckedCard(){
 }
 
 document.getElementById("topBtn").addEventListener("click", ()=> window.scrollTo({top:0, behavior:"smooth"}));
+
+function openGuideModal(){
+  document.getElementById("guideModalOverlay").classList.add("open");
+}
+function closeGuideModal(){
+  document.getElementById("guideModalOverlay").classList.remove("open");
+}
+document.getElementById("guideBtn").addEventListener("click", openGuideModal);
+document.getElementById("guideModalClose").addEventListener("click", closeGuideModal);
+document.getElementById("guideModalOverlay").addEventListener("click", (e)=>{
+  if(e.target.id === "guideModalOverlay") closeGuideModal();
+});
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape") closeGuideModal();
+});
+
 
 const THEME_STORAGE_KEY = "nikke-theme";
 document.getElementById("themeToggle").addEventListener("click", ()=>{

@@ -999,22 +999,38 @@ const INTRO_ANIM_MS = 400;
 
 function collapseIntroAnimated(){
   if(!introEl.open) return;
-  const startHeight = introBody.scrollHeight;
-  introBody.style.overflow = "hidden";
-  introBody.style.height = startHeight + "px";
-  introBody.offsetHeight; // force reflow so the next height change actually transitions
-  introBody.style.transition = `height ${INTRO_ANIM_MS}ms ease`;
-  requestAnimationFrame(()=>{ introBody.style.height = "0px"; });
-  introBody.addEventListener("transitionend", function onEnd(e){
-    if(e.propertyName !== "height") return;
-    introBody.removeEventListener("transitionend", onEnd);
-    introEl.removeAttribute("open");
-    introBody.style.height = "";
-    introBody.style.overflow = "";
-    introBody.style.transition = "";
-    const prologueEl = document.querySelector(".prologue-tag");
-    if(prologueEl) scrollToFast(prologueEl, 50, 600);
-  });
+  const runCollapse = ()=>{
+    const startHeight = introBody.scrollHeight;
+    introBody.style.overflow = "hidden";
+    introBody.style.height = startHeight + "px";
+    introBody.offsetHeight; // force reflow so the next height change actually transitions
+    introBody.style.transition = `height ${INTRO_ANIM_MS}ms ease`;
+    requestAnimationFrame(()=>{ introBody.style.height = "0px"; });
+    introBody.addEventListener("transitionend", function onEnd(e){
+      if(e.propertyName !== "height") return;
+      introBody.removeEventListener("transitionend", onEnd);
+      introEl.removeAttribute("open");
+      introBody.style.height = "";
+      introBody.style.overflow = "";
+      introBody.style.transition = "";
+      const prologueEl = document.querySelector(".prologue-tag");
+      if(prologueEl) scrollToFast(prologueEl, 50, 600);
+    });
+  };
+
+  // If the card's own top has scrolled above the viewport (typical when the bottom
+  // "접기" button was used), the shrink itself happens off-screen and only the content
+  // below appears to jump — a very different feel from closing via the top summary,
+  // where the shrink is always visible. Bring the top into view first so both entry
+  // points play out the same visible "card shrinks" motion.
+  const topVisible = introEl.getBoundingClientRect().top >= 0;
+  if(topVisible){
+    runCollapse();
+  }else{
+    const snapY = introEl.getBoundingClientRect().top + window.pageYOffset - 20;
+    window.scrollTo(0, snapY);
+    runCollapse();
+  }
 }
 
 function expandIntroAnimated(){

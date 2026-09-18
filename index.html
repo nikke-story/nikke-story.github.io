@@ -91,7 +91,7 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 }
 .update-modal-overlay.open, .guide-modal-overlay.open{display:flex;}
 .update-modal, .guide-modal{
-  width:max-content; max-width:min(92vw, 560px); max-height:80vh; overflow-y:auto;
+  width:max-content; max-width:min(92vw, 560px); max-height:80vh; overflow-y:auto; overscroll-behavior:contain;
   background:var(--bg-card); border:3px solid transparent; border-left:3px solid var(--accent-red);
   clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
   padding:20px;
@@ -416,12 +416,29 @@ html[data-theme="light"] .tag-route{color:#1A1D27;}
 .bottom-cluster-row{display:flex; align-items:center; gap:8px;}
 .progress-select{
   height:42px; background:var(--bg-card); border:1px solid var(--border-strong); color:var(--text-primary);
-  font-family:var(--font-body); font-size:0.78rem; padding:0 12px;
+  font-family:var(--font-body); font-size:0.78rem; padding:0 12px; text-align:left;
   clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
-  cursor:pointer; width:200px; box-shadow:0 4px 14px rgba(0,0,0,0.4);
+  cursor:pointer; width:260px; box-shadow:0 4px 14px rgba(0,0,0,0.4);
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .progress-select:focus{outline:2px solid var(--accent-red); outline-offset:2px;}
+.custom-select{position:relative;}
+.custom-select-panel{
+  display:none; position:absolute; bottom:100%; right:0; width:260px; max-width:80vw;
+  max-height:min(340px, 60vh); overflow-y:auto; overscroll-behavior:contain; background:var(--bg-card);
+  border:1px solid var(--border-strong); border-bottom:none;
+  z-index:70; padding:4px 0;
+}
+.custom-select-panel.open{display:block;}
+.custom-select-option{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  padding:7px 12px; font-size:0.78rem; color:var(--text-primary); cursor:pointer;
+}
+.custom-select-option .opt-label{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.custom-select-option .opt-marker{color:var(--accent-red); flex-shrink:0; opacity:0; font-size:0.6rem;}
+.custom-select-option.marked .opt-marker{opacity:1;}
+.custom-select-option:hover, .custom-select-option.active{background:var(--bg-card-hover);}
+.custom-select-divider{height:1px; background:var(--border); margin:4px 0;}
 .theme-toggle{
   width:42px; height:42px; flex-shrink:0; background:var(--bg-card); border:1px solid var(--border-strong); color:var(--text-primary);
   font-size:1.05rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
@@ -511,6 +528,7 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
 @media (max-width:767px){
   .title-block h1{font-size:1.35rem;}
   .progress-select{width:clamp(150px, 48vw, 230px);}
+  .custom-select-panel{width:clamp(150px, 48vw, 230px);}
   .content-video-list{grid-template-columns:1fr;}
 }
 </style>
@@ -587,10 +605,10 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
 <div class="bottom-cluster">
   <button class="theme-toggle guide-btn-fixed" id="guideBtn" aria-label="이용 가이드">?</button>
   <div class="bottom-cluster-row">
-    <select class="progress-select" id="progressSelect">
-      <option value="" selected disabled>진행도</option>
-      <option value="intro-jump">읽어주세요</option>
-    </select>
+    <div class="custom-select" id="progressSelectWrap">
+      <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">진행도</button>
+      <ul class="custom-select-panel" id="progressSelectPanel" role="listbox"></ul>
+    </div>
     <button class="theme-toggle" id="themeToggle"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="#FFC93C" stroke="#FFC93C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/><line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/><line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/></svg></button>
     <button class="top-btn" id="topBtn">TOP</button>
   </div>
@@ -970,19 +988,100 @@ function renderIntro(){
   ).join("");
 }
 
+const progressOptions = []; // {value, baseLabel, el}
+let progressValue = "";
+let progressMarked = null;
+
+function refreshProgressDisplay(){
+  progressOptions.forEach(o=>{
+    o.el.classList.toggle("active", o.value === progressValue);
+    o.el.classList.toggle("marked", o.value === progressMarked);
+  });
+  const current = progressOptions.find(o=> o.value === progressValue);
+  const trigger = document.getElementById("progressSelectTrigger");
+  trigger.textContent = current ? current.baseLabel : "진행도";
+}
+function setProgressValue(value){
+  progressValue = value;
+  refreshProgressDisplay();
+}
+function setProgressMarker(value){
+  progressMarked = value;
+  refreshProgressDisplay();
+}
+
 function renderProgressOptions(){
-  const sel = document.getElementById("progressSelect");
+  const panel = document.getElementById("progressSelectPanel");
+  panel.innerHTML = "";
+  progressOptions.length = 0;
   const addOpt = (value, label)=>{
-    const opt = document.createElement("option");
-    opt.value = value; opt.textContent = label;
-    sel.appendChild(opt);
+    const li = document.createElement("li");
+    li.className = "custom-select-option"; li.setAttribute("role", "option");
+    li.dataset.value = value;
+    li.innerHTML = `<span class="opt-label"></span><span class="opt-marker">●</span>`;
+    li.querySelector(".opt-label").textContent = label;
+    li.addEventListener("click", ()=> selectProgressOption(value));
+    panel.appendChild(li);
+    progressOptions.push({value, baseLabel:label, el:li});
   };
+  const addDivider = ()=>{
+    const li = document.createElement("li");
+    li.className = "custom-select-divider";
+    panel.appendChild(li);
+  };
+  addOpt("intro-jump", "읽어주세요");
+  addOpt("archives-jump", "[RECOMMENDED ARCHIVES]");
+  addOpt("contents-jump", "[RECOMMENDED CONTENTS]");
+  addDivider();
   BLOCKS_BEFORE.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
   addOpt("routes", "[분기] 31~32 OLD TALES 분기");
   BLOCKS_AFTER.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
-  addOpt("archives-jump", "[RECOMMENDED ARCHIVES]");
-  addOpt("contents-jump", "[RECOMMENDED CONTENTS]");
 }
+
+function openProgressPanel(){
+  const panel = document.getElementById("progressSelectPanel");
+  panel.classList.add("open");
+  document.getElementById("progressSelectTrigger").setAttribute("aria-expanded", "true");
+  const activeEl = panel.querySelector(".custom-select-option.active");
+  if(activeEl) activeEl.scrollIntoView({block:"center"});
+}
+function closeProgressPanel(){
+  document.getElementById("progressSelectPanel").classList.remove("open");
+  document.getElementById("progressSelectTrigger").setAttribute("aria-expanded", "false");
+}
+function selectProgressOption(value){
+  setProgressValue(value);
+  closeProgressPanel();
+  if(value === "intro-jump"){
+    const introEl = document.querySelector(".intro");
+    expandIntroAnimated();
+    scrollToFast(introEl);
+    return;
+  }
+  if(value === "archives-jump"){
+    scrollToFast(document.querySelector(".archive-section"));
+    return;
+  }
+  if(value === "contents-jump"){
+    scrollToFast(document.querySelector(".contents-section"));
+    return;
+  }
+  const target = document.getElementById(value);
+  if(target) scrollToFast(target);
+}
+document.getElementById("progressSelectTrigger").addEventListener("click", (e)=>{
+  e.stopPropagation();
+  const panel = document.getElementById("progressSelectPanel");
+  if(panel.classList.contains("open")) closeProgressPanel();
+  else openProgressPanel();
+});
+document.addEventListener("click", (e)=>{
+  if(!document.getElementById("progressSelectWrap").contains(e.target)) closeProgressPanel();
+});
+window.addEventListener("scroll", ()=> closeProgressPanel());
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape") closeProgressPanel();
+});
 
 /* Land the selected card around the "second card" position, not flush against the top */
 let suppressScrollTracking = false;
@@ -1013,28 +1112,8 @@ function persistCheckedCard(id){
 function clearPersistedCheckedCard(){
   try{ localStorage.removeItem(CHECK_STORAGE_KEY); }catch(e){}
 }
-
-document.getElementById("progressSelect").addEventListener("change", (e)=>{
-  const val = e.target.value;
-  if(!val) return;
-  if(val === "intro-jump"){
-    const introEl = document.querySelector(".intro");
-    expandIntroAnimated();
-    scrollToFast(introEl);
-    return;
-  }
-  if(val === "archives-jump"){
-    scrollToFast(document.querySelector(".archive-section"));
-    return;
-  }
-  if(val === "contents-jump"){
-    scrollToFast(document.querySelector(".contents-section"));
-    return;
-  }
-  const target = document.getElementById(val);
-  if(target) scrollToFast(target);
-});
-
+/* Reflect the currently marked card in the progress select's own option list, so the
+   marked position is visible even while the select is showing something else. */
 document.getElementById("timelineGrid").addEventListener("click", (e)=>{
   const target = e.target.closest(".card, .routes-section");
   if(!target) return;
@@ -1042,12 +1121,14 @@ document.getElementById("timelineGrid").addEventListener("click", (e)=>{
   document.querySelectorAll(".current-position").forEach(el=>el.classList.remove("current-position"));
   if(alreadyChecked){
     clearPersistedCheckedCard();
-    document.getElementById("progressSelect").value = "";
+    setProgressValue("");
+    setProgressMarker(null);
     return;
   }
   target.classList.add("current-position");
-  document.getElementById("progressSelect").value = target.id;
+  setProgressValue(target.id);
   persistCheckedCard(target.id);
+  setProgressMarker(target.id);
 });
 
 /* Restore the last-checked card on revisit: re-apply its checkmark and land the page a
@@ -1060,8 +1141,8 @@ function restoreCheckedCard(){
   const target = document.getElementById(id);
   if(!target) return;
   target.classList.add("current-position");
-  const sel = document.getElementById("progressSelect");
-  if(Array.from(sel.options).some(o=> o.value === id)) sel.value = id;
+  setProgressValue(id);
+  setProgressMarker(id);
   setTimeout(()=> scrollToFast(target), 250);
 }
 
@@ -1189,8 +1270,11 @@ function initScrollFade(){
    identically whether the user scrolls up or down. Purely a passive display sync: it never
    touches "current-position" or triggers any scrolling itself. */
 function initScrollTracking(){
-  const sel = document.getElementById("progressSelect");
-  const targets = Array.from(document.querySelectorAll(".card, .routes-section"));
+  const targets = Array.from(document.querySelectorAll("#timelineGrid .card, .routes-section"));
+  const archiveSection = document.querySelector(".archive-section");
+  const contentsSection = document.querySelector(".contents-section");
+  if(archiveSection){ archiveSection.dataset.progressValue = "archives-jump"; targets.push(archiveSection); }
+  if(contentsSection){ contentsSection.dataset.progressValue = "contents-jump"; targets.push(contentsSection); }
   const REFERENCE_LINE = 224; // ~1 card height (224px) from viewport top
 
   function updateActiveCard(){
@@ -1204,7 +1288,7 @@ function initScrollTracking(){
         closest = el;
       }
     }
-    if(closest) sel.value = closest.id;
+    if(closest) setProgressValue(closest.dataset.progressValue || closest.id);
   }
 
   let ticking = false;

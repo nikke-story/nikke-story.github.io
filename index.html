@@ -590,8 +590,6 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
     <select class="progress-select" id="progressSelect">
       <option value="" selected disabled>진행도</option>
       <option value="intro-jump">읽어주세요</option>
-      <option value="archives-jump">[RECOMMENDED ARCHIVES]</option>
-      <option value="contents-jump">[RECOMMENDED CONTENTS]</option>
     </select>
     <button class="theme-toggle" id="themeToggle"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="#FFC93C" stroke="#FFC93C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/><line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/><line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/></svg></button>
     <button class="top-btn" id="topBtn">TOP</button>
@@ -702,7 +700,7 @@ const BLOCKS_BEFORE = [
       note:"다른 이벤트와 달리 미니게임 진행이 필수 — 스토리가 있으니 밀면서 진행"},
     {type:"이벤트", title:"DIRTY BACKYARD", meta:["아카이브O","더빙X"],
       desc:"기록보관소에서 다른 결말 확인 가능.",
-      note:"이어지는 4개의 더빙X 이벤트 모두 감상을 권장"},
+      note:"DIRTY BACKYARD를 포함한 4개의 더빙X 이벤트 모두 감상을 권장"},
     {type:"이벤트", title:"L.T.K -LICENSE TO KILL-", meta:["아카이브O","더빙X"],
       desc:"기록보관소에서 다른 결말 확인 가능."},
     {type:"이벤트", title:"KILL THE LORD", meta:["아카이브O","더빙X"],
@@ -982,6 +980,8 @@ function renderProgressOptions(){
   BLOCKS_BEFORE.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
   addOpt("routes", "[분기] 31~32 OLD TALES 분기");
   BLOCKS_AFTER.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
+  addOpt("archives-jump", "[RECOMMENDED ARCHIVES]");
+  addOpt("contents-jump", "[RECOMMENDED CONTENTS]");
 }
 
 /* Land the selected card around the "second card" position, not flush against the top */
@@ -1017,7 +1017,6 @@ function clearPersistedCheckedCard(){
 document.getElementById("progressSelect").addEventListener("change", (e)=>{
   const val = e.target.value;
   if(!val) return;
-  document.querySelectorAll(".current-position").forEach(el=>el.classList.remove("current-position"));
   if(val === "intro-jump"){
     const introEl = document.querySelector(".intro");
     expandIntroAnimated();
@@ -1033,11 +1032,7 @@ document.getElementById("progressSelect").addEventListener("change", (e)=>{
     return;
   }
   const target = document.getElementById(val);
-  if(target){
-    target.classList.add("current-position");
-    scrollToFast(target);
-    persistCheckedCard(target.id);
-  }
+  if(target) scrollToFast(target);
 });
 
 document.getElementById("timelineGrid").addEventListener("click", (e)=>{

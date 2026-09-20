@@ -13,6 +13,14 @@ try{
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NIKKE 스토리 감상 순서 추천</title>
 <meta name="description" content="니케(승리의 여신 니케) 메인·이벤트·사이드·인연스토리를 감상 순서 기준으로 정리한 가이드">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NIKKE 스토리 감상 순서 추천">
+<meta property="og:description" content="니케(승리의 여신 니케) 메인·이벤트·사이드·인연스토리를 감상 순서 기준으로 정리한 가이드">
+<meta property="og:image" content="og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NIKKE 스토리 감상 순서 추천">
+<meta name="twitter:description" content="니케(승리의 여신 니케) 메인·이벤트·사이드·인연스토리를 감상 순서 기준으로 정리한 가이드">
+<meta name="twitter:image" content="og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
@@ -104,7 +112,8 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 }
 .update-modal-close:hover, .guide-modal-close:hover{border-color:var(--accent-red); color:var(--accent-red);}
 
-.guide-body{font-size:0.85rem; line-height:1.7; color:var(--text-secondary); width:min(80vw, 480px);}
+.guide-modal{width:min(92vw, 560px);}
+.guide-body{font-size:0.85rem; line-height:1.7; color:var(--text-secondary); width:100%; max-width:100%; overflow-x:hidden;}
 .guide-body .guide-lead{color:var(--text-primary); margin-bottom:14px;}
 .guide-body h4{font-family:var(--font-display); font-size:0.82rem; letter-spacing:0.04em; color:var(--text-primary); margin:22px 0 8px;}
 .guide-body h4:first-of-type{margin-top:0;}
@@ -424,9 +433,9 @@ html[data-theme="light"] .tag-route{color:#1A1D27;}
 .progress-select:focus{outline:2px solid var(--accent-red); outline-offset:2px;}
 .custom-select{position:relative;}
 .custom-select-panel{
-  display:none; position:absolute; bottom:100%; right:0; width:260px; max-width:80vw;
+  display:none; position:absolute; bottom:calc(100% + 1px); right:0; width:260px; max-width:80vw;
   max-height:min(340px, 60vh); overflow-y:auto; overscroll-behavior:contain; background:var(--bg-card);
-  border:1px solid var(--border-strong); border-bottom:none;
+  border:1px solid var(--border-strong);
   z-index:70; padding:4px 0;
 }
 .custom-select-panel.open{display:block;}

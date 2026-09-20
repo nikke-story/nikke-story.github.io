@@ -500,6 +500,7 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
    (16:9, fetched directly via the video ID, no local image assets needed) next to its title,
    the whole row acting as one clickable link out to the video. */
 .content-video-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;}
+.content-video-list-single{grid-template-columns:1fr;}
 #contentsGrid .card-title{text-align:left;}
 #contentsGrid .card-desc{text-align:left; margin-top:0;}
 #contentsGrid .content-video-list{margin-top:16px;}
@@ -960,6 +961,9 @@ const CONTENT_SERIES = [
     {label:"《MINIKKE 작은 동화집》 스노우 화이트 편 - 하", url:"https://youtu.be/2-ePhm1l_nc"},
     {label:"《MINIKKE 작은 동화집》 크라운 편 - 상", url:"https://youtu.be/0qri80l6oEA"},
     {label:"《MINIKKE 작은 동화집》 크라운 편 - 하", url:"https://youtu.be/0VyJpudcbys"}
+  ]},
+  { title:"중년게이머 김실장", desc:"46지 이후로 감상을 권장.", videos:[
+    {label:"주년마다 유저들을 울리는 게임, 니케 스토리는 어떻게 탄생했나? (니케 시나리오팀 초대석)", url:"https://youtu.be/dnGkyG9sFgI"}
   ]}
 ];
 function ytId(url){
@@ -974,7 +978,7 @@ function renderContents(){
         <span class="card-title">${series.title}</span>
       </div>
       ${series.desc ? `<div class="card-desc">${series.desc}</div>` : ""}
-      <ul class="content-video-list">
+      <ul class="content-video-list${series.videos.length === 1 ? ' content-video-list-single' : ''}">
         ${series.videos.map(v=>`
           <li class="content-video-item">
             <a href="${v.url}" target="_blank" rel="noopener">

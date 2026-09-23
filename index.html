@@ -478,7 +478,9 @@ html[data-theme="dark"] .guide-btn-fixed::before{border-left-color:var(--text-pr
 .top-btn{height:42px; padding:0 16px; background:var(--accent-red); color:#fff; border:none; clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); display:flex; align-items:center; justify-content:center; cursor:pointer; font-family:var(--font-display); font-size:0.78rem; font-weight:700; letter-spacing:0.08em; box-shadow:0 4px 14px rgba(0,0,0,0.4); flex-shrink:0;}
 .top-btn:hover{background:#ff4d61;}
 
-footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--border); font-size:0.75rem; color:var(--text-tertiary); text-align:center; word-break:keep-all;}
+footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--border); font-size:0.75rem; color:var(--text-tertiary); text-align:left; word-break:keep-all;}
+footer.site-footer .footer-note{text-align:center;}
+footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px auto 0;}
 
 /* Recommend Archive / Recommend Contents — separate sections, independent of the main timeline grid/spine */
 .archive-section, .contents-section{margin-top:8px;}
@@ -586,7 +588,6 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
       <ul id="introList" class="intro-tips"></ul>
       <h3 class="intro-subhead must"><span class="subhead-icon"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 15 14H1z"/><line x1="8" y1="6" x2="8" y2="9.5"/><circle cx="8" cy="11.6" r="0.9" fill="currentColor" stroke="none"/></svg></span>필독 포인트</h3>
       <ul class="callout-list" id="introCallouts"></ul>
-      <a class="resource-link" href="https://docs.google.com/spreadsheets/d/1RfUML43ek5Vcrf3DPUGsueBF1ytCBb90InB4zKJr3FA/edit?gid=0#gid=0" target="_blank" rel="noopener">↗ 니케 스토리 출시 순서 정리 구글시트</a>
       <div class="intro-close-row">
         <button class="intro-close-btn" id="introCloseBtn"><span class="tri"></span>접기</button>
       </div>
@@ -679,7 +680,10 @@ footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--b
 </div>
 
 <footer class="site-footer">
-  <div class="wrap">본 가이드는 니케의 스토리 감상 순서를 보다 쉽게 확인할 수 있도록 구성한 비공식 팬 가이드입니다.</div>
+  <div class="wrap">
+    <div class="footer-note">본 가이드는 니케의 스토리 감상 순서를 보다 쉽게 확인할 수 있도록 구성한 비공식 팬 가이드입니다.</div>
+    <a class="resource-link" href="https://docs.google.com/spreadsheets/d/1RfUML43ek5Vcrf3DPUGsueBF1ytCBb90InB4zKJr3FA/edit?gid=0#gid=0" target="_blank" rel="noopener">↗ 니케 스토리 출시 순서 정리 구글시트</a>
+  </div>
 </footer>
 
 <script>
@@ -804,7 +808,8 @@ const BLOCKS_AFTER = [
   ]},
   { chapter:"45 ~ 46", cards:[
     {type:"메인", title:"챕터 45 ~ 46"},
-    {type:"이벤트", title:"STAR ANIS", season:"3.5주년", meta:["아카이브O","더빙O"]},
+    {type:"이벤트", title:"STAR ANIS", season:"3.5주년", meta:["아카이브O","더빙O"],
+      note:"스토리에서 무대 영상을 감상한 뒤, 맵으로 나가 무대 앞 카메라맨을 클릭하면 볼 수 있는 SD 버전 무대도 감상을 추천."},
     {type:"이벤트", title:"ARK RANGER", meta:["아카이브X","더빙O"]},
     {type:"이벤트", title:"SCHOOL OF LOCK", meta:["아카이브O","더빙X"], optional:true,
       desc:"스토리 라인에 포함된 이벤트가 아니라 넘어가도 상관없음.<br>WAVE TO YOU 이전에 보면 좋음."},
@@ -954,7 +959,7 @@ const CONTENT_SERIES = [
     {label:"【전초기지, 오늘은 쉽니다 - 도로시 편】", url:"https://youtu.be/y-FM5w6wNZg"},
     {label:"【전초기지, 오늘은 쉽니다 - 달란트 편】", url:"https://youtu.be/A1PH5wRrcFQ"}
   ]},
-  { title:"《MINIKKE 작은 동화집》", desc:"RED ASH 이후로 감상을 권장.", videos:[
+  { title:"《MINIKKE 작은 동화집》", desc:"LAST KINGDOM 이후로 감상을 권장.", videos:[
     {label:"《MINIKKE 작은 동화집》 레드 후드 편 - 상", url:"https://youtu.be/UI3a4hrB9uU"},
     {label:"《MINIKKE 작은 동화집》 레드 후드 편 - 하", url:"https://youtu.be/02ukcUDb8zQ", blur:true},
     {label:"《MINIKKE 작은 동화집》 스노우 화이트 편 - 상", url:"https://youtu.be/lEbU6InyGL0"},
@@ -962,7 +967,7 @@ const CONTENT_SERIES = [
     {label:"《MINIKKE 작은 동화집》 크라운 편 - 상", url:"https://youtu.be/0qri80l6oEA"},
     {label:"《MINIKKE 작은 동화집》 크라운 편 - 하", url:"https://youtu.be/0VyJpudcbys"}
   ]},
-  { title:"중년게이머 김실장", desc:"STAR ANIS 이후로 감상을 권장.", videos:[
+  { title:"중년게이머 김실장", desc:"46지 + STAR ANIS 이후로 감상을 권장.", videos:[
     {label:"주년마다 유저들을 울리는 게임, 니케 스토리는 어떻게 탄생했나? (니케 시나리오팀 초대석)", url:"https://youtu.be/dnGkyG9sFgI"}
   ]}
 ];

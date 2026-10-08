@@ -575,7 +575,7 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
     <div class="title-block">
       <h1>NIKKE 스토리 감상 순서 추천</h1>
       <div class="updated">
-        <span class="updated-date">최종 업데이트 <strong id="lastUpdatedDate">2026.10.10</strong></span>
+        <span class="updated-date">최종 업데이트 <strong id="lastUpdatedDate">2026.10.08</strong></span>
       </div>
     </div>
   </div>
@@ -853,7 +853,9 @@ const BLOCKS_AFTER = [
   { chapter:"47 ~ 48", cards:[
     {type:"메인", title:"챕터 47 ~ 48"},
     {type:"이벤트", title:"GREAT VILLAIN UNION", meta:["아카이브X","더빙X"]},
-    {type:"이벤트", title:"COIN RUSH SHOWDOWN", meta:["아카이브X","더빙O"]}
+    {type:"이벤트", title:"COIN RUSH SHOWDOWN", meta:["아카이브X","더빙O"]},
+    {type:"사이드", title:"GINGERBREAD HOUSE",
+      note:"WAVE TO YOU 이후 감상을 추천."}
   ]}
 ];
 const ALL_BLOCKS = [...BLOCKS_BEFORE, ...BLOCKS_AFTER];
@@ -1417,6 +1419,7 @@ function refreshBookends(){ matchBookendWidth(); alignSpineFade(); }
    Example/placeholder entries — replace with real dates/titles as content changes.
    action: "add" | "archive" | "dub" controls the message wording below. */
 const UPDATE_LOG = [
+  {date:"2026.10.08", type:"사이드", title:"GINGERBREAD HOUSE", action:"add"},
   {date:"2026.09.17", type:"이벤트", title:"STAR ANIS", action:"archive"},
   {date:"2026.09.17", type:"이벤트", title:"COIN RUSH SHOWDOWN", action:"add"},
   {date:"2026.09.03", type:"이벤트", title:"GREAT VILLAIN UNION", action:"add"},

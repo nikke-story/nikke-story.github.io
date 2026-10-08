@@ -1418,6 +1418,7 @@ function refreshBookends(){ matchBookendWidth(); alignSpineFade(); }
 /* ============ Update Log ============
    Example/placeholder entries — replace with real dates/titles as content changes.
    action: "add" | "archive" | "dub" controls the message wording below. */
+const UPDATE_LOG_LIMIT = 5; /* number of entries shown in the log popup AND given an Update tag */
 const UPDATE_LOG = [
   {date:"2026.10.08", type:"사이드", title:"GINGERBREAD HOUSE", action:"add"},
   {date:"2026.09.17", type:"이벤트", title:"STAR ANIS", action:"archive"},
@@ -1444,7 +1445,7 @@ let logRotateStepTimer = null;
 let logRotateIndex = 0;
 
 function renderUpdateLog(){
-  const recent = UPDATE_LOG.slice(0, 5);
+  const recent = UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT);
   const trigger = document.getElementById("updateLogTrigger");
   if(recent.length){
     trigger.textContent = updateLogSummary(recent[0]);
@@ -1462,7 +1463,7 @@ function renderUpdateLog(){
 }
 
 function startLogRotation(){
-  const recent = UPDATE_LOG.slice(0, 5);
+  const recent = UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT);
   const trigger = document.getElementById("updateLogTrigger");
   if(recent.length <= 1) return;
   clearInterval(logRotateTimer);
@@ -1521,7 +1522,7 @@ document.getElementById("updateModalList").addEventListener("click", (e)=>{
    existing tag system and is appended after the title, so it never collides with the
    season/optional/required tags that sit before it. */
 function applyUpdateTags(){
-  UPDATE_LOG.forEach(entry=>{
+  UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT).forEach(entry=>{
     document.querySelectorAll(".card[data-title]").forEach(card=>{
       if(card.dataset.title !== entry.title) return;
       const head = card.querySelector(".card-head");

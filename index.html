@@ -23,8 +23,10 @@ try{
 <meta name="twitter:description" content="니케(승리의 여신 니케) 메인·이벤트·사이드·인연스토리를 감상 순서 기준으로 정리한 가이드">
 <meta name="twitter:image" content="https://nikke-story.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg-base:#0B0D12; --bg-elevated:#12141C; --bg-card:#1A1D27; --bg-card-hover:#20232F;
@@ -159,11 +161,15 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 }
 
 .intro{margin:28px 0; background:var(--bg-card); border:1px solid var(--border);}
-.intro summary{list-style:none; cursor:pointer; padding:20px 24px; user-select:none;}
+.intro summary{list-style:none; cursor:pointer; padding:20px 24px 14px; user-select:none;}
+.intro:not([open]) summary{padding-bottom:20px;}
+.intro summary .intro-subhead{margin:0;}
+.intro summary .intro-chevron{order:1; color:var(--text-secondary); flex-shrink:0; transition:transform .25s ease;}
+.intro[open] summary .intro-chevron{transform:rotate(180deg);}
 .intro summary::-webkit-details-marker{display:none;}
 .intro summary h2{font-family:var(--font-display); font-size:0.95rem; letter-spacing:0.08em; color:var(--accent-red); text-transform:uppercase;}
 .tri{width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid currentColor; display:block;}
-.intro-body{padding:0 24px 22px;}
+.intro-body{padding:0 24px 20px;}
 .intro-close-row{display:flex; justify-content:flex-end; margin-top:18px;}
 .intro-close-btn{
   display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:20px;
@@ -179,7 +185,11 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
   border-radius:0 var(--radius) var(--radius) 0; line-height:1.75; word-break:keep-all;
   display:flex; flex-direction:column; gap:2px;
 }
-.callout{border-left:3px solid var(--accent-red); background:var(--accent-red-dim); margin-top:10px;}
+.callout{background:none; border-radius:0; margin-top:14px; padding:0; position:relative;}
+/* Card notes: every line (split on <br>) gets its own red ▸ bullet; .callout-head is an un-bulleted lead line */
+.callout-line{display:block; position:relative; padding-left:16px;}
+.callout-line::before{content:"▸"; position:absolute; left:0; top:0; line-height:1.75; color:var(--accent-red);}
+.callout-head{display:block; font-weight:700; color:var(--text-primary);}
 .callout .callout-title{font-weight:700; color:var(--text-primary);}
 .callout .callout-desc{font-weight:500; color:var(--text-secondary); font-size:0.8rem; line-height:1.6;}
 .intro-highlight{border-left:3px solid var(--accent-blue); background:var(--accent-blue-dim); margin-bottom:10px; flex-direction:row; align-items:flex-start; gap:8px;}
@@ -189,7 +199,7 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 /* Section sub-headings inside 읽어주세요, separating priority tiers */
 .intro-subhead{
   display:flex; align-items:center; gap:8px; font-size:0.86rem; font-weight:700; line-height:1;
-  color:var(--text-primary); margin:28px 0 12px;
+  color:var(--text-primary); margin:20px 0 12px;
 }
 .intro-subhead::after{content:""; flex:1; height:1px; background:var(--border-strong);}
 .intro-subhead .subhead-icon{
@@ -198,32 +208,24 @@ header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-ba
 }
 .intro-subhead.notice{color:var(--accent-blue);}
 .intro-subhead.tips{color:var(--accent-blue);}
-.intro-subhead.must{color:var(--accent-red); margin-top:32px;}
+.intro-subhead.must{color:var(--accent-red);}
 
 .intro ul{list-style:none; display:grid; gap:9px; margin:14px 0;}
-.intro-tips li{font-size:0.9rem; color:var(--text-secondary); padding-left:16px; position:relative; line-height:2;}
+.intro ul.intro-tips{margin-bottom:0;}
+.intro ul.callout-list{margin-bottom:0;}
+.intro-tips li{font-size:0.82rem; color:var(--text-secondary); padding-left:16px; position:relative; line-height:1.75;}
 .intro-tips li::before{content:"▸"; position:absolute; left:0; color:var(--accent-blue);}
 .callout-list{list-style:none; display:grid; gap:8px; margin-top:0;}
 
-/* 읽어주세요 영역 분할 (PC/tablet): 안내 / 필독 포인트 / 감상 팁 순서로 각각 한 행씩 차지 */
+/* 읽어주세요: 배경 강조 없는 라인 기반 디자인. PC/모바일 모두 같은 순서(안내 → 감상 팁 → 필독 포인트), 한 행씩 차지 */
 .intro-columns{display:grid; gap:0;}
-@media (min-width:768px){
-  .intro-columns{
-    grid-template-columns:1fr; grid-template-areas:"notice" "must" "tips";
-    gap:16px; align-items:start;
-  }
-  .intro-col-notice{grid-area:notice;}
-  .intro-col-must{grid-area:must;}
-  .intro-col-tips{grid-area:tips;}
-  .intro-col{
-    background:var(--bg-elevated); border:1px solid var(--border); border-top:2px solid var(--accent-blue);
-    border-radius:0 var(--radius) 0 0; padding:16px 16px 18px;
-  }
-  .intro-col-must{border-top-color:var(--accent-red);}
-  .intro-columns .intro-subhead{margin-top:0;}
-  .intro-columns .intro-subhead::after{display:none;}
-  .intro-highlight:last-child{margin-bottom:0;}
+.intro-highlight-list, .intro .callout-list{display:grid; gap:12px;}
+.intro .intro-highlight, .intro .callout{
+  background:none; border:0; border-radius:0; margin:0; padding:0 0 0 16px; position:relative;
 }
+.intro .intro-highlight::before, .intro .callout::before{content:"▸"; position:absolute; left:0; top:0; line-height:1.75;}
+.intro .intro-highlight::before{color:var(--accent-blue);}
+.intro .callout::before{color:var(--accent-red);}
 .resource-link{display:inline-flex; align-items:center; gap:6px; margin-top:26px; font-size:0.82rem; color:var(--accent-blue); border:1px solid var(--border-strong); padding:6px 12px; border-radius:var(--radius);}
 .resource-link:hover{border-color:var(--accent-blue); text-decoration:none;}
 .section-divider{height:1px; margin:28px 0; background:linear-gradient(90deg, transparent, var(--accent-red), transparent);}
@@ -600,11 +602,10 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
 
 <main class="wrap">
   <details class="intro" open>
-    <summary><h2><span style="margin-right:8px; display:inline-flex; vertical-align:-0.15em;"><svg viewBox="0 0 20 20" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span>읽어주세요</h2></summary>
+    <summary><h3 class="intro-subhead notice"><span class="subhead-icon"><svg viewBox="0 0 20 20" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span>읽어주세요<span class="tri intro-chevron"></span></h3></summary>
     <div class="intro-body">
       <div class="intro-columns">
         <div class="intro-col intro-col-notice">
-          <h3 class="intro-subhead notice"><span class="subhead-icon"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="9.5" y2="12"/></svg></span>안내</h3>
           <div class="intro-highlight-list">
             <div class="intro-highlight"><span>최대한 출시 순서에 맞췄습니다.</span></div>
             <div class="intro-highlight"><span>아래에 빠진 이벤트는 추후 메인 스토리 진행에 따라 중요도가 바뀔 수 있습니다.</span></div>
@@ -621,9 +622,6 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
           <h3 class="intro-subhead must"><span class="subhead-icon"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 15 14H1z"/><line x1="8" y1="6" x2="8" y2="9.5"/><circle cx="8" cy="11.6" r="0.9" fill="currentColor" stroke="none"/></svg></span>필독 포인트</h3>
           <ul class="callout-list" id="introCallouts"></ul>
         </div>
-      </div>
-      <div class="intro-close-row">
-        <button class="intro-close-btn" id="introCloseBtn"><span class="tri"></span>접기</button>
       </div>
     </div>
   </details>
@@ -695,7 +693,7 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
       <p>각 스토리 카드는 단순한 정보 표시뿐만 아니라 일부 기능을 제공합니다.</p>
       <p>카드를 클릭하면 해당 카드에 마커를 남길 수 있으며 위치를 저장합니다.</p>
       <p>다시 클릭하면 마커를 해제할 수 있습니다.</p>
-      <p>읽어주세요 카드는 클릭하여 내용을 펼치거나 접을 수도 있습니다.</p>
+      <p>읽어주세요 카드는 상단의 [읽어주세요] 줄을 클릭하면 펼치거나 접을 수 있으며, 펼쳐진 상태에서는 카드 안 어디를 눌러도 접힙니다.</p>
       <hr>
       <h4>5. OLD TALES 구간은 원하는 루트를 선택</h4>
       <p>OLD TALES 구간은 31~32지와의 진행 순서에 따라 여러 감상 루트를 선택할 수 있습니다.</p>
@@ -792,7 +790,8 @@ const ROUTES = {
     {path:"OLD TALES → 31 → 32", desc:"27~30 지역이 너무 지루하게 느껴진다면 선택."},
     {path:"31 → 32 → OLD TALES", desc:"니케 스토리 출시 순서 그대로 진행."}
   ],
-  note:"OLD TALES 유실물 감상 필수<br>기억의 크리스털 · 숨겨진 아지랑이 감상 추천"
+  noteTitle:"OLD TALES",
+  note:"유실물 감상 필수<br>기억의 크리스털 · 숨겨진 아지랑이 감상 추천"
 };
 
 const BLOCKS_AFTER = [
@@ -863,6 +862,10 @@ const ALL_BLOCKS = [...BLOCKS_BEFORE, ...BLOCKS_AFTER];
 function slug(s){ return s.replace(/[^a-zA-Z0-9가-힣]+/g,"-").toLowerCase(); }
 function gcolOf(type){ if(type==="메인") return "gcol-main"; if(type==="이벤트"||type==="사이드") return "gcol-mid"; return "gcol-side"; }
 
+function noteLines(note){
+  return String(note).split("<br>").map(l=>`<span class="callout-line">${l}</span>`).join("");
+}
+
 function cardHTML(card, chapterKey, row){
   const id = slug(chapterKey+"-"+card.type+"-"+card.title);
   const metaHTML = (card.meta||[]).map(m=>`<span class="chip">${m}</span>`).join("");
@@ -870,7 +873,7 @@ function cardHTML(card, chapterKey, row){
   const optTag = card.optional ? `<span class="tag tag-optional">선택</span>` : "";
   const reqTag = card.required ? `<span class="tag tag-required">필수</span>` : "";
   const desc = card.desc ? `<div class="card-desc">${card.desc}</div>` : "";
-  const note = card.note ? `<div class="callout">${card.note}</div>` : "";
+  const note = card.note ? `<div class="callout">${noteLines(card.note)}</div>` : "";
   const meta = metaHTML ? `<div class="meta-row">${metaHTML}</div>` : "";
   return `
   <article class="card type-${card.type} ${gcolOf(card.type)}" id="${id}" style="grid-row:${row}" data-chapter="${chapterKey}" data-title="${card.title}">
@@ -907,7 +910,7 @@ function routesHTML(row){
       <p>${ROUTES.desc}</p>
     </div>
     <div class="routes-grid">${items}</div>
-    <div class="callout routes-note">${ROUTES.note}</div>
+    <div class="callout routes-note"><span class="callout-head">${ROUTES.noteTitle}</span>${noteLines(ROUTES.note)}</div>
   </section>`;
 }
 
@@ -969,7 +972,7 @@ function renderArchive(){
     const metaHTML = (a.meta||[]).map(m=>`<span class="chip">${m}</span>`).join("");
     const meta = metaHTML ? `<div class="meta-row">${metaHTML}</div>` : "";
     const desc = a.desc ? `<div class="card-desc">${a.desc}</div>` : "";
-    const note = a.note ? `<div class="callout">${a.note}</div>` : "";
+    const note = a.note ? `<div class="callout">${noteLines(a.note)}</div>` : "";
     return `
     <article class="card type-이벤트" data-title="${a.title}">
       <div class="card-head">
@@ -1028,7 +1031,7 @@ function renderContents(){
           <li class="content-video-item">
             <a href="${v.url}" target="_blank" rel="noopener">
               <span class="yt-thumb${v.blur ? ' yt-thumb-blur' : ''}">
-                <img src="https://i.ytimg.com/vi/${ytId(v.url)}/mqdefault.jpg" alt=""
+                <img src="https://i.ytimg.com/vi/${ytId(v.url)}/mqdefault.jpg" alt="" loading="lazy" decoding="async" width="320" height="180"
                   onerror="this.onerror=null; this.src=this.src.includes('mqdefault') ? this.src.replace('mqdefault','hqdefault') : this.src.replace('hqdefault','default');">
                 <span class="yt-play">▶</span>
               </span>
@@ -1062,6 +1065,7 @@ function refreshProgressDisplay(){
   trigger.textContent = current ? current.baseLabel : "진행도";
 }
 function setProgressValue(value){
+  if(value === progressValue) return;
   progressValue = value;
   refreshProgressDisplay();
 }
@@ -1138,7 +1142,10 @@ document.getElementById("progressSelectTrigger").addEventListener("click", (e)=>
 document.addEventListener("click", (e)=>{
   if(!document.getElementById("progressSelectWrap").contains(e.target)) closeProgressPanel();
 });
-window.addEventListener("scroll", ()=> closeProgressPanel());
+const progressPanelEl = document.getElementById("progressSelectPanel");
+window.addEventListener("scroll", ()=>{
+  if(progressPanelEl.classList.contains("open")) closeProgressPanel();
+}, {passive:true});
 document.addEventListener("keydown", (e)=>{
   if(e.key === "Escape") closeProgressPanel();
 });
@@ -1301,6 +1308,12 @@ function expandIntroAnimated(){
   });
 }
 
+// While open, a click anywhere inside the body also collapses the card (unless the user
+// is selecting text).
+introBody.addEventListener("click", ()=>{
+  if(String(window.getSelection()).length) return;
+  collapseIntroAnimated();
+});
 // Clicking the summary heading itself toggles it — intercept both directions so both
 // collapsing and expanding animate the same way.
 introSummary.addEventListener("click", (e)=>{
@@ -1311,7 +1324,6 @@ introSummary.addEventListener("click", (e)=>{
     expandIntroAnimated();
   }
 });
-document.getElementById("introCloseBtn").addEventListener("click", collapseIntroAnimated);
 
 function initScrollFade(){
   const targets = document.querySelectorAll(".card, .routes-section, .comingsoon-card, .prologue-tag");

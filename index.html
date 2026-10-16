@@ -16,8 +16,8 @@ try{
 <link rel="canonical" href="https://nikke-story.github.io/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="google-site-verification" content="Dn5XTVt0WvT4ToIM8BWx-2w6VOhbuqOc-lOzN386Hfc" />
-<meta name="theme-color" content="#F3F4F7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0B0D12" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0C10" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NIKKE 스토리 감상 순서 추천">
 <meta property="og:locale" content="ko_KR">
@@ -32,548 +32,486 @@ try{
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700&family=Geist+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+/* =========================================================
+   NIKKE Story Guide — 2026 renewal
+   Tokens → base → header → drawer → hero → timeline → sections → dock → modals
+   ========================================================= */
 :root{
-  --bg-base:#0B0D12; --bg-elevated:#12141C; --bg-card:#1A1D27; --bg-card-hover:#20232F;
-  --accent-red:#E5384D; --accent-red-dim:rgba(229,56,77,0.12);
-  --accent-blue:#4A8FE7; --accent-blue-dim:rgba(74,143,231,0.12);
-  --accent-gold:#D4A24C; --accent-gold-dim:rgba(212,162,76,0.12);
-  --accent-violet:#9C7BD9; --accent-violet-dim:rgba(156,123,217,0.12);
-  --accent-optional:#FFB833; --accent-optional-dim:rgba(255,184,51,0.16); --accent-optional-border:rgba(255,184,51,0.55);
-  --accent-required:#FF9142; --accent-required-dim:rgba(255,145,66,0.16); --accent-required-border:rgba(255,145,66,0.55);
-  --update-color:#4FBF87; --update-color-dim:rgba(79,191,135,0.14); --update-color-border:rgba(79,191,135,0.5);
-  --accent-season:#5B98A3;
-  --text-primary:#E8E9ED; --text-secondary:#8B8FA3; --text-tertiary:#5C6072;
-  --border:#262A36; --border-strong:#343A4A; --radius:2px;
-  --font-body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
-  --font-display:'Chakra Petch',var(--font-body);
-  --scanline-op:0.03;
-  --bookend-h:112px;
+  --bg:#F4F5F8; --bg-sunken:#ECEEF2;
+  --surface:#FFFFFF; --surface-2:#F6F7F9; --surface-3:#EEF0F4;
+  --text:#11131A; --text-2:#4B5162; --text-3:#8A90A0;
+  --line:#E3E6EC; --line-strong:#CDD2DB;
+  --glass:rgba(255,255,255,.72); --glass-strong:rgba(255,255,255,.86);
+  --scrim:rgba(12,14,20,.42);
+
+  --red:#E5384D; --blue:#3366E6; --gold:#C38D25; --violet:#8A68D6;
+  --teal:#3B92A0; --amber:#EE9A12; --green:#1FA36A;
+
+  --c-main:var(--red); --c-event:var(--blue); --c-side:var(--gold); --c-bond:var(--violet);
+
+  --shadow-1:0 1px 2px rgba(16,18,26,.04), 0 4px 14px rgba(16,18,26,.05);
+  --shadow-2:0 2px 6px rgba(16,18,26,.06), 0 18px 40px rgba(16,18,26,.10);
+  --shadow-3:0 10px 30px rgba(16,18,26,.14), 0 30px 80px rgba(16,18,26,.16);
+
+  --radius:16px; --radius-sm:10px;
+  --font:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-display:'Geist','Pretendard Variable','Pretendard',sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.16,.8,.3,1);
+  --gutter:96px;
 }
-html[data-theme="light"]{
-  --bg-base:#F3F4F7; --bg-elevated:#FFFFFF; --bg-card:#FFFFFF; --bg-card-hover:#EEF0F4;
-  --text-primary:#1A1D27; --text-secondary:#565A6B; --text-tertiary:#8B8FA3;
-  --border:#E2E4EA; --border-strong:#CBCED8; --scanline-op:0;
+html[data-theme="dark"]{
+  --bg:#0B0C10; --bg-sunken:#08090C;
+  --surface:#14161C; --surface-2:#1A1D25; --surface-3:#222631;
+  --text:#ECEDF1; --text-2:#A3A8B8; --text-3:#6C7284;
+  --line:#242833; --line-strong:#343A48;
+  --glass:rgba(14,15,20,.72); --glass-strong:rgba(20,22,28,.86);
+  --scrim:rgba(0,0,0,.6);
+  --red:#F04A5E; --blue:#5B8BFF; --gold:#D9A441; --violet:#A487F0; --teal:#57AEBB; --amber:#F5A623; --green:#36C285;
+  --shadow-1:0 1px 2px rgba(0,0,0,.3);
+  --shadow-2:0 2px 6px rgba(0,0,0,.3), 0 18px 40px rgba(0,0,0,.35);
+  --shadow-3:0 10px 30px rgba(0,0,0,.45), 0 30px 80px rgba(0,0,0,.5);
 }
-html[data-theme="light"] .update-log-bar{background:var(--bg-base);}
+
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:auto;}
+html{-webkit-text-size-adjust:100%;}
+html.lock{overflow:hidden;}
 body{
-  background:var(--bg-base); color:var(--text-primary); font-family:var(--font-body);
-  line-height:1.6; -webkit-font-smoothing:antialiased; padding-bottom:100px;
-  background-image:linear-gradient(180deg, rgba(74,143,231,var(--scanline-op)) 1px, transparent 1px);
-  background-size:100% 3px; transition:background-color .2s ease, color .2s ease;
+  background:var(--bg); color:var(--text); font-family:var(--font);
+  line-height:1.6; -webkit-font-smoothing:antialiased; word-break:keep-all;
+  padding-bottom:120px;
 }
-a{color:var(--accent-blue); text-decoration:none;}
+a{color:var(--blue); text-decoration:none;}
 a:hover{text-decoration:underline;}
-::selection{background:var(--accent-red); color:#fff;}
+button{font-family:inherit; color:inherit;}
+::selection{background:var(--red); color:#fff;}
+:focus-visible{outline:2px solid var(--blue); outline-offset:3px; border-radius:6px;}
+.sr-only{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
+html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after{transition:background-color .25s ease, color .25s ease, border-color .25s ease !important;}
+::view-transition-old(root), ::view-transition-new(root){animation-duration:.28s;}
 
-header.top{background:linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-base) 100%); padding:30px 0 0; position:relative;}
-.top-row{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
-.title-block{flex:1; min-width:0;}
-.title-block h1{font-family:var(--font-display); font-size:1.75rem; font-weight:700; letter-spacing:0.02em;}
-.title-block .updated{
-  margin-top:8px; font-size:0.8rem; color:var(--text-tertiary); font-variant-numeric:tabular-nums;
+/* ---------- small primitives ---------- */
+.eyebrow{font-family:var(--font-mono); font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3);}
+.icon-btn{
+  width:38px; height:38px; flex-shrink:0; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--surface); border:1px solid var(--line); color:var(--text-2);
+  cursor:pointer; transition:border-color .18s, color .18s, background .18s;
 }
-.title-block .updated strong{color:var(--text-secondary); font-weight:500;}
+.icon-btn:hover{border-color:var(--text-3); color:var(--text);}
+.icon-btn svg{width:17px; height:17px;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 20px;
+  border-radius:999px; border:1px solid var(--line-strong); background:var(--surface);
+  font-size:.9rem; font-weight:600; cursor:pointer; color:var(--text);
+  transition:border-color .18s, background .18s, transform .18s;
+  max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.btn:hover{border-color:var(--text-3);}
+.btn-primary{background:var(--text); color:var(--bg); border-color:var(--text);}
+.btn-primary:hover{background:var(--red); border-color:var(--red); color:#fff;}
+.btn svg{width:16px; height:16px; flex-shrink:0;}
+.btn .btn-sub{font-weight:500; color:var(--text-3); overflow:hidden; text-overflow:ellipsis;}
 
-/* Sticky bar wrapping the rolling trigger — the divider line below it is a fully separate
-   sibling element, so the trigger's rolling opacity/transform animation (applied only to
-   the button itself via JS) can never touch or visually disturb the line. */
-.update-log-bar{
-  position:sticky; top:0; z-index:40; width:100%; background:var(--bg-base);
+.tag{
+  display:inline-flex; align-items:center; height:22px; padding:0 9px; border-radius:999px;
+  font-size:.7rem; font-weight:700; line-height:1; white-space:nowrap; letter-spacing:.01em;
 }
+.tag-season{color:var(--teal); background:color-mix(in oklab, var(--teal) 13%, transparent);}
+.tag-required{color:#fff; background:var(--amber);}
+.tag-optional{color:var(--amber); background:transparent; box-shadow:inset 0 0 0 1.5px var(--amber);}
+.tag-update{color:#fff; background:var(--green); font-family:var(--font-mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase;}
+.tag-type{color:var(--tc); background:color-mix(in oklab, var(--tc) 12%, transparent);}
+:root{--tag-main:#D02F44; --tag-event:#2F5FD8; --tag-side:#996C14; --tag-bond:#6E4FC7; --tag-season:#2B7A86;}
+.tag-type.tt-메인{color:#fff; background:var(--tag-main);}
+.tag-type.tt-이벤트{color:#fff; background:var(--tag-event);}
+.tag-type.tt-사이드{color:#fff; background:var(--tag-side);}
+.tag-type.tt-인연스토리, .tag-type.tt-블라블라{color:#fff; background:var(--tag-bond);}
+
+/* ---------- header ---------- */
+.site-header{
+  position:sticky; top:0; z-index:40;
+  background:var(--glass); -webkit-backdrop-filter:saturate(1.5) blur(18px); backdrop-filter:saturate(1.5) blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{max-width:1240px; margin:0 auto; padding:0 20px; height:46px; display:flex; align-items:center; justify-content:center;}
+.ticker{flex:1; min-width:0; display:flex; justify-content:center;}
 .update-log-trigger{
-  display:block; width:100%; max-width:1180px; margin:0 auto;
-  cursor:pointer; box-sizing:border-box;
-  font-family:var(--font-body); font-size:0.78rem; color:var(--accent-blue);
-  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  text-align:left; background:none; border:none;
-  padding:8px 20px; border-radius:0;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-  will-change:transform, opacity;
-  transition:color .15s ease, opacity .25s ease, transform .25s ease;
+  display:flex; align-items:center; gap:10px; max-width:720px; min-width:0; height:32px; padding:0 4px;
+  background:none; border:none; cursor:pointer; overflow:hidden;
 }
-.update-log-trigger:hover{color:var(--accent-red);}
-.update-log-trigger:empty{display:none;}
-.update-log-line{width:100%;}
-.update-log-line-top{margin-top:6px;}
-.update-log-line::after{content:""; display:block; height:1px; background:var(--border);}
+.ticker-more{flex-shrink:0; display:inline-flex; align-items:center; gap:2px; font-size:.74rem; font-weight:600; color:var(--text-3); transition:color .18s;}
+.ticker-more svg{width:12px; height:12px; transition:transform .18s;}
+.update-log-trigger:hover .ticker-more{color:var(--green);}
+.update-log-trigger:hover .ticker-more svg{transform:translateX(2px);}
+.update-log-trigger:hover .ticker-text{color:var(--text);}
+.update-log-trigger[hidden]{display:none;}
+.ticker-pill{flex-shrink:0; display:inline-flex; align-items:center; gap:6px; height:22px; padding:0 9px; border-radius:999px; background:color-mix(in oklab, var(--green) 14%, transparent); color:var(--green); font-family:var(--font-mono); font-size:.64rem; font-weight:600; letter-spacing:.08em;}
+.ticker-pill::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; animation:pulse 2.4s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ticker-text{min-width:0; font-size:.8rem; color:var(--text-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; will-change:transform,opacity;}
+.ticker-text b{color:var(--text); font-weight:600;}
 
+/* ---------- 읽어주세요 drawer (left) ---------- */
+.drawer-overlay{position:fixed; inset:0; z-index:90; background:var(--scrim); opacity:0; pointer-events:none; transition:opacity .25s ease;}
+.drawer-overlay.is-open{opacity:1; pointer-events:auto;}
+.drawer{
+  position:absolute; top:0; left:0; bottom:0; width:min(460px, 90vw);
+  background:var(--surface); display:flex; flex-direction:column;
+  transform:translateX(-28px); opacity:0; transition:transform .32s var(--ease), opacity .25s ease;
+  box-shadow:12px 0 40px rgba(12,14,20,.14); border-right:1px solid var(--line);
+}
+.drawer-overlay.is-open .drawer{transform:none; opacity:1;}
+.drawer:focus{outline:none;}
+.drawer-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:24px 24px 20px; border-bottom:1px solid var(--line); flex:none;}
+.drawer-head h2{font-size:1.4rem; font-weight:800; letter-spacing:-.02em; margin-top:4px; display:flex; align-items:center; gap:8px;}
+.drawer-head h2 svg{width:20px; height:20px; color:var(--red);}
+.drawer-news{padding:18px 12px 4px;}
+.drawer-news .drawer-cat-name{color:var(--green);}
+.drawer-news .drawer-cat-name::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; animation:pulse 2.4s ease-in-out infinite;}
+.news-list{list-style:none; display:grid; gap:1px;}
+.news-row{display:grid; gap:4px; min-width:0; padding:10px; border-radius:10px; cursor:pointer; font-size:.9rem; line-height:1.5; transition:background .15s;}
+.news-row:hover{background:var(--surface-2);}
+.news-date-head{padding:4px 10px 0;}
+.news-row .tag{vertical-align:2px; margin-right:2px;}
+.news-text{word-break:keep-all;}
+.news-date{flex-shrink:0; font-family:var(--font-mono); font-size:.72rem; color:var(--text-3); font-variant-numeric:tabular-nums;}
+.news-row .tag{flex-shrink:0; height:20px; font-size:.66rem;}
+.news-title{font-weight:700;}
+.news-act{color:var(--text-2);}
+.drawer-close{background:transparent; border:1px solid var(--line); color:var(--text-2); font-size:.8rem; padding:6px 13px; border-radius:999px; cursor:pointer; flex-shrink:0;}
+.drawer-close:hover{border-color:var(--red); color:var(--red);}
+.drawer-body{flex:1; overflow-y:auto; overscroll-behavior:contain; padding:8px 12px 24px;}
+.drawer-cat{padding:18px 12px 4px;}
+.drawer-cat-name{display:flex; align-items:center; gap:8px; font-size:.78rem; font-weight:700; color:var(--text-3); margin-bottom:8px; letter-spacing:.02em;}
+.drawer-cat-name svg{width:14px; height:14px;}
+.drawer-cat-name::after{content:""; flex:1; height:1px; background:var(--line);}
+.drawer-cat.is-notice .drawer-cat-name{color:var(--text);}
+.is-notice .di-mark::before{background:var(--text-2);}
+.drawer-cat.is-tips .drawer-cat-name{color:var(--blue);}
+.drawer-cat.is-must .drawer-cat-name{color:var(--red);}
+.drawer-list{list-style:none; display:grid; gap:2px;}
+.drawer-item{display:flex; gap:12px; padding:10px; border-radius:10px; font-size:.9rem; line-height:1.65; color:var(--text);}
+.drawer-item:hover{background:var(--surface-2);}
+.drawer-item svg{vertical-align:-.15em;}
+.di-mark{flex-shrink:0; width:18px; display:flex; justify-content:center; padding-top:.62em;}
+.di-mark::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--text-3);}
+.di-num{flex-shrink:0; width:22px; font-family:var(--font-mono); font-size:.74rem; font-weight:600; color:var(--blue); padding-top:.2em;}
+.is-must .drawer-item{flex-direction:column; gap:2px; padding:12px 12px 12px 26px; position:relative;}
+.is-must .drawer-item::before{content:""; position:absolute; left:10px; top:20px; width:6px; height:6px; border-radius:2px; background:var(--red); transform:rotate(45deg);}
+.di-title{font-weight:700;}
+.di-desc{font-size:.84rem; color:var(--text-2);}
+.drawer-foot{display:flex; gap:8px; padding:16px 24px calc(16px + env(safe-area-inset-bottom)); border-top:1px solid var(--line); flex:none;}
+.drawer-foot .btn{flex:1; justify-content:center; height:42px; font-size:.84rem; padding:0 12px;}
+
+.readme-tab{
+  position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:30; display:none;
+  writing-mode:vertical-rl; padding:16px 9px; border-radius:0 12px 12px 0;
+  background:var(--surface); border:1px solid var(--line); border-left:none; box-shadow:var(--shadow-1);
+  font-size:.8rem; font-weight:700; letter-spacing:.12em; color:var(--text-2); cursor:pointer;
+  transition:color .18s, padding .18s;
+}
+.readme-tab::before{content:""; display:none; width:6px; height:6px; border-radius:50%; background:var(--red); margin:0 auto 10px;}
+.readme-tab.has-unread::before{display:block;}
+.readme-tab:hover{color:var(--red); padding-left:13px;}
+@media (min-width:1360px){ .readme-tab{display:block;} }
+
+/* ---------- hero ---------- */
+.hero{position:relative; padding:72px 0 64px;}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background-image:radial-gradient(var(--line-strong) 1px, transparent 1.2px); background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 80% at 20% 30%, #000 10%, transparent 70%);
+  mask-image:radial-gradient(ellipse 70% 80% at 20% 30%, #000 10%, transparent 70%); opacity:.7;
+}
+.hero h1{margin-top:4px; font-size:clamp(2.1rem, 5.2vw, 3.6rem); font-weight:800; letter-spacing:-.04em; line-height:1.08;}
+.hero h1 .h1-en{font-family:var(--font-display); color:var(--red);}
+.hero-lead{margin-top:18px; font-size:clamp(.98rem,1.4vw,1.08rem); color:var(--text-2); max-width:34em; line-height:1.7;}
+.hero-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.hero-meta{margin-top:22px; font-size:.8rem; color:var(--text-3); font-variant-numeric:tabular-nums; display:flex; align-items:center; gap:8px;}
+.hero-meta strong{color:var(--text-2); font-weight:600; font-family:var(--font-mono);}
+.hero-meta::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--green);}
+.th-right{display:flex; flex-direction:column; align-items:flex-end; gap:10px; min-width:0;}
+.stats{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; list-style:none;}
+.stat{display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 11px; border-radius:999px; background:var(--surface); border:1px solid var(--line); font-size:.76rem; font-weight:600; color:var(--text-2); white-space:nowrap;}
+.stat::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--tc); flex-shrink:0;}
+.stat b{font-family:var(--font-display); font-weight:700; font-size:.86rem; color:var(--text); font-variant-numeric:tabular-nums;}
+.stat-total{background:var(--text); border-color:var(--text); color:var(--bg); font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;}
+.stat-total::before{display:none;}
+.stat-total b{color:var(--bg);}
+
+/* ---------- timeline ---------- */
+.timeline-head{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-top:28px; border-top:1px solid var(--line); margin-bottom:40px;}
+.timeline-head h2, .section-head h2{font-family:var(--font-display); font-size:clamp(1.5rem,3vw,2rem); font-weight:700; letter-spacing:-.03em; line-height:1.2; margin-top:6px;}
+.head-desc{margin-top:8px; font-size:.88rem; color:var(--text-2); max-width:40em;}
+
+.timeline{position:relative; padding-bottom:8px;}
+.spine{position:absolute; top:18px; bottom:18px; left:50%; width:2px; transform:translateX(-50%); pointer-events:none;}
+.spine-track{position:absolute; inset:0; background:repeating-linear-gradient(to bottom, var(--line-strong) 0 4px, transparent 4px 10px);}
+.spine-fill{
+  position:absolute; left:0; top:0; width:2px; height:0; border-radius:2px;
+  background:linear-gradient(to bottom, var(--red), var(--blue)); background-repeat:no-repeat;
+}
+.spine-fill::after{
+  content:""; position:absolute; left:50%; bottom:-5px; width:10px; height:10px; border-radius:50%; transform:translateX(-50%);
+  background:var(--surface); border:2px solid var(--head-c, var(--red)); box-shadow:0 0 0 4px color-mix(in oklab, var(--head-c, var(--red)) 18%, transparent);
+}
+
+/* stations: chapter waypoints that sit on the spine */
+.station{position:relative; z-index:2; display:flex; justify-content:center; margin:52px 0 28px;}
+.station:first-of-type{margin-top:0;}
+.station-pill{
+  --sc:color-mix(in oklab, var(--red) var(--mix,100%), var(--blue));
+  display:inline-flex; align-items:center; gap:10px; height:36px; padding:0 16px 0 6px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--line-strong); box-shadow:var(--shadow-1);
+  transition:background .3s, border-color .3s, color .3s;
+}
+.station-ch{display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:999px; background:var(--surface-3); font-family:var(--font-mono); font-size:.64rem; font-weight:600; letter-spacing:.1em; color:var(--text-3); transition:inherit;}
+.station-label{font-weight:800; font-size:.92rem; letter-spacing:-.01em; white-space:nowrap;}
+.station.passed .station-pill{background:var(--sc); border-color:var(--sc); color:#fff;}
+.station.passed .station-ch{background:rgba(255,255,255,.2); color:#fff;}
+.station-cap .station-pill{padding:0 18px; font-family:var(--font-display); font-weight:700; font-size:.78rem; letter-spacing:.2em; color:var(--text-2);}
+.station-cap.passed .station-pill{color:#fff;}
+
+/* cards */
+.card{
+  --tc:var(--c-main);
+  position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:20px 22px; cursor:pointer; box-shadow:var(--shadow-1);
+  transition:border-color .2s ease, box-shadow .2s ease, opacity .5s ease, translate .5s var(--ease);
+}
+.card.t-이벤트{--tc:var(--c-event);}
+.card.t-사이드{--tc:var(--c-side);}
+.card.t-인연스토리, .card.t-블라블라{--tc:var(--c-bond);}
+#timelineGrid .card.passed, #timelineGrid .routes-section.passed{border-color:color-mix(in oklab, var(--tc) 35%, var(--line));}
+.card:hover{border-color:color-mix(in oklab, var(--tc) 55%, var(--line)); box-shadow:var(--shadow-2);}
+.tl-item{width:calc(50% - var(--gutter) / 2); margin-bottom:18px;}
+.tl-item.side-l{margin-right:auto;}
+.tl-item.side-r{margin-left:auto;}
+html.js .reveal{opacity:0; translate:0 14px;}
+html.js .reveal.in-view{opacity:1; translate:0 0;}
+
+.card-dot{
+  position:absolute; top:28px; width:14px; height:14px; border-radius:50%; z-index:3;
+  background:var(--surface); border:2.5px solid var(--tc); transition:transform .2s ease, background .25s ease, box-shadow .2s ease;
+}
+.card-link{position:absolute; top:34px; height:2px; z-index:1; width:calc(var(--gutter) / 2 - 7px); opacity:.55; transition:opacity .2s;}
+.side-l .card-dot{right:calc(var(--gutter) / -2 - 7px - 1px);}
+.side-l .card-link{right:calc(var(--gutter) / -2 + 7px - 1px); background:linear-gradient(to right, transparent, var(--tc));}
+.side-r .card-dot{left:calc(var(--gutter) / -2 - 7px - 1px);}
+.side-r .card-link{left:calc(var(--gutter) / -2 + 7px - 1px); background:linear-gradient(to left, transparent, var(--tc));}
+.card:hover .card-dot{transform:scale(1.2);}
+.card:hover .card-link{opacity:1;}
+.card.passed .card-dot{background:var(--tc);}
+
+.card-tags{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-bottom:10px;}
+.card-title{display:block; font-family:var(--font-display); font-size:1.24rem; font-weight:700; letter-spacing:-.02em; line-height:1.3;}
+.meta-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;}
+.chip{
+  display:inline-flex; align-items:center; gap:5px; height:24px; padding:0 9px; border-radius:7px;
+  background:var(--surface-2); border:1px solid var(--line); font-size:.72rem; font-weight:500; color:var(--text-2);
+}
+.chip-state{font-weight:800; font-size:.72rem;}
+.chip-state.on{color:var(--green);}
+.chip-state.off{color:var(--text-3);}
+.chip.off{color:var(--text-3);}
+.chip-changed{border-color:var(--green); box-shadow:0 0 0 2px color-mix(in oklab, var(--green) 18%, transparent);}
+.card-desc{margin-top:12px; font-size:.88rem; color:var(--text-2); line-height:1.7;}
+.notes{margin-top:14px; display:grid; gap:4px;}
+.note-line{position:relative; padding-left:16px; font-size:.84rem; font-weight:500; line-height:1.65; color:var(--text);}
+.note-line::before{content:""; position:absolute; left:2px; top:calc(1.65em / 2 + 1px); width:5px; height:5px; border-radius:1px; background:var(--tc); transform:translateY(-50%) rotate(45deg);}
+.note-head{font-size:.8rem; font-weight:800; color:var(--tc); letter-spacing:.02em;}
+
+.here-flag{
+  display:none; position:absolute; top:-12px; left:18px; z-index:4; align-items:center; gap:6px; height:24px; padding:0 11px;
+  border-radius:999px; background:var(--tc); color:#fff; font-size:.7rem; font-weight:700; box-shadow:0 4px 12px color-mix(in oklab, var(--tc) 35%, transparent);
+}
+.here-flag svg{width:12px; height:12px;}
+.current-position .here-flag{display:inline-flex;}
+.card.current-position{border-color:var(--tc); box-shadow:0 0 0 3px color-mix(in oklab, var(--tc) 16%, transparent), var(--shadow-2);}
+.card.current-position .card-dot{background:var(--tc); transform:scale(1.25); box-shadow:0 0 0 6px color-mix(in oklab, var(--tc) 20%, transparent);}
+
+/* OLD TALES routes */
+.routes-section{
+  --tc:var(--red); position:relative; z-index:2; margin-bottom:18px; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:var(--shadow-1);
+  transition:border-color .2s ease, box-shadow .2s ease, opacity .5s ease, translate .5s var(--ease);
+}
+.routes-section:hover{border-color:color-mix(in oklab, var(--red) 50%, var(--line)); box-shadow:var(--shadow-2);}
+.routes-section.current-position{border-color:var(--red); box-shadow:0 0 0 3px color-mix(in oklab, var(--red) 16%, transparent), var(--shadow-2);}
+.routes-section .here-flag{left:50%; transform:translateX(-50%);}
+.routes-head{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;}
+.routes-head h3{font-family:var(--font-display); font-size:1.5rem; font-weight:700; letter-spacing:-.03em; margin-top:10px;}
+.routes-head p{font-size:.9rem; color:var(--text-2); margin-top:4px;}
+.routes-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:22px; counter-reset:route;}
+.route-card{border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:var(--surface-2); transition:border-color .18s, background .18s, box-shadow .18s;}
+.route-card:hover{border-color:color-mix(in oklab, var(--red) 55%, var(--line)); background:color-mix(in oklab, var(--red) 6%, var(--surface)); box-shadow:var(--shadow-2);}
+.route-num{font-family:var(--font-mono); font-size:.68rem; font-weight:600; letter-spacing:.12em; color:var(--red);}
+.route-flow{display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:10px 0 10px;}
+.route-step{display:inline-flex; align-items:center; height:28px; padding:0 10px; border-radius:8px; background:var(--surface); border:1px solid var(--line); font-size:.82rem; font-weight:700; white-space:nowrap;}
+.route-step.ot{background:var(--red); border-color:var(--red); color:#fff; font-family:var(--font-display); letter-spacing:.02em;}
+.route-arrow{color:var(--text-3); font-size:.8rem;}
+.route-card p{font-size:.84rem; color:var(--text-2); line-height:1.65;}
+.routes-note{margin-top:16px; padding:12px 14px; border-radius:var(--radius-sm); background:color-mix(in oklab, var(--tc) 6%, var(--surface-2));}
+
+/* ---------- sections ---------- */
+.section{margin-top:128px;}
+.section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; padding-top:28px; border-top:1px solid var(--line); margin-bottom:28px;}
+.archive-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px;}
+@media (max-width:767px){ .archive-grid{grid-template-columns:1fr;} }
+.archive-grid .card{--tc:var(--c-event); cursor:default; display:flex; flex-direction:column;}
+
+.series{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:24px; margin-bottom:16px; box-shadow:var(--shadow-1);}
+.series-head{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:baseline;}
+.series-title{font-size:1.15rem; font-weight:800; letter-spacing:-.02em;}
+.series-count{font-family:var(--font-mono); font-size:.72rem; color:var(--text-3);}
+.series-desc{font-size:.86rem; color:var(--text-2); margin-top:4px;}
+.content-video-list{list-style:none; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px 14px; margin-top:18px;}
+.content-video-item a{display:flex; flex-direction:column; gap:8px; color:var(--text-2); text-decoration:none; transition:color .18s;}
+.content-video-item a:hover{color:var(--text);}
+.content-video-item .yt-thumb{width:100%;}
+.content-video-item a:hover .yt-thumb img{transform:scale(1.04);}
+.yt-thumb{position:relative; display:block; width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:var(--surface-3);}
+.yt-thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s var(--ease);}
+.yt-thumb-blur img{filter:blur(4px); transform:scale(1.1);}
+.content-video-item a:hover .yt-thumb-blur img{transform:scale(1.12);}
+.yt-play{position:absolute; right:6px; bottom:6px; width:26px; height:26px; border-radius:50%; background:rgba(0,0,0,.6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.7rem; padding-left:2px; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);}
+.yt-label{font-size:.82rem; font-weight:500; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+
+/* ---------- dock (bottom) ---------- */
+.dock{
+  position:fixed; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:45;
+  display:flex; align-items:center; gap:6px; padding:6px;
+  border-radius:999px; background:var(--glass-strong); -webkit-backdrop-filter:saturate(1.5) blur(18px); backdrop-filter:saturate(1.5) blur(18px);
+  border:1px solid var(--line); box-shadow:var(--shadow-3);
+}
+.dock .icon-btn{width:44px; height:44px; background:transparent; border-color:transparent;}
+.dock .icon-btn:hover{background:var(--surface-3);}
+.dock .icon-btn{position:relative;}
+.dock-unread{position:absolute; top:9px; right:9px; width:8px; height:8px; border-radius:50%; background:var(--red); box-shadow:0 0 0 2px var(--glass-strong); display:none;}
+.has-unread .dock-unread{display:block;}
+.dock-sep{width:1px; height:24px; background:var(--line); margin:0 2px; flex-shrink:0;}
+.custom-select{position:relative;}
+.progress-select{
+  display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:1px;
+  width:300px; height:44px; padding:0 40px 0 16px; border-radius:999px; position:relative;
+  background:var(--surface); border:1px solid var(--line); cursor:pointer; text-align:left;
+}
+.progress-select:hover{border-color:var(--line-strong);}
+.ps-label{font-family:var(--font-mono); font-size:.6rem; font-weight:600; letter-spacing:.12em; color:var(--text-3); line-height:1;}
+.ps-value{width:100%; font-size:.82rem; font-weight:600; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.progress-select::after{content:""; position:absolute; right:16px; top:50%; width:7px; height:7px; border-right:1.5px solid var(--text-3); border-top:1.5px solid var(--text-3); transform:translateY(-25%) rotate(-45deg); transition:transform .2s;}
+.progress-select[aria-expanded="true"]::after{transform:translateY(-75%) rotate(135deg);}
+.top-btn{width:44px; height:44px; border-radius:50%; background:var(--text); color:var(--bg); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .18s;}
+.top-btn:hover{background:var(--red); color:#fff;}
+.top-btn svg{width:18px; height:18px;}
+.custom-select-panel{
+  display:none; position:absolute; bottom:calc(100% + 14px); left:50%; transform:translateX(-50%); width:min(360px, calc(100vw - 24px));
+  max-height:min(440px, 62vh); overflow-y:auto; overscroll-behavior:contain; list-style:none;
+  background:var(--surface); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow-3); padding:6px;
+}
+.custom-select-panel.open{display:block;}
+.custom-select-cat{padding:12px 12px 6px; font-family:var(--font-mono); font-size:.64rem; font-weight:600; letter-spacing:.12em; color:var(--text-3);}
+.custom-select-option{display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:10px; font-size:.84rem; cursor:pointer;}
+.custom-select-option .opt-dot{width:7px; height:7px; border-radius:50%; flex-shrink:0; background:var(--tc, var(--text-3));}
+.custom-select-option .opt-label{flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.custom-select-option .opt-marker{flex-shrink:0; opacity:0; font-size:.66rem; font-weight:700; color:#fff; background:var(--red); border-radius:999px; padding:2px 7px;}
+.custom-select-option.marked .opt-marker{opacity:1;}
+.custom-select-option:hover{background:var(--surface-2);}
+.custom-select-option.active{background:var(--surface-3); font-weight:700;}
+
+/* ---------- modals ---------- */
 .update-modal-overlay, .guide-modal-overlay{
-  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100;
+  display:none; position:fixed; inset:0; z-index:100; background:var(--scrim); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
   align-items:center; justify-content:center; padding:20px;
 }
 .update-modal-overlay.open, .guide-modal-overlay.open{display:flex;}
 .update-modal, .guide-modal{
-  width:max-content; max-width:min(92vw, 560px); max-height:80vh; overflow-y:auto; overscroll-behavior:contain;
-  background:var(--bg-card); border:3px solid transparent; border-left:3px solid var(--accent-red);
-  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
-  padding:20px;
+  width:min(560px, 100%); max-height:82vh; overflow-y:auto; overscroll-behavior:contain;
+  background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow-3); padding:24px;
+  animation:pop .28s var(--ease);
 }
-.update-modal-head, .guide-modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:16px;}
-.update-modal-head h3, .guide-modal-head h3{font-family:var(--font-display); font-size:0.95rem; letter-spacing:0.08em; color:var(--accent-red); text-transform:uppercase;}
-.update-modal-close, .guide-modal-close{
-  background:var(--bg-elevated); border:1px solid var(--border-strong); color:var(--text-primary);
-  width:28px; height:28px; border-radius:50%; font-size:1.1rem; line-height:1; cursor:pointer; flex-shrink:0;
-}
-.update-modal-close:hover, .guide-modal-close:hover{border-color:var(--accent-red); color:var(--accent-red);}
+@keyframes pop{from{opacity:0; transform:translateY(10px) scale(.98)} to{opacity:1; transform:none}}
+.modal-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px;}
+.modal-head h2{font-size:1.25rem; font-weight:800; letter-spacing:-.02em; margin-top:4px;}
+.modal-close{width:34px; height:34px; border-radius:50%; background:var(--surface-2); border:1px solid var(--line); font-size:1.1rem; line-height:1; cursor:pointer; flex-shrink:0;}
+.modal-close:hover{border-color:var(--red); color:var(--red);}
 
-.guide-modal{width:min(92vw, 560px);}
-.guide-body{font-size:0.85rem; line-height:1.7; color:var(--text-secondary); width:100%; max-width:100%; overflow-x:hidden;}
-.guide-body .guide-lead{color:var(--text-primary); margin-bottom:14px;}
-.guide-body h4{font-family:var(--font-display); font-size:0.82rem; letter-spacing:0.04em; color:var(--text-primary); margin:22px 0 8px;}
-.guide-body h4:first-of-type{margin-top:0;}
-.guide-body p{margin-bottom:10px;}
-.guide-body ul{margin:8px 0 10px 20px;}
+.update-modal-list{list-style:none; position:relative; display:grid; gap:4px;}
+.update-modal-list::before{content:""; position:absolute; left:9px; top:14px; bottom:14px; width:2px; transform:translateX(-50%); background:repeating-linear-gradient(to bottom, var(--line-strong) 0 3px, transparent 3px 7px);}
+.update-modal-list li{position:relative; padding:10px 12px 10px 32px; border-radius:12px; cursor:pointer; transition:background .15s;}
+.update-modal-list li:hover{background:var(--surface-2);}
+.update-modal-list li::before{content:""; position:absolute; left:9px; top:19px; transform:translate(-50%,-50%); width:10px; height:10px; border-radius:50%; background:var(--surface); border:2.5px solid var(--tc); box-sizing:border-box;}
+.update-modal-list li:first-child::before{background:var(--tc);}
+.log-date{display:block; font-family:var(--font-mono); font-size:.72rem; color:var(--text-3); line-height:18px;}
+.log-row{display:flex; align-items:center; gap:8px; margin-top:4px; flex-wrap:wrap;}
+.log-text{font-size:.88rem; color:var(--text-2);}
+.log-text strong{color:var(--text); font-weight:700;}
+
+.guide-body{font-size:.88rem; line-height:1.75; color:var(--text-2);}
+.guide-body .guide-lead{color:var(--text); margin-bottom:6px;}
+.guide-body h3{font-size:.95rem; font-weight:800; color:var(--text); margin:0 0 8px; display:flex; align-items:center; gap:10px;}
+.guide-body h3 .gnum{font-family:var(--font-mono); font-size:.7rem; color:var(--red); font-weight:600;}
+.guide-body p{margin-bottom:8px;}
+.guide-body ul{margin:6px 0 10px 18px;}
 .guide-body li{margin-bottom:4px;}
-.guide-body strong{color:var(--text-primary); font-weight:700;}
-.guide-body hr{border:none; border-top:1px solid var(--border); margin:18px 0;}
-.guide-body .tag, .guide-body .chip{margin:0 2px; vertical-align:middle;}
+.guide-body strong{color:var(--text); font-weight:700;}
+.guide-body hr{border:none; border-top:1px solid var(--line); margin:20px 0;}
 
-/* Mini timeline look, echoing the main story spine: a vertical line with a colored dot per entry.
-   The line (on the list) and every dot (on each item) both anchor to the exact same "left:8px"
-   point using translateX(-50%) to center themselves on it — since the list itself carries no
-   left padding (the indent lives on each <li> instead), both share one coordinate origin, so
-   there is no cross-box math that could drift them apart. */
-.update-modal-list{list-style:none; position:relative; margin-left:4px; display:grid; gap:6px;}
-.update-modal-list::before{
-  content:""; position:absolute; left:8px; transform:translateX(-50%); top:4px; bottom:4px; width:2px;
-  background:linear-gradient(to bottom, transparent, var(--accent-red) 12%, var(--accent-red) 88%, transparent);
-  opacity:0.6;
-}
-.update-modal-list li{
-  position:relative; padding:6px 10px 6px 32px; color:var(--text-primary); line-height:1.5;
-  border-radius:6px; cursor:pointer;
-}
-.update-modal-list li::before{
-  content:""; position:absolute; left:8px; top:14px; transform:translate(-50%,-50%); width:8px; height:8px; border-radius:50%;
-  background:var(--accent-red); border:2px solid var(--bg-card); z-index:1;
-  transition:width .15s ease, height .15s ease;
-}
-.update-modal-list li:hover::before{width:11px; height:11px;}
-.update-modal-list li.type-이벤트::before{background:var(--accent-blue);}
-.update-modal-list li.type-사이드::before{background:var(--accent-gold);}
-.update-modal-list li.type-인연스토리::before, .update-modal-list li.type-블라블라::before{background:var(--accent-violet);}
-.log-row{margin-top:2px;}
-.update-modal-list .tag{font-size:0.56rem; padding:2px 5px; vertical-align:middle; margin-right:6px; line-height:1;}
-.log-date{font-size:0.72rem; line-height:16px; display:block; color:var(--text-tertiary); font-variant-numeric:tabular-nums; transition:color .15s ease;}
-.log-text{font-size:0.85rem; color:var(--text-secondary); white-space:nowrap; transition:color .15s ease;}
-.log-text strong{color:var(--text-primary); font-weight:700;}
-@media (max-width:600px){
-  .log-text{white-space:normal;}
-}
+/* ---------- footer ---------- */
+footer.site-footer{margin-top:120px; padding:32px 0 24px; border-top:1px solid var(--line); font-size:.8rem; color:var(--text-3);}
+footer.site-footer .wrap{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;}
+.resource-link{display:inline-flex; align-items:center; gap:6px; font-size:.82rem; font-weight:600; color:var(--text-2); border:1px solid var(--line-strong); padding:8px 14px; border-radius:999px;}
+.resource-link:hover{border-color:var(--blue); color:var(--blue); text-decoration:none;}
 
-.intro{margin:28px 0; background:var(--bg-card); border:1px solid var(--border);}
-.intro summary{list-style:none; cursor:pointer; padding:20px 24px 14px; user-select:none;}
-.intro:not([open]) summary{padding-bottom:20px;}
-.intro summary .intro-subhead{margin:0;}
-.intro summary .intro-chevron{order:1; color:var(--text-secondary); flex-shrink:0; transition:transform .25s ease;}
-.intro[open] summary .intro-chevron{transform:rotate(180deg);}
-.intro summary::-webkit-details-marker{display:none;}
-.intro summary h2{font-family:var(--font-display); font-size:0.95rem; letter-spacing:0.08em; color:var(--accent-red); text-transform:uppercase;}
-.tri{width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid currentColor; display:block;}
-.intro-body{padding:0 24px 20px;}
-.intro-close-row{display:flex; justify-content:flex-end; margin-top:18px;}
-.intro-close-btn{
-  display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:20px;
-  border:1px solid var(--border-strong); background:var(--bg-elevated); color:var(--accent-red);
-  font-size:0.8rem; font-family:var(--font-body); cursor:pointer;
-}
-.intro-close-btn:hover{border-color:var(--accent-red);}
-.intro-close-btn .tri{transform:rotate(180deg);}
-
-/* Unified notice-box design: same structure for red(callout) and blue(highlight), color differs only */
-.callout, .intro-highlight{
-  padding:11px 14px; font-size:0.82rem; font-weight:500; color:var(--text-primary);
-  border-radius:0 var(--radius) var(--radius) 0; line-height:1.75; word-break:keep-all;
-  display:flex; flex-direction:column; gap:2px;
-}
-.callout{background:none; border-radius:0; margin-top:14px; padding:0; position:relative;}
-/* Card notes: every line (split on <br>) gets its own red ▸ bullet; .callout-head is an un-bulleted lead line */
-.callout-line{display:block; position:relative; padding-left:16px;}
-.callout-line::before{content:"▸"; position:absolute; left:0; top:0; line-height:1.75; color:var(--accent-red);}
-.callout-head{display:block; font-weight:700; color:var(--text-primary);}
-.callout .callout-title{font-weight:700; color:var(--text-primary);}
-.callout .callout-desc{font-weight:500; color:var(--text-secondary); font-size:0.8rem; line-height:1.6;}
-.intro-highlight{border-left:3px solid var(--accent-blue); background:var(--accent-blue-dim); margin-bottom:10px; flex-direction:row; align-items:flex-start; gap:8px;}
-.intro-highlight .icon{color:var(--accent-blue); font-weight:700; flex-shrink:0;}
-.intro-highlight-list{display:grid;}
-
-/* Section sub-headings inside 읽어주세요, separating priority tiers */
-.intro-subhead{
-  display:flex; align-items:center; gap:8px; font-size:0.86rem; font-weight:700; line-height:1;
-  color:var(--text-primary); margin:20px 0 12px;
-}
-.intro-subhead::after{content:""; flex:1; height:1px; background:var(--border-strong);}
-.intro-subhead .subhead-icon{
-  display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
-  font-size:0.95rem; line-height:1;
-}
-.intro-subhead.notice{color:var(--accent-red);}
-.intro-subhead.tips{color:var(--accent-blue);}
-.intro-subhead.must{color:var(--accent-red);}
-
-.intro ul{list-style:none; display:grid; gap:9px; margin:14px 0;}
-.intro ul.intro-tips{margin-bottom:0;}
-.intro ul.callout-list{margin-bottom:0;}
-.intro-tips li{font-size:0.82rem; color:var(--text-secondary); padding-left:16px; position:relative; line-height:1.75;}
-.intro-tips li::before{content:"▸"; position:absolute; left:0; color:var(--accent-blue);}
-.callout-list{list-style:none; display:grid; gap:8px; margin-top:0;}
-
-/* 읽어주세요: 배경 강조 없는 라인 기반 디자인. PC/모바일 모두 같은 순서(안내 → 감상 팁 → 필독 포인트), 한 행씩 차지 */
-.intro-columns{display:grid; gap:0;}
-.intro-highlight-list, .intro .callout-list{display:grid; gap:12px;}
-.intro .intro-highlight, .intro .callout{
-  background:none; border:0; border-radius:0; margin:0; padding:0 0 0 16px; position:relative;
-}
-.intro .intro-highlight::before, .intro .callout::before{content:"▸"; position:absolute; left:0; top:0; line-height:1.75;}
-.intro .intro-highlight::before{color:var(--accent-blue);}
-.intro .callout::before{color:var(--accent-red);}
-.resource-link{display:inline-flex; align-items:center; gap:6px; margin-top:26px; font-size:0.82rem; color:var(--accent-blue); border:1px solid var(--border-strong); padding:6px 12px; border-radius:var(--radius);}
-.resource-link:hover{border-color:var(--accent-blue); text-decoration:none;}
-.section-divider{height:1px; margin:28px 0; background:linear-gradient(90deg, transparent, var(--accent-red), transparent);}
-.section-divider-lg{margin:224px 0;}
-
-.tag{font-family:var(--font-display); font-size:0.68rem; font-weight:600; letter-spacing:0.05em; padding:3px 9px; border-radius:3px; text-transform:uppercase; white-space:nowrap; border:1px solid transparent; display:inline-block;}
-.tag-메인{color:#fff; background:var(--accent-red); border-color:var(--accent-red);}
-.tag-이벤트{color:#fff; background:var(--accent-blue); border-color:var(--accent-blue);}
-.tag-사이드{color:#fff; background:var(--accent-gold); border-color:var(--accent-gold);}
-.tag-인연스토리, .tag-블라블라{color:var(--accent-violet); background:var(--accent-violet-dim); border-color:rgba(156,123,217,0.4);}
-.tag-optional{color:#fff; background:#F0A11A; border-color:transparent; font-weight:700;}
-.tag-required{color:#fff; background:#F0A11A; border-color:transparent; font-weight:700;}
-.tag-update{
-  color:#fff; background:var(--update-color); border-color:var(--update-color);
-  font-weight:700; font-size:0.54rem; padding:2px 5px; line-height:1;
-  display:inline-flex; align-items:center; justify-content:center;
-}
-.tag-season{color:#fff; background:var(--accent-season); border-color:var(--accent-season);}
-.tag-route{color:#fff; background:var(--accent-red-dim); border-color:rgba(229,56,77,0.4); font-weight:600;}
-html[data-theme="light"] .tag-route{color:#1A1D27;}
-
-.meta-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
-.chip{font-size:0.72rem; color:var(--text-secondary); background:var(--bg-elevated); border:none; padding:3px 9px; border-radius:10px;}
-.chip-changed{border:1px solid var(--update-color); color:var(--text-primary);}
-
-/* Card */
-.card{
-  position:relative;
-  background:var(--bg-card);
-  border:3px solid transparent; border-left:3px solid var(--border-strong);
-  padding:16px 18px; clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
-  transition:background .15s ease, box-shadow .15s ease, transform .15s ease, border-color .15s ease, opacity .5s ease;
-  margin-bottom:12px; min-height:224px; display:flex; flex-direction:column; justify-content:center; cursor:pointer;
-  opacity:0; will-change:transform; transform:scale(1); backface-visibility:hidden;
-}
-.card.in-view{opacity:1;}
-.card:hover{background:var(--bg-card-hover); box-shadow:0 4px 18px rgba(0,0,0,0.35); transform:scale(1.015);}
-#contentsGrid .card:hover{transform:none;}
-.card.type-메인{border-left-color:var(--accent-red);}
-.card.type-메인:hover, .card.type-메인.current-position{border-color:var(--accent-red); box-shadow:0 4px 18px rgba(229,56,77,0.22);}
-.card.type-이벤트{border-left-color:var(--accent-blue);}
-.card.type-이벤트:hover, .card.type-이벤트.current-position{border-color:var(--accent-blue); box-shadow:0 4px 18px rgba(74,143,231,0.22);}
-#contentsGrid .card.type-이벤트{border-left-color:var(--accent-season);}
-#contentsGrid .card.type-이벤트:hover, #contentsGrid .card.type-이벤트.current-position{border-color:var(--accent-season); box-shadow:0 4px 18px rgba(91,152,163,0.25);}
-.card.type-사이드{border-left-color:var(--accent-gold);}
-.card.type-사이드:hover, .card.type-사이드.current-position{border-color:var(--accent-gold); box-shadow:0 4px 18px rgba(212,162,76,0.22);}
-.card.type-인연스토리, .card.type-블라블라{border-left-color:var(--accent-violet);}
-.card.type-인연스토리:hover, .card.type-블라블라:hover, .card.type-인연스토리.current-position, .card.type-블라블라.current-position{border-color:var(--accent-violet); box-shadow:0 4px 18px rgba(156,123,217,0.22);}
-
-/* Progress marker: larger, evenly-proportioned badge so the checkmark sits centered */
-.card.current-position::after{
-  content:"✓"; position:absolute; top:-4px; right:-4px; width:27px; height:27px;
-  color:#fff; font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center;
-  padding-bottom:1px;
-  clip-path:polygon(6px 0,100% 0,100% 100%,0 100%,0 6px); z-index:3;
-}
-.card.type-메인.current-position::after{background:var(--accent-red);}
-.card.type-이벤트.current-position::after{background:var(--accent-blue);}
-.card.type-사이드.current-position::after{background:var(--accent-gold); color:#fff;}
-.card.type-인연스토리.current-position::after, .card.type-블라블라.current-position::after{background:var(--accent-violet);}
-
-.card-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;}
-.card-title{font-size:1rem; font-weight:600; color:var(--text-primary);}
-.card-desc{font-size:0.86rem; color:var(--text-secondary); margin-top:8px;}
-
-/* ============ Single shared timeline grid — one card per row, column by type ============ */
-.timeline-grid{display:grid; grid-template-columns:1fr; column-gap:22px; position:relative;}
-.timeline-spine-cap{display:none;}
-.gcol-main, .gcol-mid, .gcol-side{grid-column:1;}
-
-.prologue-tag, .comingsoon-card{
-  grid-column:1/-1; opacity:0; transition:opacity .5s ease;
-  display:inline-flex; align-items:center; justify-content:center;
-  width:100%; max-width:540px; justify-self:center; min-height:224px;
-  font-family:var(--font-display); font-size:1.05rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--accent-red); background:transparent; border:none;
-  padding:5px 14px; border-radius:14px;
-}
-.prologue-tag{margin-bottom:14px;}
-.comingsoon-card{margin-top:4px;}
-.prologue-tag.in-view, .comingsoon-card.in-view{opacity:1;}
-
-/* OLD TALES section now shares the exact main-card visual language */
-.routes-section{
-  position:relative; grid-column:1/-1; margin:24px 0; opacity:0; cursor:pointer;
-  background:var(--bg-card);
-  border:3px solid transparent; border-left:3px solid var(--accent-red);
-  padding:16px 18px;
-  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
-  transition:box-shadow .15s ease, transform .15s ease, opacity .5s ease, border-color .15s ease;
-  will-change:transform; transform:scale(1); backface-visibility:hidden;
-}
-.routes-section.in-view{opacity:1;}
-.routes-section:hover, .routes-section.current-position{border-color:var(--accent-red); box-shadow:0 4px 18px rgba(229,56,77,0.22); transform:scale(1.008);}
-.routes-section.current-position::after{
-  content:"✓"; position:absolute; top:-4px; right:-4px; width:27px; height:27px; background:var(--accent-red);
-  color:#fff; font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; padding-bottom:1px;
-  clip-path:polygon(6px 0,100% 0,100% 100%,0 100%,0 6px); z-index:3;
-}
-.routes-head{margin-bottom:18px;}
-.routes-head h3{font-family:var(--font-display); font-size:1.2rem; font-weight:700; letter-spacing:0.02em; margin-top:10px;}
-.routes-head p{font-size:0.85rem; color:var(--text-secondary); margin-top:6px;}
-.routes-grid{display:grid; grid-template-columns:1fr; gap:12px;}
-.route-card{background:var(--bg-card); border:1px solid var(--border); padding:14px 16px; border-radius:var(--radius); transition:background .15s ease;}
-.route-card:hover{background:var(--bg-card-hover);}
-.route-card:hover .tag-route{filter:brightness(1.2);}
-.route-card .route-head-row{display:flex; flex-direction:column; align-items:flex-start; gap:6px;}
-.route-card .route-path{font-family:var(--font-display); font-size:0.95rem; font-weight:600; color:var(--text-primary);}
-.route-card p{font-size:0.83rem; color:var(--text-secondary); margin-top:6px;}
-.routes-note{margin-top:16px;}
-
-
-/* Central main-axis timeline (tablet/desktop only). The spine is a real grid item spanning
-   row 2 (first main card, right after Prologue) to just before Coming Soon — computed exactly
-   in JS, not via CSS "-1" (unreliable on an implicit grid).
-
-   IMPORTANT: markers/connector lines are rendered as SEPARATE sibling grid items (.tl-marker),
-   not as children of .card. Cards have `clip-path`, which clips its entire box tree — any child
-   positioned outside the card's own box (via negative offsets) gets clipped away with it. That
-   was the actual reason markers were invisible before. A .tl-marker shares the same grid-row as
-   its card and uses align-self:center, so it always aligns to that card's vertical center
-   regardless of content height, with no clip-path in the way. */
-@media (min-width:768px){
-  .timeline-spine{
-    grid-column:2; width:2px; margin:0 auto; align-self:stretch;
-    background:linear-gradient(to bottom,
-      transparent 0px,
-      var(--accent-red) var(--bookend-h),
-      var(--accent-red) calc(100% - var(--bookend-h)),
-      transparent 100%);
-    opacity:0.85; z-index:0;
-  }
-
-  .tl-marker{grid-column:2; align-self:center; position:relative; height:1px; pointer-events:none; z-index:5;}
-  .tl-marker::before{
-    content:""; position:absolute; top:50%; left:50%; width:8px; height:8px; border-radius:50%;
-    transform:translate(-50%,-50%); z-index:2; background:var(--marker-color);
-    box-shadow:0 0 0 2px var(--bg-base), 0 0 0 3px var(--marker-color);
-    transition:width .15s ease, height .15s ease;
-  }
-  /* .tl-marker sits immediately after its card in DOM order, so :hover + works directly */
-  .card:hover + .tl-marker::before{width:12px; height:12px;}
-  .tl-marker::after{
-    content:""; position:absolute; top:50%; height:1px; transform:translateY(-50%); z-index:1;
-  }
-
-  /* The line always stays at its full, exact length — touching both the card and the marker
-     at all times, hover included. Rather than shrinking it to dodge the card's hover scale,
-     .tl-marker is given a higher z-index than the card, so the line simply paints on top of
-     the card's edge if they overlap slightly — it never looks cut short or disconnected. */
-  /* The line always stays visible on top of the card (z-index above it, see .tl-marker),
-     but its start point is also nudged back a hair on hover so it never looks geometrically
-     tucked inside the card's slightly-larger hover boundary. The retreat is intentionally
-     tiny — the z-index already guarantees visibility, this only fixes the geometry. */
-  :root{ --hover-nudge: clamp(1px, 0.3vw, 4px); }
-  .tl-marker-메인{--marker-color:var(--accent-red);}
-  .tl-marker-메인::after{left:0; width:20px; background:var(--accent-red); opacity:0.6;}
-  .card:hover + .tl-marker-메인::after{left:var(--hover-nudge); width:calc(20px - var(--hover-nudge));}
-
-  .tl-marker-이벤트{--marker-color:var(--accent-blue);}
-  .tl-marker-이벤트::after{right:0; width:20px; background:var(--accent-blue); opacity:0.5;}
-  .tl-marker-사이드{--marker-color:var(--accent-gold);}
-  .tl-marker-사이드::after{right:0; width:20px; background:var(--accent-gold); opacity:0.5;}
-  .tl-marker-인연스토리, .tl-marker-블라블라{--marker-color:var(--accent-violet);}
-  .tl-marker-인연스토리::after, .tl-marker-블라블라::after{right:0; width:20px; background:var(--accent-violet); opacity:0.5;}
-  .card:hover + .tl-marker-이벤트::after,
-  .card:hover + .tl-marker-사이드::after,
-  .card:hover + .tl-marker-인연스토리::after,
-  .card:hover + .tl-marker-블라블라::after{right:var(--hover-nudge); width:calc(20px - var(--hover-nudge));}
-  .tl-marker-bookend{display:none;}
-}
-
-/* Mobile: a single left-hand gutter track holds the spine, all cards sit in the right
-   track (still one card per row, same order — the "1열" rule is unaffected). Connector
-   lines only ever reach in one direction (left→right, gutter→card). */
-@media (max-width:767px){
-  .timeline-grid{grid-template-columns:20px minmax(0,1fr); column-gap:12px;}
-  .gcol-main, .gcol-mid, .gcol-side{grid-column:2;}
-  .prologue-tag, .comingsoon-card{grid-column:2; width:auto; max-width:none; min-height:224px;}
-
-  .timeline-spine, .timeline-spine-cap{
-    grid-column:1; width:2px; margin:0 auto; align-self:stretch;
-    background:var(--accent-red); opacity:0.85; z-index:0; display:block;
-  }
-  /* Story range stays a constant strength — no fade across the actual timeline. */
-  .timeline-spine{background:var(--accent-red);}
-  /* Caps fade only between each bookend marker (always at 50% of its own row, since the
-     marker uses align-self:center within the same row) and Prologue/Coming Soon's own edge. */
-  .timeline-spine-cap-top{
-    background:linear-gradient(to bottom, transparent 0%, var(--accent-red) 50%, var(--accent-red) 100%);
-  }
-  .timeline-spine-cap-bottom{
-    background:linear-gradient(to bottom, var(--accent-red) 0%, var(--accent-red) 50%, transparent 100%);
-  }
-  .tl-marker{grid-column:1; align-self:center; position:relative; height:1px; pointer-events:none; z-index:2; display:block;}
-  .tl-marker::before{
-    content:""; position:absolute; top:50%; left:50%; width:7px; height:7px; border-radius:50%;
-    transform:translate(-50%,-50%); z-index:2; background:var(--marker-color);
-    box-shadow:0 0 0 2px var(--bg-base), 0 0 0 3px var(--marker-color);
-    transition:width .15s ease, height .15s ease;
-  }
-  .card:hover + .tl-marker::before{width:10px; height:10px;}
-  .tl-marker::after{
-    content:""; position:absolute; top:50%; right:-12px; width:22px; height:1px; transform:translateY(-50%); z-index:1;
-    background:var(--marker-color); opacity:0.5; transition:right .15s ease, width .15s ease;
-  }
-  :root{ --hover-retract-m: clamp(2px, 0.8vw, 6px); }
-  .card:hover + .tl-marker::after{right:calc(-12px + var(--hover-retract-m)); width:calc(22px - var(--hover-retract-m));}
-
-  .tl-marker-메인{--marker-color:var(--accent-red);}
-  .tl-marker-이벤트{--marker-color:var(--accent-blue);}
-  .tl-marker-사이드{--marker-color:var(--accent-gold);}
-  .tl-marker-인연스토리, .tl-marker-블라블라{--marker-color:var(--accent-violet);}
-  .tl-marker-bookend{display:block;}
-  .tl-marker-bookend::after{
-    background:linear-gradient(to right, var(--marker-color), transparent);
-    opacity:0.7;
-  }
-}
-
-.bottom-cluster{position:fixed; bottom:20px; right:20px; z-index:50; display:flex; flex-direction:column; align-items:flex-end; gap:8px;}
-.bottom-cluster-row{display:flex; align-items:center; gap:8px;}
-.progress-select{
-  height:42px; background:var(--bg-card); border:1px solid var(--border-strong); color:var(--text-primary);
-  font-family:var(--font-body); font-size:0.78rem; padding:0 12px; text-align:left;
-  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
-  cursor:pointer; width:260px; box-shadow:0 4px 14px rgba(0,0,0,0.4);
-  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-}
-.progress-select:focus{outline:2px solid var(--accent-red); outline-offset:2px;}
-.custom-select{position:relative;}
-.custom-select-panel{
-  display:none; position:absolute; bottom:calc(100% + 1px); right:0; width:260px; max-width:80vw;
-  max-height:min(340px, 60vh); overflow-y:auto; overscroll-behavior:contain; background:var(--bg-card);
-  border:1px solid var(--border-strong);
-  z-index:70; padding:4px 0;
-}
-.custom-select-panel.open{display:block;}
-.custom-select-option{
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
-  padding:7px 12px; font-size:0.78rem; color:var(--text-primary); cursor:pointer;
-}
-.custom-select-option .opt-label{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.custom-select-option .opt-marker{color:var(--accent-red); flex-shrink:0; opacity:0; font-size:0.6rem;}
-.custom-select-option.marked .opt-marker{opacity:1;}
-.custom-select-option:hover, .custom-select-option.active{background:var(--bg-card-hover);}
-.custom-select-divider{height:1px; background:var(--border); margin:4px 0;}
-.theme-toggle{
-  width:42px; height:42px; flex-shrink:0; background:var(--bg-card); border:1px solid var(--border-strong); color:var(--text-primary);
-  font-size:1.05rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
-  box-shadow:0 4px 14px rgba(0,0,0,0.4);
-}
-.theme-toggle:hover{border-color:var(--accent-blue);}
-.guide-btn-fixed{
-  position:relative;
-  width:24px; height:24px; font-size:0.72rem;
-  clip-path:none; border-radius:50%; box-shadow:none;
-}
-.guide-btn-fixed::after{
-  content:"이용 가이드";
-  position:absolute; right:calc(100% + 12px); top:50%; transform:translateY(-50%);
-  background:#111; color:#fff; font-size:0.7rem; font-family:var(--font-body); font-weight:500;
-  padding:4px 8px; border-radius:4px; white-space:nowrap;
-  opacity:0; pointer-events:none; transition:opacity .15s ease;
-}
-.guide-btn-fixed::before{
-  content:""; position:absolute; right:calc(100% + 2px); top:50%; transform:translateY(-50%);
-  border:5px solid transparent; border-left-color:#111;
-  opacity:0; pointer-events:none; transition:opacity .15s ease;
-}
-html[data-theme="dark"] .guide-btn-fixed::after{background:var(--text-primary); color:var(--bg-base);}
-html[data-theme="dark"] .guide-btn-fixed::before{border-left-color:var(--text-primary);}
-.guide-btn-fixed:hover::after, .guide-btn-fixed:hover::before{opacity:1;}
-.top-btn{height:42px; padding:0 16px; background:var(--accent-red); color:#fff; border:none; clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); display:flex; align-items:center; justify-content:center; cursor:pointer; font-family:var(--font-display); font-size:0.78rem; font-weight:700; letter-spacing:0.08em; box-shadow:0 4px 14px rgba(0,0,0,0.4); flex-shrink:0;}
-.top-btn:hover{background:#ff4d61;}
-
-footer.site-footer{margin-top:60px; padding:24px 0; border-top:1px solid var(--border); font-size:0.75rem; color:var(--text-tertiary); text-align:left; word-break:keep-all;}
-footer.site-footer .footer-note{text-align:center;}
-footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px auto 0;}
-
-/* Recommend Archive / Recommend Contents — separate sections, independent of the main timeline grid/spine */
-.archive-section, .contents-section{margin-top:8px;}
-.archive-title, .contents-title{
-  font-family:var(--font-display); font-size:1.05rem; font-weight:700; letter-spacing:0.18em;
-  text-transform:uppercase; text-align:center;
-  min-height:224px; display:flex; align-items:center; justify-content:center; margin-bottom:20px;
-}
-.archive-title{color:var(--accent-blue);}
-.contents-title{color:var(--accent-season);}
-.archive-grid, .contents-grid{display:grid; grid-template-columns:1fr; row-gap:12px;}
-.archive-grid{margin-bottom:224px;}
-@media (min-width:768px){
-  .archive-grid, .contents-grid{grid-template-columns:1fr 1fr; column-gap:24px;}
-  .contents-grid{grid-template-columns:1fr; row-gap:24px;}
-}
-
-/* Video list inside a Recommend Contents card — each item shows the real YouTube thumbnail
-   (16:9, fetched directly via the video ID, no local image assets needed) next to its title,
-   the whole row acting as one clickable link out to the video. */
-.content-video-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;}
-.content-video-list-single{grid-template-columns:1fr;}
-#contentsGrid .card-title{text-align:left;}
-#contentsGrid .card-desc{text-align:left; margin-top:0;}
-#contentsGrid .content-video-list{margin-top:16px;}
-.content-video-item a{
-  display:flex; flex-direction:row; align-items:center; gap:6px; padding:6px; border-radius:6px;
-  background:var(--bg-elevated); color:var(--text-secondary); font-size:0.78rem; font-weight:500;
-  text-decoration:none; transition:background .15s ease, color .15s ease;
-}
-.content-video-item a:hover{color:var(--accent-red);}
-.yt-thumb{display:block; position:relative; width:100%; max-width:200px; flex-shrink:0; aspect-ratio:16/9; border-radius:4px; overflow:hidden; background:var(--bg-base);}
-.yt-thumb-blur img{filter:blur(3px); transform:scale(1.1);}
-.yt-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
-.yt-play{
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  color:#fff; font-size:0.85rem; text-shadow:0 0 4px rgba(0,0,0,0.7); pointer-events:none;
-}
-.yt-label{
-  flex:1; display:flex; align-items:center; justify-content:flex-start; text-align:left;
-  padding-left:8px; overflow:hidden; line-height:1.35;
-}
-
-@media (min-width:768px){
-  .bottom-cluster{right:max(20px, calc((100vw - 1180px) / 2 + 20px));}
-}
-
-@media (min-width:768px){
-  .timeline-grid{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr); column-gap:0;}
-  .gcol-main{grid-column:1;}
-  .gcol-mid, .gcol-side{grid-column:3;}
-  .routes-grid{grid-template-columns:1fr 1fr;}
-}
-@media (min-width:1280px){
-  .routes-grid{grid-template-columns:repeat(4,1fr);}
+/* ---------- responsive ---------- */
+@media (max-width:1023px){
+  :root{--gutter:64px;}
+  .hero{padding:56px 0 48px;}
+  .routes-grid{grid-template-columns:1fr;}
 }
 @media (max-width:767px){
-  .title-block h1{font-size:1.35rem;}
-  .progress-select{width:clamp(150px, 48vw, 230px);}
-  .custom-select-panel{width:clamp(150px, 48vw, 230px);}
-  .content-video-list{grid-template-columns:1fr;}
+  body{padding-bottom:110px;}
+  .header-inner{height:42px; padding:0 12px;}
+  .update-log-trigger{width:100%; max-width:none;}
+  .ticker-more .tm-text{display:none;}
+  .wrap{padding:0 16px;}
+  .hero{padding:40px 0 40px;}
+
+  .timeline-head{flex-direction:column; align-items:flex-start;}
+  .order-desc{display:none;}
+  .th-right{align-items:flex-start;}
+  .stats{justify-content:flex-start;}
+  .timeline{padding-left:38px;}
+  .spine{left:15px; transform:none;}
+  .station{justify-content:flex-start; margin:40px 0 20px -38px;}
+  .tl-item{width:auto; margin-left:0 !important; margin-right:0 !important;}
+  .side-l .card-dot, .side-r .card-dot{left:-31px; right:auto;}
+  .side-l .card-link, .side-r .card-link{left:-17px; right:auto; width:16px; background:linear-gradient(to left, var(--tc), transparent);}
+  .card{padding:18px;}
+  .card-title{font-size:1.12rem;}
+  .routes-section{padding:20px 18px; border-radius:18px;}
+  .routes-section .card-dot{display:block;}
+  .route-step{font-size:.78rem; height:26px; padding:0 8px;}
+
+  .section{margin-top:96px;}
+  .series{padding:18px;}
+  .content-video-list{grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px 10px;}
+
+  .dock{left:12px; right:12px; transform:none; justify-content:space-between;}
+  .custom-select{flex:1; min-width:0;}
+  .progress-select{width:100%;}
+  .custom-select-panel{left:-6px; transform:none; width:calc(100vw - 24px);}
+}
+@media (min-width:768px){ .routes-section .card-dot, .routes-section .card-link{display:none;} }
+
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{animation:none !important; transition:none !important;}
+  html.js .reveal{opacity:1; translate:none;}
 }
 </style>
 <!-- SEO:JSONLD:START (generated by tools/seo_inject.py — do not edit by hand) -->
@@ -581,76 +519,100 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
 <!-- SEO:JSONLD:END -->
 </head>
 <body>
+<script>document.documentElement.classList.add("js");</script>
 
-<header class="top">
-  <div class="wrap top-row">
-    <div class="title-block">
-      <h1>NIKKE 스토리 감상 순서 추천</h1>
-      <div class="updated">
-        <span class="updated-date">최종 업데이트 <strong id="lastUpdatedDate">2026.10.08</strong></span>
-      </div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="ticker">
+      <button type="button" class="update-log-trigger" id="updateLogTrigger" aria-haspopup="dialog" hidden>
+        <span class="ticker-pill">UPDATE</span><span class="ticker-text" id="updateLogText"></span><span class="ticker-more"><span class="tm-text">전체 보기</span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></span>
+      </button>
     </div>
   </div>
 </header>
 
-<div class="update-log-line update-log-line-top"></div>
+<button type="button" class="readme-tab" id="readmeTab" aria-controls="introDrawer">읽어주세요</button>
 
-<div class="update-log-bar">
-  <button type="button" class="update-log-trigger" id="updateLogTrigger" aria-haspopup="dialog"></button>
-</div>
-<div class="update-log-line"></div>
-
-<div class="update-modal-overlay" id="updateModalOverlay">
-  <div class="update-modal" id="updateModal" role="dialog" aria-modal="true" aria-label="업데이트 로그">
-    <div class="update-modal-head">
-      <h3>업데이트 로그</h3>
-      <button type="button" class="update-modal-close" id="updateModalClose" aria-label="닫기">×</button>
+<!-- 읽어주세요: left drawer -->
+<div class="drawer-overlay" id="introOverlay">
+  <aside class="drawer" id="introDrawer" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="drawer-head">
+      <div>
+        <div class="eyebrow">READ ME FIRST</div>
+        <h2 id="introTitle"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>읽어주세요</h2>
+      </div>
+      <button type="button" class="drawer-close" id="introClose">닫기</button>
     </div>
-    <ul class="update-modal-list" id="updateModalList"></ul>
-  </div>
+    <div class="drawer-body">
+      <section class="drawer-news" aria-label="최근 업데이트">
+        <h3 class="drawer-cat-name">최근 업데이트</h3>
+        <ul class="news-list" id="drawerUpdates"></ul>
+      </section>
+      <section class="drawer-cat is-notice">
+        <h3 class="drawer-cat-name"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="2.5" y1="4" x2="13.5" y2="4"/><line x1="2.5" y1="8" x2="13.5" y2="8"/><line x1="2.5" y1="12" x2="9" y2="12"/></svg>안내</h3>
+        <ul class="drawer-list" id="introNotices"></ul>
+      </section>
+      <section class="drawer-cat is-tips">
+        <h3 class="drawer-cat-name"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11.5"/><circle cx="8" cy="4.6" r="0.9" fill="currentColor" stroke="none"/></svg>감상 팁</h3>
+        <ul class="drawer-list" id="introList"></ul>
+      </section>
+      <section class="drawer-cat is-must">
+        <h3 class="drawer-cat-name"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 15 14H1z"/><line x1="8" y1="6" x2="8" y2="9.5"/><circle cx="8" cy="11.6" r="0.9" fill="currentColor" stroke="none"/></svg>필독 포인트</h3>
+        <ul class="drawer-list" id="introCallouts"></ul>
+      </section>
+    </div>
+    <div class="drawer-foot">
+      <button type="button" class="btn" id="drawerGuide">이용 가이드</button>
+      <button type="button" class="btn btn-primary" id="drawerStart">감상 순서 보기 →</button>
+    </div>
+  </aside>
 </div>
 
-<main class="wrap">
-  <details class="intro" open>
-    <summary><h3 class="intro-subhead notice"><span class="subhead-icon"><svg viewBox="0 0 20 20" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span>읽어주세요<span class="tri intro-chevron"></span></h3></summary>
-    <div class="intro-body">
-      <div class="intro-columns">
-        <div class="intro-col intro-col-notice">
-          <div class="intro-highlight-list">
-            <div class="intro-highlight"><span>최대한 출시 순서에 맞췄습니다.</span></div>
-            <div class="intro-highlight"><span>아래에 빠진 이벤트는 추후 메인 스토리 진행에 따라 중요도가 바뀔 수 있습니다.</span></div>
-            <div class="intro-highlight"><span>니케 스토리는 메인 / 이벤트 / 사이드로 구분되어 있지만 모든 콘텐츠는 하나의 메인 스토리로 이어집니다.</span></div>
-            <div class="intro-highlight"><span>스토리 진행도는 인게임 우측 상단의 <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align:-0.15em;" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11.5"/><circle cx="8" cy="4.6" r="0.9" fill="currentColor" stroke="none"/></svg> 아이콘 → [메인 미션] 탭에서 확인 가능</span></div>
-            <div class="intro-highlight"><span>카드를 클릭해 마커를 남기면 해당 위치가 저장됩니다.</span></div>
-          </div>
-        </div>
-        <div class="intro-col intro-col-tips">
-          <h3 class="intro-subhead tips"><span class="subhead-icon"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11.5"/><circle cx="8" cy="4.6" r="0.9" fill="currentColor" stroke="none"/></svg></span>감상 팁</h3>
-          <ul id="introList" class="intro-tips"></ul>
-        </div>
-        <div class="intro-col intro-col-must">
-          <h3 class="intro-subhead must"><span class="subhead-icon"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 15 14H1z"/><line x1="8" y1="6" x2="8" y2="9.5"/><circle cx="8" cy="11.6" r="0.9" fill="currentColor" stroke="none"/></svg></span>필독 포인트</h3>
-          <ul class="callout-list" id="introCallouts"></ul>
-        </div>
+<main class="wrap" id="top">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">승리의 여신: 니케</div>
+      <h1><span class="h1-en">NIKKE</span> 스토리 감상 순서 추천</h1>
+      <p class="hero-lead">메인 · 이벤트 · 사이드 · 인연스토리를 어떤 순서로 보면 좋을지 정리했습니다. 카드를 눌러 감상 위치를 저장할 수 있어요.</p>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-primary" id="heroReadme"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>읽어주세요 먼저 보기</button>
+        <button type="button" class="btn" id="heroResume"></button>
+      </div>
+      <div class="hero-meta">최종 업데이트 <time id="lastUpdatedTime" datetime="2026-10-08"><strong id="lastUpdatedDate">2026.10.08</strong></time></div>
+    </div>
+  </section>
+
+  <div class="timeline-head" id="orderHead">
+    <div>
+      <div class="eyebrow">Viewing order</div>
+      <h2>감상 순서</h2>
+      <p class="head-desc order-desc">왼쪽은 메인 스토리, 오른쪽은 이벤트 · 사이드 · 인연스토리입니다.</p>
+    </div>
+    <div class="th-right">
+      <ul class="stats" id="heroStats" aria-label="수록 콘텐츠 수"></ul>
+    </div>
+  </div>
+  <div class="timeline" id="timelineGrid"></div>
+
+  <section class="section archive-section" id="archives">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Recommended archives</div>
+        <h2>추천 아카이브</h2>
+        <p class="head-desc">메인 스토리 진행과는 별개로, 감상하면 좋은 과거 이벤트입니다.</p>
       </div>
     </div>
-  </details>
-
-  <div class="section-divider"></div>
-
-  <div class="timeline-grid" id="timelineGrid"></div>
-
-  <div class="section-divider"></div>
-
-  <section class="archive-section">
-    <h2 class="archive-title">[ RECOMMENDED ARCHIVES ]</h2>
     <div class="archive-grid" id="archiveGrid"></div>
   </section>
 
-  <div class="section-divider"></div>
-
-  <section class="contents-section">
-    <h2 class="contents-title">[ RECOMMENDED CONTENTS ]</h2>
+  <section class="section contents-section" id="contents">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Recommended contents</div>
+        <h2>추천 콘텐츠</h2>
+        <p class="head-desc">감상 순서에 포함되지 않는 추가 추천 콘텐츠입니다.</p>
+      </div>
+    </div>
     <div class="contents-grid" id="contentsGrid"></div>
   </section>
 <!-- SEO:NOSCRIPT:START (generated by tools/seo_inject.py — do not edit by hand) -->
@@ -683,28 +645,38 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
 <!-- SEO:NOSCRIPT:END -->
 </main>
 
-<div class="bottom-cluster">
-  <button class="theme-toggle guide-btn-fixed" id="guideBtn" aria-label="이용 가이드">?</button>
-  <div class="bottom-cluster-row">
-    <div class="custom-select" id="progressSelectWrap">
-      <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">진행도</button>
-      <ul class="custom-select-panel" id="progressSelectPanel" role="listbox"></ul>
+<nav class="dock" aria-label="빠른 이동">
+  <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="color:var(--text)"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
+  <div class="custom-select" id="progressSelectWrap">
+    <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">
+      <span class="ps-label">NOW</span><span class="ps-value" id="progressSelectValue">진행도</span>
+    </button>
+    <ul class="custom-select-panel" id="progressSelectPanel" role="listbox"></ul>
+  </div>
+  <button class="icon-btn" id="themeToggle" aria-label="테마 전환" title="테마 전환"></button>
+  <button class="top-btn" id="topBtn" aria-label="맨 위로"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 16V4M4.5 9.5 10 4l5.5 5.5"/></svg></button>
+</nav>
+
+<div class="update-modal-overlay" id="updateModalOverlay">
+  <div class="update-modal" id="updateModal" role="dialog" aria-modal="true" aria-label="업데이트 로그">
+    <div class="modal-head">
+      <div><div class="eyebrow">Changelog</div><h2>업데이트 로그</h2></div>
+      <button type="button" class="modal-close" id="updateModalClose" aria-label="닫기">×</button>
     </div>
-    <button class="theme-toggle" id="themeToggle"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="#FFC93C" stroke="#FFC93C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/><line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/><line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/></svg></button>
-    <button class="top-btn" id="topBtn">TOP</button>
+    <ul class="update-modal-list" id="updateModalList"></ul>
   </div>
 </div>
 
 <div class="guide-modal-overlay" id="guideModalOverlay">
   <div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-label="NIKKE 스토리 가이드 이용 방법">
-    <div class="guide-modal-head">
-      <h3>이용 가이드</h3>
-      <button type="button" class="guide-modal-close" id="guideModalClose" aria-label="닫기">×</button>
+    <div class="modal-head">
+      <div><div class="eyebrow">How to use</div><h2>이용 가이드</h2></div>
+      <button type="button" class="modal-close" id="guideModalClose" aria-label="닫기">×</button>
     </div>
     <div class="guide-body">
       <p class="guide-lead">처음 방문하셨다면 아래 내용을 먼저 확인해주세요.<br>이 가이드는 <strong>승리의 여신: NIKKE의 스토리를 어떤 순서로 감상하면 되는지</strong> 한눈에 확인할 수 있도록 구성되어 있습니다.</p>
       <hr>
-      <h4>1. 기본적인 감상 방법</h4>
+      <h3><span class="gnum">01</span>기본적인 감상 방법</h3>
       <p>각 카드는 메인 스토리와 이벤트 스토리 등을 감상 순서에 맞춰 배치하고 있으며, 카드에 표시된 태그를 통해 해당 콘텐츠의 특징을 확인할 수 있습니다.</p>
       <ul>
         <li><strong>필수</strong> — 스토리 이해를 위해 감상을 권장하는 콘텐츠</li>
@@ -714,8 +686,8 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
       </ul>
       <p>카드의 세부 설명도 함께 확인하면서 진행해주세요.</p>
       <hr>
-      <h4>2. 「읽어주세요」 먼저 확인하기</h4>
-      <p>페이지를 처음 이용한다면 가장 먼저 <strong>[읽어주세요]</strong> 카드를 확인하는 것을 권장합니다.</p>
+      <h3><span class="gnum">02</span>「읽어주세요」 먼저 확인하기</h3>
+      <p>페이지를 처음 이용한다면 가장 먼저 <strong>[읽어주세요]</strong>를 확인하는 것을 권장합니다.</p>
       <p>여기에는 이 가이드의 기본적인 감상 기준과 함께,</p>
       <ul>
         <li>히스토리 순서와 실제 감상 순서의 차이</li>
@@ -724,25 +696,25 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
       <p>등의 중요한 내용이 정리되어 있습니다.</p>
       <p>특히 <strong>필독 포인트</strong>에 있는 내용은 스토리를 보기 전에 확인하는 것이 좋습니다.</p>
       <hr>
-      <h4>3. 진행도를 확인하면서 따라가기</h4>
-      <p>진행도를 선택하면 해당 위치로 이동할 수 있어 원하는 구간을 빠르게 찾을 수 있습니다.</p>
+      <h3><span class="gnum">03</span>진행도를 확인하면서 따라가기</h3>
+      <p>하단의 진행도를 선택하면 해당 위치로 이동할 수 있어 원하는 구간을 빠르게 찾을 수 있습니다.</p>
       <hr>
-      <h4>4. 카드는 클릭해서 사용할 수 있습니다</h4>
+      <h3><span class="gnum">04</span>카드는 클릭해서 사용할 수 있습니다</h3>
       <p>각 스토리 카드는 단순한 정보 표시뿐만 아니라 일부 기능을 제공합니다.</p>
       <p>카드를 클릭하면 해당 카드에 마커를 남길 수 있으며 위치를 저장합니다.</p>
       <p>다시 클릭하면 마커를 해제할 수 있습니다.</p>
-      <p>읽어주세요 카드는 상단의 [읽어주세요] 줄을 클릭하면 펼치거나 접을 수 있으며, 펼쳐진 상태에서는 카드 안 어디를 눌러도 접힙니다.</p>
+      <p>읽어주세요는 하단 바의 [읽어주세요] 버튼으로 언제든 열고 닫을 수 있습니다.</p>
       <hr>
-      <h4>5. OLD TALES 구간은 원하는 루트를 선택</h4>
+      <h3><span class="gnum">05</span>OLD TALES 구간은 원하는 루트를 선택</h3>
       <p>OLD TALES 구간은 31~32지와의 진행 순서에 따라 여러 감상 루트를 선택할 수 있습니다.</p>
       <p>가이드에서는 각 루트를 별도로 안내하고 있으므로 해당 구간의 설명을 확인한 뒤 자신의 상황에 맞는 루트를 선택하면 됩니다.</p>
       <hr>
-      <h4>6. 추천 아카이브</h4>
-      <p>[ RECOMMENDED ARCHIVES ]는 메인 스토리 진행과는 별도로, 감상하면 좋은 과거 이벤트를 모아둔 공간입니다.</p>
+      <h3><span class="gnum">06</span>추천 아카이브</h3>
+      <p>[추천 아카이브]는 메인 스토리 진행과는 별도로, 감상하면 좋은 과거 이벤트를 모아둔 공간입니다.</p>
       <p>현재 진행 중인 메인 스토리를 우선 따라가고 싶다면 나중에 감상해도 됩니다.</p>
       <hr>
-      <h4>7. 추천 콘텐츠</h4>
-      <p>[ RECOMMENDED CONTENTS ]에는 공식적으로 공개된 영상 콘텐츠가 정리되어 있습니다.</p>
+      <h3><span class="gnum">07</span>추천 콘텐츠</h3>
+      <p>[추천 콘텐츠]에는 공식적으로 공개된 영상 콘텐츠가 정리되어 있습니다.</p>
       <p>이곳의 영상들은 <strong>메인 스토리 진행 순서에 포함되는 콘텐츠가 아니라 추가로 감상할 수 있는 추천 콘텐츠</strong>입니다.</p>
       <p>카드를 클릭하면 해당 YouTube 영상으로 이동할 수 있습니다.</p>
     </div>
@@ -755,7 +727,6 @@ footer.site-footer .resource-link{display:flex; width:fit-content; margin:12px a
     <a class="resource-link" href="https://docs.google.com/spreadsheets/d/1RfUML43ek5Vcrf3DPUGsueBF1ytCBb90InB4zKJr3FA/edit?gid=0#gid=0" target="_blank" rel="noopener">↗ 니케 스토리 출시 순서 정리 구글시트</a>
   </div>
 </footer>
-
 <script>
 const INTRO_BULLETS = [
   "커맨드 센터 → 스토리 라인 → 릴리즈 순으로 진행하면 최소한의 사고는 방지",
@@ -897,96 +868,6 @@ const BLOCKS_AFTER = [
 ];
 const ALL_BLOCKS = [...BLOCKS_BEFORE, ...BLOCKS_AFTER];
 
-function slug(s){ return s.replace(/[^a-zA-Z0-9가-힣]+/g,"-").toLowerCase(); }
-function gcolOf(type){ if(type==="메인") return "gcol-main"; if(type==="이벤트"||type==="사이드") return "gcol-mid"; return "gcol-side"; }
-
-function noteLines(note){
-  return String(note).split("<br>").map(l=>`<span class="callout-line">${l}</span>`).join("");
-}
-
-function cardHTML(card, chapterKey, row){
-  const id = slug(chapterKey+"-"+card.type+"-"+card.title);
-  const metaHTML = (card.meta||[]).map(m=>`<span class="chip">${m}</span>`).join("");
-  const seasonTag = card.season ? `<span class="tag tag-season">${card.season}</span>` : "";
-  const optTag = card.optional ? `<span class="tag tag-optional">선택</span>` : "";
-  const reqTag = card.required ? `<span class="tag tag-required">필수</span>` : "";
-  const desc = card.desc ? `<div class="card-desc">${card.desc}</div>` : "";
-  const note = card.note ? `<div class="callout">${noteLines(card.note)}</div>` : "";
-  const meta = metaHTML ? `<div class="meta-row">${metaHTML}</div>` : "";
-  return `
-  <article class="card type-${card.type} ${gcolOf(card.type)}" id="${id}" style="grid-row:${row}" data-chapter="${chapterKey}" data-title="${card.title}">
-    <div class="card-head">
-      <span class="tag tag-${card.type}">${card.type}</span>
-      ${seasonTag}
-      ${optTag}
-      ${reqTag}
-      <span class="card-title">${card.title}</span>
-    </div>
-    ${meta}
-    ${desc}
-    ${note}
-  </article>`;
-}
-
-function markerHTML(type, row, isEndpoint){
-  const id = isEndpoint ? ` id="marker-row-${row}"` : "";
-  return `<div class="tl-marker tl-marker-${type}"${id} style="grid-row:${row}"></div>`;
-}
-
-function routesHTML(row){
-  const items = ROUTES.list.map((r,i)=>`
-    <div class="route-card" id="route-${i+1}">
-      <div class="route-head-row"><span class="tag tag-route">루트 ${i+1}</span><span class="route-path">${r.path}</span></div>
-      <p>${r.desc}</p>
-    </div>`).join("");
-  return `
-  <section class="routes-section" id="routes" style="grid-row:${row}">
-    <div class="routes-head">
-      <span class="tag tag-메인">메인 · 이벤트</span>
-      <span class="tag tag-season">${ROUTES.season}</span>
-      <h3>${ROUTES.title}</h3>
-      <p>${ROUTES.desc}</p>
-    </div>
-    <div class="routes-grid">${items}</div>
-    <div class="callout routes-note"><span class="callout-head">${ROUTES.noteTitle}</span>${noteLines(ROUTES.note)}</div>
-  </section>`;
-}
-
-/* Strict rule: exactly one card per grid row, always, in unchanged chronological order.
-   Column is decided purely by type — no grouping, pairing, or reordering. */
-function renderTimeline(){
-  let cardsHtml = "";
-  let row = 2;
-  const firstRow = row;
-  let lastRow = row;
-  const emit = (b)=> b.cards.forEach(c=>{
-    cardsHtml += cardHTML(c, b.chapter, row) + markerHTML(c.type, row, true);
-    lastRow = row;
-    row++;
-  });
-  BLOCKS_BEFORE.forEach(emit);
-  cardsHtml += routesHTML(row); row++;
-  BLOCKS_AFTER.forEach(emit);
-  window.__firstMainRow = firstRow;
-  window.__lastMainRow = lastRow;
-  // Spine is a real grid item confined to rows 2..lastRow — it structurally cannot exist
-  // inside Prologue's or Coming Soon's own row, so it can never bleed into them on PC/tablet.
-  const spineHtml = `<div class="timeline-spine" style="grid-row:2 / ${row}"></div>`;
-  const prologueHtml = `<div class="prologue-tag" style="grid-row:1">[ PROLOGUE ]</div>`;
-  const comingsoonHtml = `<div class="comingsoon-card" style="grid-row:${row}">[ COMING SOON... ]</div>`;
-  // Mobile-only markers linking Prologue/Coming Soon into the left-hand timeline (hidden on PC/tablet).
-  const bookendMarkers =
-    `<div class="tl-marker tl-marker-bookend tl-marker-메인" style="grid-row:1"></div>` +
-    `<div class="tl-marker tl-marker-bookend tl-marker-메인" style="grid-row:${row}"></div>`;
-  // Mobile-only cap segments bridging Prologue's own row and Coming Soon's own row into the
-  // spine, so the line reads as one continuous run from Prologue to Coming Soon (hidden on PC/tablet).
-  const spineCaps =
-    `<div class="timeline-spine-cap timeline-spine-cap-top" style="grid-row:1 / 2"></div>` +
-    `<div class="timeline-spine-cap timeline-spine-cap-bottom" style="grid-row:${row} / ${row + 1}"></div>`;
-  document.getElementById("timelineGrid").innerHTML = spineHtml + spineCaps + prologueHtml + cardsHtml + comingsoonHtml + bookendMarkers;
-}
-
-/* Placeholder content — replace with the real recommended-archive list once provided. */
 const ARCHIVE_ITEMS = [
   {title:"MIRACLE SNOW", season:"22' 겨울", meta:["아카이브O","더빙O"],
     note:"N102 인연스토리 감상 필수", desc:"루피 · 메이든 인연스토리 감상 추천"},
@@ -1004,31 +885,7 @@ const ARCHIVE_ITEMS = [
   {title:"FOOL BURST DAY", season:"25' 만우절", meta:["아카이브O","더빙X"],
     desc:"만우절 이벤트는 출시 순서대로 감상"}
 ];
-function renderArchive(){
-  const html = ARCHIVE_ITEMS.map(a=>{
-    const seasonTag = a.season ? `<span class="tag tag-season">${a.season}</span>` : "";
-    const metaHTML = (a.meta||[]).map(m=>`<span class="chip">${m}</span>`).join("");
-    const meta = metaHTML ? `<div class="meta-row">${metaHTML}</div>` : "";
-    const desc = a.desc ? `<div class="card-desc">${a.desc}</div>` : "";
-    const note = a.note ? `<div class="callout">${noteLines(a.note)}</div>` : "";
-    return `
-    <article class="card type-이벤트" data-title="${a.title}">
-      <div class="card-head">
-        <span class="tag tag-이벤트">이벤트</span>
-        ${seasonTag}
-        <span class="card-title">${a.title}</span>
-      </div>
-      ${meta}
-      ${desc}
-      ${note}
-    </article>`;
-  }).join("");
-  document.getElementById("archiveGrid").innerHTML = html;
-}
 
-/* Recommend Contents — YouTube series unrelated to story order, kept fully separate from
-   the main timeline and from Recommended Archives. Each series is one card (reusing the
-   same event-card component), holding a small list of video thumbnails. */
 const CONTENT_SERIES = [
   { title:"【전초기지, 오늘은 쉽니다】", desc:"21지 이후로 감상을 권장.", videos:[
     {label:"【전초기지, 오늘은 쉽니다 - 카운터스 편】", url:"https://youtu.be/4aL5EzTkX0s"},
@@ -1048,7 +905,7 @@ const CONTENT_SERIES = [
     {label:"《MINIKKE 작은 동화집》 리틀 머메이드 편 - 상", url:"https://youtu.be/gNGCGu-LjgE"},
     {label:"《MINIKKE 작은 동화집》 리틀 머메이드 편 - 하", url:"https://youtu.be/a95cjFgW2NM"}
   ]},
-  { title:"중년게이머 김실장", desc:"46지 + STAR ANIS + MIRACLE SNOW + Memories TELLER<br>이후로 감상을 권장.", videos:[
+  { title:"중년게이머 김실장", desc:"46지 + STAR ANIS + MIRACLE SNOW + Memories TELLER 이후로 감상을 권장.", videos:[
     {label:"주년마다 유저들을 울리는 게임, 니케 스토리는 어떻게 탄생했나? (니케 시나리오팀 초대석)", url:"https://youtu.be/dnGkyG9sFgI"}
   ]}
 ];
@@ -1057,38 +914,193 @@ function ytId(url){
   return m ? m[1] : "";
 }
 
-function renderContents(){
-  const html = CONTENT_SERIES.map(series=>`
-    <article class="card type-이벤트">
-      <div class="card-head">
-        <span class="card-title">${series.title}</span>
+const UPDATE_LOG = [
+  {date:"2026.10.08", type:"사이드", title:"GINGERBREAD HOUSE", action:"add"},
+  {date:"2026.09.17", type:"이벤트", title:"STAR ANIS", action:"archive"},
+  {date:"2026.09.17", type:"이벤트", title:"COIN RUSH SHOWDOWN", action:"add"},
+  {date:"2026.09.03", type:"이벤트", title:"GREAT VILLAIN UNION", action:"add"},
+  {date:"2026.09.03", type:"이벤트", title:"ARCANE ARCHIVE", action:"archive"},
+  {date:"2026.08.13", type:"메인", title:"챕터 47 ~ 48", action:"add"}
+];
+
+/* ============ 읽어주세요 — 안내 (moved from inline markup into data) ============ */
+const INFO_ICON = `<svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11.5"/><circle cx="8" cy="4.6" r="0.9" fill="currentColor" stroke="none"/></svg>`;
+const INTRO_NOTICES = [
+  "최대한 출시 순서에 맞췄습니다.",
+  "아래에 빠진 이벤트는 추후 메인 스토리 진행에 따라 중요도가 바뀔 수 있습니다.",
+  "니케 스토리는 메인 / 이벤트 / 사이드로 구분되어 있지만 모든 콘텐츠는 하나의 메인 스토리로 이어집니다.",
+  `스토리 진행도는 인게임 우측 상단의 ${INFO_ICON} 아이콘 → [메인 미션] 탭에서 확인 가능`,
+  "카드를 클릭해 마커를 남기면 해당 위치가 저장됩니다."
+];
+
+const TYPE_VAR = {"메인":"--c-main","이벤트":"--c-event","사이드":"--c-side","인연스토리":"--c-bond","블라블라":"--c-bond"};
+const HERE_ICON = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5"/></svg>`;
+const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function slug(s){ return s.replace(/[^a-zA-Z0-9가-힣]+/g,"-").toLowerCase(); }
+function sideOf(type){ return type === "메인" ? "side-l" : "side-r"; }
+function pad2(n){ return String(n).padStart(2,"0"); }
+function chapterLabel(ch){ return ch.replace(/\s*~\s*/, " – ") + "지"; }
+
+function noteLines(note){
+  return String(note).split("<br>").map(l=>`<span class="note-line">${l}</span>`).join("");
+}
+function chipHTML(m){
+  const mm = String(m).match(/^(.*?)([OX])$/);
+  if(!mm) return `<span class="chip">${m}</span>`;
+  const on = mm[2] === "O";
+  return `<span class="chip${on ? "" : " off"}">${mm[1]}<span class="chip-state ${on ? "on" : "off"}">${on ? "O" : "X"}</span></span>`;
+}
+function tagsHTML(card, withType){
+  return [
+    withType ? `<span class="tag tag-type tt-${card.type}">${card.type}</span>` : "",
+    card.season ? `<span class="tag tag-season">${card.season}</span>` : "",
+    card.required ? `<span class="tag tag-required">필수</span>` : "",
+    card.optional ? `<span class="tag tag-optional">선택</span>` : ""
+  ].join("");
+}
+
+function cardHTML(card, chapterKey, n){
+  const id = slug(chapterKey+"-"+card.type+"-"+card.title);
+  const meta = (card.meta||[]).length ? `<div class="meta-row">${card.meta.map(chipHTML).join("")}</div>` : "";
+  const desc = card.desc ? `<div class="card-desc">${card.desc}</div>` : "";
+  const note = card.note ? `<div class="notes">${noteLines(card.note)}</div>` : "";
+  return `
+  <article class="card tl-item reveal t-${card.type} ${sideOf(card.type)}" id="${id}" data-chapter="${chapterKey}" data-title="${card.title}" data-type="${card.type}">
+    <span class="card-link" aria-hidden="true"></span><span class="card-dot" aria-hidden="true"></span>
+    <span class="here-flag">${HERE_ICON}여기까지 감상</span>
+    <div class="card-tags">${tagsHTML(card, true)}</div>
+    <h3 class="card-title">${card.title}</h3>
+    ${meta}${desc}${note}
+  </article>`;
+}
+
+function routesHTML(n){
+  const items = ROUTES.list.map((r,i)=>{
+    const steps = r.path.split(/\s*→\s*/).map(s=>
+      `<span class="route-step${/OLD TALES/.test(s) ? " ot" : ""}">${s}</span>`
+    ).join(`<span class="route-arrow" aria-hidden="true">→</span>`);
+    return `
+    <div class="route-card" id="route-${i+1}">
+      <div class="route-num">ROUTE ${pad2(i+1)}</div>
+      <div class="route-flow" aria-label="${r.path}">${steps}</div>
+      <p>${r.desc}</p>
+    </div>`;
+  }).join("");
+  return `
+  <section class="routes-section reveal side-r" id="routes" data-title="${ROUTES.title}">
+    <span class="card-link" aria-hidden="true"></span><span class="card-dot" aria-hidden="true"></span>
+    <span class="here-flag">${HERE_ICON}여기까지 감상</span>
+    <div class="routes-head">
+      <div>
+        <div class="card-tags"><span class="tag tag-type tt-메인">메인 · 이벤트</span><span class="tag tag-season">${ROUTES.season}</span></div>
+        <h3>${ROUTES.title}</h3>
+        <p>${ROUTES.desc}</p>
       </div>
-      ${series.desc ? `<div class="card-desc">${series.desc}</div>` : ""}
-      <ul class="content-video-list${series.videos.length === 1 ? ' content-video-list-single' : ''}">
+    </div>
+    <div class="routes-grid">${items}</div>
+    <div class="notes routes-note"><span class="note-head">${ROUTES.noteTitle}</span>${noteLines(ROUTES.note)}</div>
+  </section>`;
+}
+
+function stationHTML(label, opts = {}){
+  const ch = opts.cap ? "" : `<span class="station-ch">CH</span>`;
+  return `<div class="station reveal${opts.cap ? " station-cap" : ""}"${opts.id ? ` id="${opts.id}"` : ""}><span class="station-pill">${ch}<span class="station-label">${label}</span></span></div>`;
+}
+
+/* Rule kept from v1: one card per row, unchanged release order, side decided only by type. */
+function renderTimeline(){
+  let html = `<div class="spine" aria-hidden="true"><div class="spine-track"></div><div class="spine-fill" id="spineFill"></div></div>`;
+  html += stationHTML("PROLOGUE", {cap:true, id:"prologue"});
+  let n = 0;
+  const emit = b => {
+    html += stationHTML(chapterLabel(b.chapter), {id:"ch-"+slug(b.chapter)});
+    b.cards.forEach(c=>{ n++; html += cardHTML(c, b.chapter, n); });
+  };
+  BLOCKS_BEFORE.forEach(emit);
+  n++;
+  html += stationHTML("31 – 32지", {id:"ch-31-32"});
+  html += routesHTML(n);
+  BLOCKS_AFTER.forEach(emit);
+  html += stationHTML("COMING SOON", {cap:true});
+  const grid = document.getElementById("timelineGrid");
+  grid.innerHTML = html;
+  // hue drift along the spine: red at the start → cobalt at the end
+  const stations = grid.querySelectorAll(".station-pill");
+  stations.forEach((p,i)=> p.style.setProperty("--mix", Math.round(100 - (i/(stations.length-1))*100) + "%"));
+}
+
+function renderArchive(){
+  document.getElementById("archiveGrid").innerHTML = ARCHIVE_ITEMS.map(a=>{
+    const meta = (a.meta||[]).length ? `<div class="meta-row">${a.meta.map(chipHTML).join("")}</div>` : "";
+    const desc = a.desc ? `<div class="card-desc">${a.desc}</div>` : "";
+    const note = a.note ? `<div class="notes">${noteLines(a.note)}</div>` : "";
+    return `
+    <article class="card reveal t-이벤트" data-title="${a.title}">
+      <div class="card-tags"><span class="tag tag-type tt-이벤트">이벤트</span>${a.season ? `<span class="tag tag-season">${a.season}</span>` : ""}</div>
+      <h3 class="card-title">${a.title}</h3>
+      ${meta}${desc}${note}
+    </article>`;
+  }).join("");
+}
+
+function renderContents(){
+  document.getElementById("contentsGrid").innerHTML = CONTENT_SERIES.map(series=>`
+    <article class="series reveal">
+      <div class="series-head">
+        <h3 class="series-title">${series.title}</h3>
+        <span class="series-count">${series.videos.length} VIDEO${series.videos.length > 1 ? "S" : ""}</span>
+      </div>
+      ${series.desc ? `<div class="series-desc">${series.desc}</div>` : ""}
+      <ul class="content-video-list">
         ${series.videos.map(v=>`
           <li class="content-video-item">
             <a href="${v.url}" target="_blank" rel="noopener">
-              <span class="yt-thumb${v.blur ? ' yt-thumb-blur' : ''}">
+              <span class="yt-thumb${v.blur ? " yt-thumb-blur" : ""}">
                 <img src="https://i.ytimg.com/vi/${ytId(v.url)}/mqdefault.jpg" alt="" loading="lazy" decoding="async" width="320" height="180"
                   onerror="this.onerror=null; this.src=this.src.includes('mqdefault') ? this.src.replace('mqdefault','hqdefault') : this.src.replace('hqdefault','default');">
-                <span class="yt-play">▶</span>
+                <span class="yt-play" aria-hidden="true">▶</span>
               </span>
               <span class="yt-label">${v.label}</span>
             </a>
           </li>`).join("")}
       </ul>
     </article>`).join("");
-  document.getElementById("contentsGrid").innerHTML = html;
 }
-
 
 function renderIntro(){
-  document.getElementById("introList").innerHTML = INTRO_BULLETS.map(t=>`<li>${t}</li>`).join("");
+  document.getElementById("introNotices").innerHTML = INTRO_NOTICES.map(t=>
+    `<li class="drawer-item"><span class="di-mark" aria-hidden="true"></span><span>${t}</span></li>`).join("");
+  document.getElementById("introList").innerHTML = INTRO_BULLETS.map((t,i)=>
+    `<li class="drawer-item"><span class="di-num">${pad2(i+1)}</span><span>${t}</span></li>`).join("");
   document.getElementById("introCallouts").innerHTML = INTRO_CALLOUTS.map(c=>
-    `<li class="callout"><span class="callout-title">${c.title}</span><span class="callout-desc">${c.desc}</span></li>`
-  ).join("");
+    `<li class="drawer-item"><span class="di-title">${c.title}</span><span class="di-desc">${c.desc}</span></li>`).join("");
 }
 
+function renderStats(){
+  const count = {이벤트:0, 사이드:0, 인연:0};
+  let lastChapter = 0;
+  ALL_BLOCKS.forEach(b=>{
+    (b.chapter.match(/\d+/g) || []).forEach(n=> lastChapter = Math.max(lastChapter, +n));
+    b.cards.forEach(c=>{
+      if(c.type === "인연스토리" || c.type === "블라블라") count.인연++;
+      else if(c.type !== "메인") count[c.type]++;
+    });
+  });
+  const main = lastChapter;            // 메인 = 최신 챕터 번호 (1 ~ N지)
+  const events = count.이벤트 + 1;      // + OLD TALES
+  const total = main + events + count.사이드 + count.인연;
+  const chip = (label, num, v, title)=>
+    `<li class="stat" style="--tc:var(${v})"${title ? ` title="${title}"` : ""}>${label} <b>${num}</b></li>`;
+  document.getElementById("heroStats").innerHTML =
+    `<li class="stat stat-total" title="메인 챕터 + 이벤트(OLD TALES 포함) + 사이드 + 인연스토리·블라블라"><b>${total}</b> TOTAL</li>` +
+    chip("메인", main, "--c-main", `챕터 1 ~ ${main}`) +
+    chip("이벤트", events, "--c-event", "OLD TALES 포함") +
+    chip("사이드", count.사이드, "--c-side") +
+    chip("인연·블라", count.인연, "--c-bond", "인연스토리 · 블라블라");
+}
+
+/* ============ Progress select (dock) ============ */
 const progressOptions = []; // {value, baseLabel, el}
 let progressValue = "";
 let progressMarked = null;
@@ -1099,8 +1111,7 @@ function refreshProgressDisplay(){
     o.el.classList.toggle("marked", o.value === progressMarked);
   });
   const current = progressOptions.find(o=> o.value === progressValue);
-  const trigger = document.getElementById("progressSelectTrigger");
-  trigger.textContent = current ? current.baseLabel : "진행도";
+  document.getElementById("progressSelectValue").textContent = current ? current.baseLabel : "진행도";
 }
 function setProgressValue(value){
   if(value === progressValue) return;
@@ -1110,123 +1121,108 @@ function setProgressValue(value){
 function setProgressMarker(value){
   progressMarked = value;
   refreshProgressDisplay();
+  updateResumeButton();
 }
 
 function renderProgressOptions(){
   const panel = document.getElementById("progressSelectPanel");
   panel.innerHTML = "";
   progressOptions.length = 0;
-  const addOpt = (value, label)=>{
+  const addOpt = (value, label, type)=>{
     const li = document.createElement("li");
     li.className = "custom-select-option"; li.setAttribute("role", "option");
     li.dataset.value = value;
-    li.innerHTML = `<span class="opt-label"></span><span class="opt-marker">●</span>`;
+    if(type && TYPE_VAR[type]) li.style.setProperty("--tc", `var(${TYPE_VAR[type]})`);
+    li.innerHTML = `<span class="opt-dot"></span><span class="opt-label"></span><span class="opt-marker">HERE</span>`;
     li.querySelector(".opt-label").textContent = label;
     li.addEventListener("click", ()=> selectProgressOption(value));
     panel.appendChild(li);
     progressOptions.push({value, baseLabel:label, el:li});
   };
-  const addDivider = ()=>{
+  const addCat = (name)=>{
     const li = document.createElement("li");
-    li.className = "custom-select-divider";
+    li.className = "custom-select-cat"; li.setAttribute("role", "presentation");
+    li.textContent = name;
     panel.appendChild(li);
   };
+  addCat("GUIDE");
   addOpt("intro-jump", "읽어주세요");
-  addOpt("archives-jump", "[RECOMMENDED ARCHIVES]");
-  addOpt("contents-jump", "[RECOMMENDED CONTENTS]");
-  addDivider();
-  BLOCKS_BEFORE.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
-  addOpt("routes", "[분기] 31~32 OLD TALES 분기");
-  BLOCKS_AFTER.forEach(b=> b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`)));
+  addOpt("archives-jump", "추천 아카이브");
+  addOpt("contents-jump", "추천 콘텐츠");
+  const addBlock = b=>{
+    addCat("CH " + b.chapter.replace(/\s*~\s*/, " – "));
+    b.cards.forEach(c=> addOpt(slug(b.chapter+"-"+c.type+"-"+c.title), `[${c.type}] ${c.title}`, c.type));
+  };
+  BLOCKS_BEFORE.forEach(addBlock);
+  addCat("CH 31 – 32");
+  addOpt("routes", "[분기] 31~32 OLD TALES 분기", "메인");
+  BLOCKS_AFTER.forEach(addBlock);
 }
 
+const progressPanelEl = document.getElementById("progressSelectPanel");
 function openProgressPanel(){
-  const panel = document.getElementById("progressSelectPanel");
-  panel.classList.add("open");
+  progressPanelEl.classList.add("open");
   document.getElementById("progressSelectTrigger").setAttribute("aria-expanded", "true");
-  const activeEl = panel.querySelector(".custom-select-option.active");
+  const activeEl = progressPanelEl.querySelector(".custom-select-option.active");
   if(activeEl) activeEl.scrollIntoView({block:"center"});
 }
 function closeProgressPanel(){
-  document.getElementById("progressSelectPanel").classList.remove("open");
+  progressPanelEl.classList.remove("open");
   document.getElementById("progressSelectTrigger").setAttribute("aria-expanded", "false");
 }
 function selectProgressOption(value){
-  setProgressValue(value);
   closeProgressPanel();
-  if(value === "intro-jump"){
-    const introEl = document.querySelector(".intro");
-    expandIntroAnimated();
-    scrollToFast(introEl);
-    return;
-  }
-  if(value === "archives-jump"){
-    scrollToFast(document.querySelector(".archive-section"));
-    return;
-  }
-  if(value === "contents-jump"){
-    scrollToFast(document.querySelector(".contents-section"));
-    return;
-  }
+  if(value === "intro-jump"){ openIntro(); return; }
+  setProgressValue(value);
+  if(value === "archives-jump"){ scrollToFast(document.getElementById("archives")); return; }
+  if(value === "contents-jump"){ scrollToFast(document.getElementById("contents")); return; }
   const target = document.getElementById(value);
   if(target) scrollToFast(target);
 }
 document.getElementById("progressSelectTrigger").addEventListener("click", (e)=>{
   e.stopPropagation();
-  const panel = document.getElementById("progressSelectPanel");
-  if(panel.classList.contains("open")) closeProgressPanel();
-  else openProgressPanel();
+  if(progressPanelEl.classList.contains("open")) closeProgressPanel(); else openProgressPanel();
 });
 document.addEventListener("click", (e)=>{
   if(!document.getElementById("progressSelectWrap").contains(e.target)) closeProgressPanel();
 });
-const progressPanelEl = document.getElementById("progressSelectPanel");
-window.addEventListener("scroll", ()=>{
-  if(progressPanelEl.classList.contains("open")) closeProgressPanel();
-}, {passive:true});
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape") closeProgressPanel();
-});
+window.addEventListener("scroll", ()=>{ if(progressPanelEl.classList.contains("open")) closeProgressPanel(); }, {passive:true});
 
-/* Land the selected card around the "second card" position, not flush against the top */
+/* Land the target a comfortable distance below the sticky header */
 let suppressScrollTracking = false;
-function scrollToFast(el, offset = 200, duration = 300){
+function scrollToFast(el, offset, duration = 340){
+  if(!el) return;
+  if(offset == null) offset = Math.round(window.innerHeight * 0.32) - 6;
   suppressScrollTracking = true;
-  const targetY = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  const targetY = Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - offset);
   const startY = window.pageYOffset;
   const diff = targetY - startY;
+  if(reduceMotion){ window.scrollTo(0, targetY); suppressScrollTracking = false; return; }
   let startTime = null;
   function step(ts){
     if(!startTime) startTime = ts;
-    const progress = Math.min((ts - startTime) / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    window.scrollTo({top: startY + diff * ease, behavior: "auto"});
-    if(progress < 1){
-      requestAnimationFrame(step);
-    }else{
-      suppressScrollTracking = false;
-    }
+    const p = Math.min((ts - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    window.scrollTo({top: startY + diff * ease, behavior:"auto"});
+    if(p < 1) requestAnimationFrame(step);
+    else { suppressScrollTracking = false; updateScrollState(true); }
   }
   requestAnimationFrame(step);
 }
 
+/* ============ Card marker (saved position) ============ */
 const CHECK_STORAGE_KEY = "nikke-last-checked-card";
-function persistCheckedCard(id){
-  try{ localStorage.setItem(CHECK_STORAGE_KEY, id); }catch(e){}
-}
-function clearPersistedCheckedCard(){
-  try{ localStorage.removeItem(CHECK_STORAGE_KEY); }catch(e){}
-}
-/* Reflect the currently marked card in the progress select's own option list, so the
-   marked position is visible even while the select is showing something else. */
+function persistCheckedCard(id){ try{ localStorage.setItem(CHECK_STORAGE_KEY, id); }catch(e){} }
+function clearPersistedCheckedCard(){ try{ localStorage.removeItem(CHECK_STORAGE_KEY); }catch(e){} }
+
 document.getElementById("timelineGrid").addEventListener("click", (e)=>{
+  if(String(window.getSelection()).length) return;
   const target = e.target.closest(".card, .routes-section");
   if(!target) return;
   const alreadyChecked = target.classList.contains("current-position");
   document.querySelectorAll(".current-position").forEach(el=>el.classList.remove("current-position"));
   if(alreadyChecked){
     clearPersistedCheckedCard();
-    setProgressValue("");
     setProgressMarker(null);
     return;
   }
@@ -1236,9 +1232,6 @@ document.getElementById("timelineGrid").addEventListener("click", (e)=>{
   setProgressMarker(target.id);
 });
 
-/* Restore the last-checked card on revisit: re-apply its checkmark and land the page a
-   card-height above it (reusing the same scrollToFast offset already used for progress
-   navigation), rather than jumping straight to the very top. */
 function restoreCheckedCard(){
   let id;
   try{ id = localStorage.getItem(CHECK_STORAGE_KEY); }catch(e){ return; }
@@ -1251,336 +1244,276 @@ function restoreCheckedCard(){
   setTimeout(()=> scrollToFast(target), 250);
 }
 
-document.getElementById("topBtn").addEventListener("click", ()=> window.scrollTo({top:0, behavior:"smooth"}));
-
-function openGuideModal(){
-  document.getElementById("guideModalOverlay").classList.add("open");
+function updateResumeButton(){
+  const btn = document.getElementById("heroResume");
+  const opt = progressMarked && progressOptions.find(o=> o.value === progressMarked);
+  if(opt){
+    btn.innerHTML = `이어서 보기 <span class="btn-sub"></span>`;
+    btn.querySelector(".btn-sub").textContent = opt.baseLabel;
+  }else{
+    btn.textContent = "처음부터 보기 →";
+  }
 }
-function closeGuideModal(){
-  document.getElementById("guideModalOverlay").classList.remove("open");
+document.getElementById("heroResume").addEventListener("click", ()=>{
+  const t = progressMarked ? document.getElementById(progressMarked) : document.getElementById("orderHead");
+  scrollToFast(t, progressMarked ? undefined : 80);
+});
+
+document.getElementById("topBtn").addEventListener("click", ()=> window.scrollTo({top:0, behavior: reduceMotion ? "auto" : "smooth"}));
+
+/* ============ 읽어주세요 drawer ============ */
+const INTRO_SEEN_KEY = "nikke-readme-seen";
+const introOverlay = document.getElementById("introOverlay");
+let introReturnFocus = null;
+function lockScroll(on){ document.documentElement.classList.toggle("lock", on); }
+function openIntro(){
+  introReturnFocus = document.activeElement;
+  introOverlay.classList.add("is-open");
+  lockScroll(true);
+  setTimeout(()=> document.getElementById("introDrawer").focus({preventScroll:true}), 50);
 }
-document.getElementById("guideBtn").addEventListener("click", openGuideModal);
-document.getElementById("guideModalClose").addEventListener("click", closeGuideModal);
-document.getElementById("guideModalOverlay").addEventListener("click", (e)=>{
-  if(e.target.id === "guideModalOverlay") closeGuideModal();
+function closeIntro(){
+  if(!introOverlay.classList.contains("is-open")) return;
+  introOverlay.classList.remove("is-open");
+  lockScroll(false);
+  markUpdatesSeen();
+  if(introReturnFocus && introReturnFocus.focus) introReturnFocus.focus({preventScroll:true});
+}
+["readmeTab","heroReadme","dockReadme"].forEach(id=> document.getElementById(id).addEventListener("click", openIntro));
+document.getElementById("introClose").addEventListener("click", closeIntro);
+introOverlay.addEventListener("click", (e)=>{ if(e.target === introOverlay) closeIntro(); });
+document.getElementById("drawerStart").addEventListener("click", ()=>{
+  closeIntro();
+  setTimeout(()=> scrollToFast(document.getElementById("orderHead"), 80, 500), 120);
 });
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape") closeGuideModal();
-});
-
-
-const THEME_STORAGE_KEY = "nikke-theme";
-const SUN_ICON = `<svg viewBox="0 0 24 24" width="1em" height="1em" fill="#FFC93C" stroke="#FFC93C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/><line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/><line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/></svg>`;
-const MOON_ICON = `<svg viewBox="0 0 24 24" width="1em" height="1em" fill="#FFC93C" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>`;
-document.getElementById("themeToggle").addEventListener("click", ()=>{
-  const html = document.documentElement;
-  const isLight = html.getAttribute("data-theme") === "light";
-  const newTheme = isLight ? "dark" : "light";
-  html.setAttribute("data-theme", newTheme);
-  document.getElementById("themeToggle").innerHTML = isLight ? MOON_ICON : SUN_ICON;
-  try{ localStorage.setItem(THEME_STORAGE_KEY, newTheme); }catch(e){}
-});
-// Sync the toggle icon in case the early <head> script (see top of file) already
-// restored a saved theme before this script ran.
-(function syncThemeToggleIcon(){
-  const current = document.documentElement.getAttribute("data-theme");
-  document.getElementById("themeToggle").innerHTML = current === "light" ? SUN_ICON : MOON_ICON;
+document.getElementById("drawerGuide").addEventListener("click", ()=>{ closeIntro(); openGuideModal(); });
+/* Red dot rule: the stored value is the "signature" of the latest update the visitor has seen
+   (latest date + every title on that date). Closing 읽어주세요 or opening the update popup stores it.
+   A new update (new date, or a new entry on the same date) changes the signature → the dot returns.
+   Legacy value "1" never matches, so existing visitors see the dot once after this change. */
+function updateSignature(){
+  if(!UPDATE_LOG.length) return "none";
+  const latest = UPDATE_LOG[0].date;
+  return latest + "|" + UPDATE_LOG.filter(e=> e.date === latest).map(e=> e.title).join("/");
+}
+function setUnread(on){
+  ["dockReadme","readmeTab"].forEach(id=> document.getElementById(id).classList.toggle("has-unread", on));
+}
+function markUpdatesSeen(){
+  try{ localStorage.setItem(INTRO_SEEN_KEY, updateSignature()); }catch(e){}
+  setUnread(false);
+}
+(function initUnread(){
+  let seen = null;
+  try{ seen = localStorage.getItem(INTRO_SEEN_KEY); }catch(e){ seen = updateSignature(); }
+  let hasMarker = null;
+  try{ hasMarker = localStorage.getItem(CHECK_STORAGE_KEY); }catch(e){}
+  if(!seen){
+    // true first visit: dot + auto-open (unless a saved position exists)
+    setUnread(true);
+    if(!hasMarker) setTimeout(openIntro, 500);
+  }else if(seen !== updateSignature()){
+    // returning visitor with an unseen update: dot only, no auto-open
+    setUnread(true);
+  }
 })();
 
-const introEl = document.querySelector(".intro");
-const introBody = document.querySelector(".intro-body");
-const introSummary = introEl.querySelector("summary");
-const INTRO_ANIM_MS = 400;
-
-function collapseIntroAnimated(){
-  if(!introEl.open) return;
-  const runCollapse = ()=>{
-    const startHeight = introBody.scrollHeight;
-    introBody.style.overflow = "hidden";
-    introBody.style.height = startHeight + "px";
-    introBody.offsetHeight; // force reflow so the next height change actually transitions
-    introBody.style.transition = `height ${INTRO_ANIM_MS}ms ease`;
-    requestAnimationFrame(()=>{ introBody.style.height = "0px"; });
-    introBody.addEventListener("transitionend", function onEnd(e){
-      if(e.propertyName !== "height") return;
-      introBody.removeEventListener("transitionend", onEnd);
-      introEl.removeAttribute("open");
-      introBody.style.height = "";
-      introBody.style.overflow = "";
-      introBody.style.transition = "";
-      const prologueEl = document.querySelector(".prologue-tag");
-      if(prologueEl) scrollToFast(prologueEl, 50, 600);
-    });
-  };
-
-  // If the card's own top has scrolled above the viewport (typical when the bottom
-  // "접기" button was used), the shrink itself happens off-screen and only the content
-  // below appears to jump — a very different feel from closing via the top summary,
-  // where the shrink is always visible. Bring the top into view first so both entry
-  // points play out the same visible "card shrinks" motion.
-  const topVisible = introEl.getBoundingClientRect().top >= 0;
-  if(topVisible){
-    runCollapse();
-  }else{
-    const snapY = introEl.getBoundingClientRect().top + window.pageYOffset - 20;
-    window.scrollTo(0, snapY);
-    runCollapse();
-  }
+/* ============ Guide modal ============ */
+function openGuideModal(){ document.getElementById("guideModalOverlay").classList.add("open"); lockScroll(true); }
+function closeGuideModal(){
+  const o = document.getElementById("guideModalOverlay");
+  if(!o.classList.contains("open")) return;
+  o.classList.remove("open"); lockScroll(false);
 }
+document.getElementById("guideModalClose").addEventListener("click", closeGuideModal);
+document.getElementById("guideModalOverlay").addEventListener("click", (e)=>{ if(e.target.id === "guideModalOverlay") closeGuideModal(); });
 
-function expandIntroAnimated(){
-  if(introEl.open) return;
-  introEl.setAttribute("open", "");
-  const targetHeight = introBody.scrollHeight;
-  introBody.style.overflow = "hidden";
-  introBody.style.height = "0px";
-  introBody.offsetHeight; // force reflow
-  introBody.style.transition = `height ${INTRO_ANIM_MS}ms ease`;
-  requestAnimationFrame(()=>{ introBody.style.height = targetHeight + "px"; });
-  introBody.addEventListener("transitionend", function onEnd(e){
-    if(e.propertyName !== "height") return;
-    introBody.removeEventListener("transitionend", onEnd);
-    introBody.style.height = "";
-    introBody.style.overflow = "";
-    introBody.style.transition = "";
-  });
-}
-
-// While open, a click anywhere inside the body also collapses the card (unless the user
-// is selecting text).
-introBody.addEventListener("click", ()=>{
-  if(String(window.getSelection()).length) return;
-  collapseIntroAnimated();
-});
-// Clicking the summary heading itself toggles it — intercept both directions so both
-// collapsing and expanding animate the same way.
-introSummary.addEventListener("click", (e)=>{
-  e.preventDefault();
-  if(introEl.open){
-    collapseIntroAnimated();
-  }else{
-    expandIntroAnimated();
-  }
+document.addEventListener("keydown", (e)=>{
+  if(e.key !== "Escape") return;
+  closeProgressPanel(); closeGuideModal(); closeUpdateModal(); closeIntro();
 });
 
-function initScrollFade(){
-  const targets = document.querySelectorAll(".card, .routes-section, .comingsoon-card, .prologue-tag");
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      entry.target.classList.toggle("in-view", entry.isIntersecting);
-    });
-  }, {threshold:0.12});
-  targets.forEach(el=> observer.observe(el));
+/* ============ Theme ============ */
+const THEME_STORAGE_KEY = "nikke-theme";
+const SUN_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>`;
+const MOON_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>`;
+function syncThemeIcon(){
+  const isLight = document.documentElement.getAttribute("data-theme") !== "dark";
+  document.getElementById("themeToggle").innerHTML = isLight ? MOON_ICON : SUN_ICON;
+  const meta = document.querySelectorAll('meta[name="theme-color"]');
+  meta.forEach(m=> m.setAttribute("content", isLight ? "#F4F5F8" : "#0B0C10"));
+}
+document.getElementById("themeToggle").addEventListener("click", ()=>{
+  const html = document.documentElement;
+  const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  const apply = ()=>{ html.setAttribute("data-theme", newTheme); syncThemeIcon(); };
+  if(reduceMotion) apply();
+  else if(document.startViewTransition) document.startViewTransition(apply);
+  else { html.classList.add("theme-switching"); apply(); setTimeout(()=>html.classList.remove("theme-switching"), 350); }
+  try{ localStorage.setItem(THEME_STORAGE_KEY, newTheme); }catch(e){}
+});
+syncThemeIcon();
+
+/* ============ Reveal on scroll ============ */
+function initReveal(){
+  const targets = document.querySelectorAll(".reveal");
+  if(reduceMotion || !("IntersectionObserver" in window)){ targets.forEach(el=> el.classList.add("in-view")); return; }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("in-view"); io.unobserve(entry.target); } });
+  }, {threshold:0.08, rootMargin:"0px 0px -6% 0px"});
+  targets.forEach(el=> io.observe(el));
 }
 
-/* Auto-sync the progress dropdown's displayed value to whichever card sits closest to a fixed
-   reference line ~1.5 card-heights from the top of the viewport. Uses a throttled scroll
-   listener + getBoundingClientRect().top instead of IntersectionObserver, so the result is
-   determined by a single fixed line rather than event-batching order — meaning it behaves
-   identically whether the user scrolls up or down. Purely a passive display sync: it never
-   touches "current-position" or triggers any scrolling itself. */
+/* ============ Scroll state: spine fill, passed dots/stations, NOW sync ============
+   One fixed reference line (~32% of viewport height). Everything above it counts as
+   "passed"; the item closest to it becomes the dock's NOW value. Direction-independent. */
+let trackTargets = [], passTargets = [];
 function initScrollTracking(){
-  const targets = Array.from(document.querySelectorAll("#timelineGrid .card, .routes-section"));
-  const archiveSection = document.querySelector(".archive-section");
-  const contentsSection = document.querySelector(".contents-section");
-  if(archiveSection){ archiveSection.dataset.progressValue = "archives-jump"; targets.push(archiveSection); }
-  if(contentsSection){ contentsSection.dataset.progressValue = "contents-jump"; targets.push(contentsSection); }
-  const REFERENCE_LINE = 224; // ~1 card height (224px) from viewport top
-
-  function updateActiveCard(){
-    if(suppressScrollTracking) return;
-    let closest = null;
-    let closestDist = Infinity;
-    for(const el of targets){
-      const dist = Math.abs(el.getBoundingClientRect().top - REFERENCE_LINE);
-      if(dist < closestDist){
-        closestDist = dist;
-        closest = el;
-      }
-    }
-    if(closest) setProgressValue(closest.dataset.progressValue || closest.id);
-  }
-
+  trackTargets = Array.from(document.querySelectorAll("#timelineGrid .card, #timelineGrid .routes-section"));
+  const archive = document.getElementById("archives");
+  const contents = document.getElementById("contents");
+  archive.dataset.progressValue = "archives-jump"; trackTargets.push(archive);
+  contents.dataset.progressValue = "contents-jump"; trackTargets.push(contents);
+  passTargets = Array.from(document.querySelectorAll("#timelineGrid .card, #timelineGrid .routes-section, #timelineGrid .station"));
   let ticking = false;
-  window.addEventListener("scroll", ()=>{
-    if(ticking) return;
-    ticking = true;
-    requestAnimationFrame(()=>{
-      updateActiveCard();
-      ticking = false;
-    });
-  }, {passive:true});
-
-  updateActiveCard();
+  const onScroll = ()=>{
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(()=>{ updateScrollState(); ticking = false; });
+  };
+  window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", onScroll);
+  updateScrollState();
 }
-
-function equalizeRouteCardHeights(){
-  const cards = document.querySelectorAll(".route-card");
-  if(!cards.length) return;
-  cards.forEach(c=> c.style.minHeight = "0px");
-  let max = 0;
-  cards.forEach(c=> { max = Math.max(max, c.getBoundingClientRect().height); });
-  cards.forEach(c=> c.style.minHeight = Math.ceil(max) + "px");
-}
-
-/* The spine's fade-in/out must never bleed into Prologue's or Coming Soon's own area.
-   Instead of approximating with a fixed CSS length, measure the actual rendered edges
-   after layout and set the gradient stops to match exactly — robust regardless of
-   font rendering, wrapping, or margin quirks. No-op on mobile, where the spine sits in
-   a different track (grid-column handled separately, this only touches the desktop spine). */
-function alignSpineFade(){
-  const spine = document.querySelector(".timeline-spine");
-  if(!spine) return;
-  if(window.innerWidth < 768){
-    spine.style.background = ""; // let the mobile CSS rule (constant color) take over
-    return;
+function updateScrollState(force){
+  const ref = Math.round(window.innerHeight * 0.32);
+  const spine = document.querySelector(".spine");
+  const fill = document.getElementById("spineFill");
+  if(spine && fill){
+    const r = spine.getBoundingClientRect();
+    const h = Math.max(0, Math.min(r.height, ref - r.top));
+    fill.style.height = h + "px";
+    fill.style.backgroundSize = `2px ${r.height}px`;
+    fill.style.setProperty("--head-c", `color-mix(in oklab, var(--red) ${Math.round(100 - (r.height ? h / r.height : 0) * 100)}%, var(--blue))`);
+    fill.style.opacity = h > 0 ? "1" : "0";
   }
-  if(window.__firstMainRow == null || window.__lastMainRow == null) return;
-  const firstMarker = document.getElementById(`marker-row-${window.__firstMainRow}`);
-  const lastMarker = document.getElementById(`marker-row-${window.__lastMainRow}`);
-  if(!firstMarker || !lastMarker) return;
-  const spineRect = spine.getBoundingClientRect();
-  if(spineRect.height <= 0) return;
-  const firstRect = firstMarker.getBoundingClientRect();
-  const lastRect = lastMarker.getBoundingClientRect();
-  const firstCenter = firstRect.top + firstRect.height / 2;
-  const lastCenter = lastRect.top + lastRect.height / 2;
-  // Full color starts exactly at the first main card's marker, fading out toward the spine's
-  // own top edge (which structurally stops before Prologue). Symmetric at the bottom.
-  const fadeInPx = Math.max(0, firstCenter - spineRect.top);
-  const fadeOutPx = Math.max(0, spineRect.bottom - lastCenter);
-  spine.style.background =
-    `linear-gradient(to bottom, transparent 0px, var(--accent-red) ${fadeInPx}px, var(--accent-red) calc(100% - ${fadeOutPx}px), transparent 100%)`;
+  for(const el of passTargets){
+    const top = el.getBoundingClientRect().top + (el.classList.contains("station") ? 18 : 34);
+    el.classList.toggle("passed", top < ref);
+  }
+  if(suppressScrollTracking && !force) return;
+  let closest = null, closestDist = Infinity;
+  for(const el of trackTargets){
+    const d = Math.abs(el.getBoundingClientRect().top - ref);
+    if(d < closestDist){ closestDist = d; closest = el; }
+  }
+  if(closest) setProgressValue(closest.dataset.progressValue || closest.id);
 }
 
-/* Prologue/Coming Soon should be exactly as wide as a regular card. Measured from an actual
-   rendered card rather than approximated, so it always matches regardless of breakpoint. */
-function matchBookendWidth(){
-  const card = document.querySelector(".card.type-메인");
-  if(!card) return;
-  const w = Math.round(card.getBoundingClientRect().width);
-  if(w <= 0) return;
-  document.querySelectorAll(".prologue-tag, .comingsoon-card").forEach(el=> el.style.width = w + "px");
-}
-
-function refreshBookends(){ matchBookendWidth(); alignSpineFade(); }
-
-/* ============ Update Log ============
-   Example/placeholder entries — replace with real dates/titles as content changes.
-   action: "add" | "archive" | "dub" controls the message wording below. */
-const UPDATE_LOG_LIMIT = 5; /* number of entries shown in the log popup AND given an Update tag */
-const UPDATE_LOG = [
-  {date:"2026.10.08", type:"사이드", title:"GINGERBREAD HOUSE", action:"add"},
-  {date:"2026.09.17", type:"이벤트", title:"STAR ANIS", action:"archive"},
-  {date:"2026.09.17", type:"이벤트", title:"COIN RUSH SHOWDOWN", action:"add"},
-  {date:"2026.09.03", type:"이벤트", title:"GREAT VILLAIN UNION", action:"add"},
-  {date:"2026.09.03", type:"이벤트", title:"ARCANE ARCHIVE", action:"archive"},
-  {date:"2026.08.13", type:"메인", title:"챕터 47 ~ 48", action:"add"}
-];
-
-function updateLogSummary(entry){
-  const label = `[${entry.type}] ${entry.title}`;
-  if(entry.action === "archive") return `${entry.date} ${label} 아카이브 태그가 변경되었습니다.`;
-  if(entry.action === "dub") return `${entry.date} ${label} 더빙 태그가 변경되었습니다.`;
-  return `${entry.date} ${label} 이 추가되었습니다.`;
-}
+/* ============ Update Log ============ */
 function updateLogAction(entry){
   if(entry.action === "archive") return "아카이브 태그가 변경되었습니다.";
   if(entry.action === "dub") return "더빙 태그가 변경되었습니다.";
   return "이 추가되었습니다.";
 }
-
-let logRotateTimer = null;
-let logRotateStepTimer = null;
-let logRotateIndex = 0;
+function updateLogTickerHTML(entry){
+  return `<span style="font-family:var(--font-mono);color:var(--text-3)">${entry.date}</span>&nbsp; [${entry.type}] <b>${entry.title}</b> ${updateLogAction(entry)}`;
+}
+const UPDATE_LOG_LIMIT = 5;
+let logRotateTimer = null, logRotateStepTimer = null, logRotateIndex = 0;
 
 function renderUpdateLog(){
   const recent = UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT);
   const trigger = document.getElementById("updateLogTrigger");
   if(recent.length){
-    trigger.textContent = updateLogSummary(recent[0]);
+    trigger.hidden = false;
+    document.getElementById("updateLogText").innerHTML = updateLogTickerHTML(recent[0]);
     document.getElementById("lastUpdatedDate").textContent = recent[0].date;
+    document.getElementById("lastUpdatedTime").setAttribute("datetime", recent[0].date.replace(/\./g, "-"));
   }
   document.getElementById("updateModalList").innerHTML = recent.map(entry=>
-    `<li class="type-${entry.type}" data-log-title="${entry.title}">
+    `<li style="--tc:var(${TYPE_VAR[entry.type] || "--c-main"})" data-log-title="${entry.title}">
       <span class="log-date">${entry.date}</span>
       <div class="log-row">
-        <span class="tag tag-${entry.type}">${entry.type}</span>
+        <span class="tag tag-type tt-${entry.type}">${entry.type}</span>
         <span class="log-text"><strong>${entry.title}</strong> ${updateLogAction(entry)}</span>
       </div>
-    </li>`
-  ).join("");
+    </li>`).join("");
 }
-
+function renderDrawerUpdates(){
+  // every entry sharing the most recent date; the date is printed once above them
+  const latest = UPDATE_LOG.length ? UPDATE_LOG[0].date : null;
+  const recent = UPDATE_LOG.filter(e=> e.date === latest);
+  document.getElementById("drawerUpdates").innerHTML = (latest ? `<li class="news-date-head"><span class="news-date">${latest}</span></li>` : "") +
+    recent.map(entry=>
+    `<li class="news-row" style="--tc:var(${TYPE_VAR[entry.type] || "--c-main"})" data-log-title="${entry.title}">
+      <span class="news-text"><span class="tag tag-type tt-${entry.type}">${entry.type}</span> <span class="news-title">${entry.title}</span> <span class="news-act">${updateLogAction(entry)}</span></span>
+    </li>`).join("");
+}
+document.getElementById("drawerUpdates").addEventListener("click", (e)=>{
+  const li = e.target.closest("li[data-log-title]");
+  if(!li) return;
+  const sel = `[data-title="${CSS.escape(li.dataset.logTitle)}"]`;
+  const target = document.querySelector(`#timelineGrid ${sel}`) || document.querySelector(sel);
+  if(!target) return;
+  closeIntro();
+  setTimeout(()=> scrollToFast(target), 150);
+});
 function startLogRotation(){
   const recent = UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT);
-  const trigger = document.getElementById("updateLogTrigger");
-  if(recent.length <= 1) return;
+  const text = document.getElementById("updateLogText");
+  if(recent.length <= 1 || reduceMotion) return;
   clearInterval(logRotateTimer);
   logRotateTimer = setInterval(()=>{
     logRotateIndex = (logRotateIndex + 1) % recent.length;
-    trigger.style.transition = "opacity .3s ease, transform .3s ease";
-    trigger.style.opacity = "0";
-    trigger.style.transform = "translateY(-8px)";
+    text.style.transition = "opacity .3s ease, transform .3s ease";
+    text.style.opacity = "0"; text.style.transform = "translateY(-8px)";
     logRotateStepTimer = setTimeout(()=>{
-      trigger.textContent = updateLogSummary(recent[logRotateIndex]);
-      trigger.style.transition = "none";
-      trigger.style.transform = "translateY(14px)";
+      text.innerHTML = updateLogTickerHTML(recent[logRotateIndex]);
+      text.style.transition = "none"; text.style.transform = "translateY(10px)";
       requestAnimationFrame(()=>{
-        trigger.style.transition = "opacity .35s ease, transform .35s ease";
-        trigger.style.opacity = "1";
-        trigger.style.transform = "translateY(0)";
+        text.style.transition = "opacity .35s ease, transform .35s ease";
+        text.style.opacity = "1"; text.style.transform = "translateY(0)";
       });
     }, 300);
   }, 5200);
 }
 function stopLogRotation(){
-  clearInterval(logRotateTimer);
-  clearTimeout(logRotateStepTimer);
-  const trigger = document.getElementById("updateLogTrigger");
-  trigger.style.transition = "opacity .2s ease, transform .2s ease";
-  trigger.style.opacity = "1";
-  trigger.style.transform = "translateY(0)";
+  clearInterval(logRotateTimer); clearTimeout(logRotateStepTimer);
+  const text = document.getElementById("updateLogText");
+  text.style.transition = "opacity .2s ease, transform .2s ease"; text.style.opacity = "1"; text.style.transform = "translateY(0)";
 }
-
-function openUpdateModal(){
-  document.getElementById("updateModalOverlay").classList.add("open");
-}
+function openUpdateModal(){ document.getElementById("updateModalOverlay").classList.add("open"); lockScroll(true); markUpdatesSeen(); }
 function closeUpdateModal(){
-  document.getElementById("updateModalOverlay").classList.remove("open");
+  const o = document.getElementById("updateModalOverlay");
+  if(!o.classList.contains("open")) return;
+  o.classList.remove("open"); lockScroll(false);
 }
-document.getElementById("updateLogTrigger").addEventListener("click", openUpdateModal);
-document.getElementById("updateLogTrigger").addEventListener("mouseenter", stopLogRotation);
-document.getElementById("updateLogTrigger").addEventListener("mouseleave", startLogRotation);
+const logTrigger = document.getElementById("updateLogTrigger");
+logTrigger.addEventListener("click", openUpdateModal);
+logTrigger.addEventListener("mouseenter", stopLogRotation);
+logTrigger.addEventListener("mouseleave", startLogRotation);
 document.getElementById("updateModalClose").addEventListener("click", closeUpdateModal);
-document.getElementById("updateModalOverlay").addEventListener("click", (e)=>{
-  if(e.target.id === "updateModalOverlay") closeUpdateModal();
-});
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape") closeUpdateModal();
-});
+document.getElementById("updateModalOverlay").addEventListener("click", (e)=>{ if(e.target.id === "updateModalOverlay") closeUpdateModal(); });
 document.getElementById("updateModalList").addEventListener("click", (e)=>{
   const li = e.target.closest("li[data-log-title]");
   if(!li) return;
-  const target = document.querySelector(`.card[data-title="${CSS.escape(li.dataset.logTitle)}"]`);
+  const sel = `[data-title="${CSS.escape(li.dataset.logTitle)}"]`;
+  const target = document.querySelector(`#timelineGrid ${sel}`) || document.querySelector(sel);
   if(!target) return;
   closeUpdateModal();
-  setTimeout(()=> scrollToFast(target), 200);
+  setTimeout(()=> scrollToFast(target), 150);
 });
 
-/* Attach an "Update" tag to any card whose title matches a logged entry — reuses the
-   existing tag system and is appended after the title, so it never collides with the
-   season/optional/required tags that sit before it. */
+/* Update tag on matching cards (timeline + archives) */
 function applyUpdateTags(){
   UPDATE_LOG.slice(0, UPDATE_LOG_LIMIT).forEach(entry=>{
     document.querySelectorAll(".card[data-title]").forEach(card=>{
       if(card.dataset.title !== entry.title) return;
-      const head = card.querySelector(".card-head");
-      if(head && !head.querySelector(".tag-update")){
+      const tags = card.querySelector(".card-tags");
+      if(tags && !tags.querySelector(".tag-update")){
         const tag = document.createElement("span");
-        tag.className = "tag tag-update";
-        tag.textContent = "Update";
-        head.appendChild(tag);
+        tag.className = "tag tag-update"; tag.textContent = "Update";
+        tags.appendChild(tag);
       }
       if(entry.action === "archive" || entry.action === "dub"){
         const prefix = entry.action === "archive" ? "아카이브" : "더빙";
@@ -1591,30 +1524,22 @@ function applyUpdateTags(){
   });
 }
 
-let resizeTimer;
-window.addEventListener("resize", ()=>{
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(()=>{ equalizeRouteCardHeights(); refreshBookends(); }, 150);
-});
-
 renderIntro();
+renderStats();
 renderTimeline();
 renderArchive();
 renderContents();
 renderProgressOptions();
+updateResumeButton();
 renderUpdateLog();
+renderDrawerUpdates();
 startLogRotation();
 applyUpdateTags();
 restoreCheckedCard();
-initScrollFade();
+initReveal();
 initScrollTracking();
-equalizeRouteCardHeights();
-refreshBookends();
-if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(refreshBookends);
-}
-window.addEventListener("load", refreshBookends);
-setTimeout(refreshBookends, 300);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=> updateScrollState());
+window.addEventListener("load", ()=> updateScrollState());
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "adfcde6c0605432e966c361540d53969"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

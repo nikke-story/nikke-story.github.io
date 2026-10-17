@@ -369,17 +369,17 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
 .series-head{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:baseline;}
 .series-title{font-size:1.15rem; font-weight:800; letter-spacing:-.02em;}
 .series-desc{font-size:.86rem; color:var(--text-2); margin-top:4px;}
-.content-video-list{list-style:none; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px 14px; margin-top:18px;}
+.content-video-list{list-style:none; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:22px 20px; margin-top:18px;}
 .content-video-item a{display:flex; flex-direction:column; gap:8px; color:var(--text-2); text-decoration:none; transition:color .18s;}
 .content-video-item a:hover{color:var(--text);}
 .content-video-item .yt-thumb{width:100%;}
 .content-video-item a:hover .yt-thumb img{transform:scale(1.04);}
-.yt-thumb{position:relative; display:block; width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:var(--surface-3);}
+.yt-thumb{position:relative; display:block; width:100%; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:var(--surface-3);}
 .yt-thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s var(--ease);}
 .yt-thumb-blur img{filter:blur(4px); transform:scale(1.1);}
 .content-video-item a:hover .yt-thumb-blur img{transform:scale(1.12);}
-.yt-play{position:absolute; right:6px; bottom:6px; width:26px; height:26px; border-radius:50%; background:rgba(0,0,0,.6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.7rem; padding-left:2px; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);}
-.yt-label{font-size:.82rem; font-weight:500; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+.yt-play{position:absolute; right:10px; bottom:10px; width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.82rem; padding-left:2px; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);}
+.yt-label{font-size:.9rem; font-weight:500; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
 
 /* ---------- dock (bottom) ---------- */
 .dock{
@@ -388,6 +388,7 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
   border-radius:999px; background:var(--glass-strong); -webkit-backdrop-filter:saturate(1.5) blur(18px); backdrop-filter:saturate(1.5) blur(18px);
   border:1px solid var(--line); box-shadow:var(--shadow-3);
 }
+@media (min-width:768px){ html.lock .dock{left:calc(50% - var(--sbw, 0px) / 2);} }
 .dock .icon-btn{width:44px; height:44px; background:transparent; border-color:transparent;}
 .dock .icon-btn:hover{background:var(--surface-3);}
 .dock .icon-btn{position:relative;}
@@ -501,9 +502,13 @@ footer.site-footer .nw{white-space:nowrap;}
 
   .section{margin-top:96px;}
   .series{padding:18px;}
-  .content-video-list{grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px 10px;}
+  .content-video-list{grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px 10px;}
+  .yt-thumb{border-radius:10px;}
+  .yt-play{right:6px; bottom:6px; width:26px; height:26px; font-size:.7rem;}
+  .yt-label{font-size:.82rem;}
 
   .dock{left:12px; right:12px; transform:none; justify-content:space-between;}
+  html.lock .dock{right:calc(12px + var(--sbw, 0px));}
   .custom-select{flex:1; min-width:0;}
   .progress-select{width:100%;}
   .custom-select-panel{left:-6px; transform:none; width:calc(100vw - 24px);}
@@ -521,8 +526,18 @@ footer.site-footer .nw{white-space:nowrap;}
   -webkit-mask-image:linear-gradient(to left, #000 0%, #000 45%, transparent 100%), linear-gradient(to bottom left, #000 0%, rgba(0,0,0,.7) 35%, transparent 80%); mask-image:linear-gradient(to left, #000 0%, #000 45%, transparent 100%), linear-gradient(to bottom left, #000 0%, rgba(0,0,0,.7) 35%, transparent 80%); -webkit-mask-composite:source-in; mask-composite:intersect;
   opacity:0; transition:opacity 1.2s ease;}
 .card-art img.is-on{opacity:1;}
-.card.has-art > :not(.card-art):not(.card-dot):not(.card-link):not(.here-flag){position:relative; z-index:1;}
+.card.has-art > :not(.card-art):not(.card-dot):not(.card-link):not(.here-flag):not(.upd-mini){position:relative; z-index:1;}
 .card.has-art{min-height:120px;}
+
+/* update marker: "UPDATE ●" at card top-right */
+@keyframes updPulse{0%{box-shadow:0 0 0 0 color-mix(in oklab, var(--green) 55%, transparent)} 70%{box-shadow:0 0 0 7px transparent} 100%{box-shadow:0 0 0 0 transparent}}
+.upd-mini{position:absolute; top:22px; right:22px; z-index:3; display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+  font-family:var(--font-mono); font-size:.62rem; font-weight:700; letter-spacing:.08em; color:var(--green);
+  /* 카드 배경색 외곽선: 배경 그림 위에서만 드러나고 일반 카드에서는 보이지 않음 */
+  -webkit-text-stroke:2px var(--surface); paint-order:stroke fill; text-shadow:0 0 3px var(--surface), 0 0 6px var(--surface);}
+.upd-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green); outline:2px solid var(--surface); animation:updPulse 2s ease-out infinite;}
+@media (prefers-reduced-motion: reduce){ .upd-dot{animation:none;} }
+@media (max-width:767px){ .upd-mini{top:21px; right:18px;} }
 </style>
 <!-- SEO:JSONLD:START (generated by tools/seo_inject.py — do not edit by hand) -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://nikke-story.github.io/#website", "url": "https://nikke-story.github.io/", "name": "NIKKE 스토리 감상 순서 추천", "inLanguage": "ko"}, {"@type": "WebPage", "@id": "https://nikke-story.github.io/#webpage", "url": "https://nikke-story.github.io/", "name": "NIKKE 스토리 감상 순서 추천", "description": "승리의 여신: 니케(NIKKE)의 메인·이벤트·사이드·인연스토리를 감상 순서 기준으로 정리한 비공식 팬 가이드", "inLanguage": "ko", "isPartOf": {"@id": "https://nikke-story.github.io/#website"}, "dateModified": "2026-10-08", "about": {"@type": "VideoGame", "name": "승리의 여신: 니케", "alternateName": "NIKKE: Goddess of Victory"}, "mainEntity": {"@id": "https://nikke-story.github.io/#order"}}, {"@type": "ItemList", "@id": "https://nikke-story.github.io/#order", "name": "NIKKE 스토리 감상 순서", "itemListOrder": "https://schema.org/ItemListOrderAscending", "numberOfItems": 13, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "1 ~ 20지", "description": "[메인] 챕터 1 ~ 20, [이벤트] OVER ZONE, [이벤트] CHERRY BLOSSOM, [인연스토리] 디젤"}, {"@type": "ListItem", "position": 2, "name": "21 ~ 24지", "description": "[메인] 챕터 21 ~ 24, [이벤트] RED ASH, [블라블라] 랩칠리언"}, {"@type": "ListItem", "position": 3, "name": "25 ~ 26지", "description": "[메인] 챕터 25 ~ 26, [이벤트] NEW YEAR, NEW SWORD, [사이드] SECOND AFFECTION, [인연스토리] 킬로, [이벤트] LAST KINGDOM, [이벤트] DIRTY BACKYARD, [이벤트] L.T.K -LICENSE TO KILL-, [이벤트] KILL THE LORD, [이벤트] BOOM'S DAY, [이벤트] D.ARK HERO, [이벤트] ICE DRAGON SAGA"}, {"@type": "ListItem", "position": 4, "name": "27 ~ 28지", "description": "[메인] 챕터 27 ~ 28"}, {"@type": "ListItem", "position": 5, "name": "29 ~ 30지", "description": "[메인] 챕터 29 ~ 30"}, {"@type": "ListItem", "position": 6, "name": "33 ~ 34지", "description": "[메인] 챕터 33 ~ 34, [이벤트] FOOTSTEP, WALK, RUN, [인연스토리] 에테르, [이벤트] WISDOM SPRING"}, {"@type": "ListItem", "position": 7, "name": "35 ~ 36지", "description": "[메인] 챕터 35 ~ 36, [이벤트] FOR REST, [사이드] WORDLESS, [사이드] MUDFISH, [인연스토리] 모리, [이벤트] UNBREAKABLE SPHERE, [인연스토리] 헬름"}, {"@type": "ListItem", "position": 8, "name": "37 ~ 38지", "description": "[메인] 챕터 37 ~ 38, [이벤트] ARCANE ARCHIVE, [인연스토리] D, [이벤트] LORD FOR JUSTICE, [이벤트] OVER THE HORIZON, [이벤트] BOOM THE GHOST"}, {"@type": "ListItem", "position": 9, "name": "39 ~ 40지", "description": "[메인] 챕터 39 ~ 40, [사이드] EDEN SPEAR"}, {"@type": "ListItem", "position": 10, "name": "41 ~ 42지", "description": "[메인] 챕터 41 ~ 42, [이벤트] GODDESS FALL, [이벤트] ARK GUARDIAN, [블라블라] 세르반"}, {"@type": "ListItem", "position": 11, "name": "43 ~ 44지", "description": "[메인] 챕터 43 ~ 44, [이벤트] ENTER HEAVEN, [이벤트] GOOD WORLD, [사이드] PRETTY STAR"}, {"@type": "ListItem", "position": 12, "name": "45 ~ 46지", "description": "[메인] 챕터 45 ~ 46, [이벤트] STAR ANIS, [이벤트] ARK RANGER, [이벤트] SCHOOL OF LOCK, [이벤트] WAVE TO YOU, [이벤트] PROJECT MATIS"}, {"@type": "ListItem", "position": 13, "name": "47 ~ 48지", "description": "[메인] 챕터 47 ~ 48, [이벤트] GREAT VILLAIN UNION, [이벤트] COIN RUSH SHOWDOWN, [사이드] GINGERBREAD HOUSE"}]}]}</script>
@@ -765,7 +780,7 @@ function chImgs(from, to){
 
 const BLOCKS_BEFORE = [
   { chapter:"1 ~ 20", cards:[
-    {type:"메인", title:"챕터 1 ~ 20", img:chImgs(0, 20),
+    {type:"메인", title:"챕터 1 ~ 20", img:chImgs(0, 20), imgRandomStart:true,
       note:"라피(SR), 아니스(SR) 호감도 스토리는 세계관 설명이 포함되어 있어 최대한 빨리 감상 추천"},
     {type:"이벤트", title:"OVER ZONE", season:"0.5주년", meta:["아카이브O","더빙O"],
       desc:"21지 이후 감상을 추천하는 의견도 있지만, 특정 인물의 인상 변화를 이 시점에 확인하는 것이 중요함.",
@@ -961,6 +976,12 @@ const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: r
 
 /* ===== chapter background art =====
    첫 이미지만 바로 불러오고, 나머지는 교체 직전에 하나씩 불러옴. 없는 파일은 자동으로 건너뜀. */
+/* 첫 이미지만 무작위로 고르고, 이후는 그 다음 번호부터 순서대로 (끝나면 처음으로) */
+function randomStart(list){
+  const arr = [].concat(list);
+  const k = Math.floor(Math.random() * arr.length);
+  return arr.slice(k).concat(arr.slice(0, k));
+}
 function artHTML(list){
   return `<span class="card-art" aria-hidden="true">${[].concat(list).map((src,i)=>
     i === 0 ? `<img src="${src}" alt="" loading="lazy" decoding="async" class="is-on">`
@@ -1047,7 +1068,7 @@ function cardHTML(card, chapterKey, n){
   <article class="card tl-item reveal t-${card.type} ${sideOf(card.type)}${card.img ? " has-art" : ""}" id="${id}" data-chapter="${chapterKey}" data-title="${card.title}" data-type="${card.type}">
     <span class="card-link" aria-hidden="true"></span><span class="card-dot" aria-hidden="true"></span>
     <span class="here-flag">${HERE_ICON}여기까지 감상</span>
-    ${card.img ? artHTML(card.img) : ""}
+    ${card.img ? artHTML(card.imgRandomStart ? randomStart(card.img) : card.img) : ""}
     <div class="card-tags">${tagsHTML(card, true)}</div>
     <h3 class="card-title">${card.title}</h3>
     ${meta}${desc}${note}
@@ -1135,8 +1156,8 @@ function renderContents(){
           <li class="content-video-item">
             <a href="${v.url}" target="_blank" rel="noopener">
               <span class="yt-thumb${v.blur ? " yt-thumb-blur" : ""}">
-                <img src="https://i.ytimg.com/vi/${ytId(v.url)}/mqdefault.jpg" alt="" loading="lazy" decoding="async" width="320" height="180"
-                  onerror="this.onerror=null; this.src=this.src.includes('mqdefault') ? this.src.replace('mqdefault','hqdefault') : this.src.replace('hqdefault','default');">
+                <img src="https://i.ytimg.com/vi/${ytId(v.url)}/sddefault.jpg" alt="" loading="lazy" decoding="async" width="640" height="360"
+                  onerror="const n={sddefault:'hqdefault',hqdefault:'mqdefault'}; const m=this.src.match(/(sddefault|hqdefault)/); if(m) this.src=this.src.replace(m[1], n[m[1]]); else this.onerror=null;">
                 <span class="yt-play" aria-hidden="true">▶</span>
               </span>
               <span class="yt-label">${v.label}</span>
@@ -1348,8 +1369,10 @@ function lockScroll(on){
   if(on){
     const sw = window.innerWidth - html.clientWidth;   // 사라질 스크롤바 폭만큼 채워 레이아웃 흔들림 방지
     html.style.paddingRight = sw > 0 ? sw + "px" : "";
+    html.style.setProperty("--sbw", (sw > 0 ? sw : 0) + "px");   // 고정 요소(하단 바)도 같은 폭 보정
   } else {
     html.style.paddingRight = "";
+    html.style.removeProperty("--sbw");
   }
   html.classList.toggle("lock", on);
 }
@@ -1598,10 +1621,11 @@ function applyUpdateTags(){
     document.querySelectorAll(".card[data-title]").forEach(card=>{
       if(card.dataset.title !== entry.title) return;
       const tags = card.querySelector(".card-tags");
-      if(tags && !tags.querySelector(".tag-update")){
-        const tag = document.createElement("span");
-        tag.className = "tag tag-update"; tag.textContent = "Update";
-        tags.appendChild(tag);
+      if(!card.querySelector(".upd-mini")){
+        const d = document.createElement("span");
+        d.className = "upd-mini"; d.title = "최근 업데이트";
+        d.innerHTML = 'UPDATE<span class="upd-dot" aria-hidden="true"></span>';
+        card.appendChild(d);   // 카드 우측 상단
       }
       if(entry.action === "archive" || entry.action === "dub"){
         const prefix = entry.action === "archive" ? "아카이브" : "더빙";

@@ -425,7 +425,7 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
 
 /* ---------- modals ---------- */
 .update-modal-overlay, .guide-modal-overlay{
-  display:none; position:fixed; inset:0; z-index:100; background:var(--scrim); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  display:none; position:fixed; inset:0; z-index:100; background:var(--scrim);
   align-items:center; justify-content:center; padding:20px;
 }
 .update-modal-overlay.open, .guide-modal-overlay.open{display:flex;}
@@ -585,7 +585,7 @@ footer.site-footer .nw{white-space:nowrap;}
       <h1><span class="h1-en">NIKKE</span> 스토리 감상 순서 추천</h1>
       <p class="hero-lead">메인 · 이벤트 · 사이드 · 인연스토리를 어떤 순서로 보면 좋을지 정리했습니다. 카드를 눌러 감상 위치를 저장할 수 있어요.</p>
       <div class="hero-actions">
-        <button type="button" class="btn btn-primary" id="heroReadme"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>읽어주세요 먼저 보기</button>
+        <button type="button" class="btn btn-primary" id="heroReadme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg>읽어주세요 먼저 보기</button>
         <button type="button" class="btn" id="heroResume"></button>
       </div>
       <div class="hero-meta">최종 업데이트 <time id="lastUpdatedTime" datetime="2026-10-08"><strong id="lastUpdatedDate">2026.10.08</strong></time></div>
@@ -656,7 +656,7 @@ footer.site-footer .nw{white-space:nowrap;}
 </main>
 
 <nav class="dock" aria-label="빠른 이동">
-  <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="color:var(--text)"><path d="M2 8v4h3l6 4V4L5 8H2z"/><path d="M14.5 6.5a4 4 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
+  <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
   <div class="custom-select" id="progressSelectWrap">
     <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">
       <span class="ps-label">NOW</span><span class="ps-value" id="progressSelectValue">진행도</span>
@@ -989,6 +989,7 @@ function initCardArt(){
     .forEach((art, i)=>{ art.dataset.phase = i % CYCLE; io.observe(art); });
   let tick = 0;
   setInterval(()=>{
+    if(document.documentElement.classList.contains("lock")) return;   // 팝업·패널이 열려 있으면 일시정지
     tick = (tick + 1) % CYCLE;
     visible.forEach(art=>{
       if(+art.dataset.phase !== tick) return;
@@ -1342,7 +1343,16 @@ document.getElementById("topBtn").addEventListener("click", ()=> window.scrollTo
 const INTRO_SEEN_KEY = "nikke-readme-seen";
 const introOverlay = document.getElementById("introOverlay");
 let introReturnFocus = null;
-function lockScroll(on){ document.documentElement.classList.toggle("lock", on); }
+function lockScroll(on){
+  const html = document.documentElement;
+  if(on){
+    const sw = window.innerWidth - html.clientWidth;   // 사라질 스크롤바 폭만큼 채워 레이아웃 흔들림 방지
+    html.style.paddingRight = sw > 0 ? sw + "px" : "";
+  } else {
+    html.style.paddingRight = "";
+  }
+  html.classList.toggle("lock", on);
+}
 function openIntro(){
   introReturnFocus = document.activeElement;
   introOverlay.classList.add("is-open");
@@ -1541,6 +1551,7 @@ function startLogRotation(){
   if(recent.length <= 1 || reduceMotion) return;
   clearInterval(logRotateTimer);
   logRotateTimer = setInterval(()=>{
+    if(document.documentElement.classList.contains("lock")) return;   // 팝업·패널이 열려 있으면 일시정지
     logRotateIndex = (logRotateIndex + 1) % recent.length;
     text.style.transition = "opacity .3s ease, transform .3s ease";
     text.style.opacity = "0"; text.style.transform = "translateY(-8px)";

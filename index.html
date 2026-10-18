@@ -215,15 +215,17 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
 
 .readme-tab{
   position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:30; display:none;
-  writing-mode:vertical-rl; padding:16px 9px; border-radius:0 12px 12px 0;
+  flex-direction:column; align-items:center; padding:16px 9px; border-radius:0 12px 12px 0;
   background:var(--surface); border:1px solid var(--line); border-left:none; box-shadow:var(--shadow-1);
   font-size:.8rem; font-weight:700; letter-spacing:.12em; color:var(--text-2); cursor:pointer;
   transition:color .18s, padding .18s;
 }
 .readme-tab::before{content:""; display:none; width:6px; height:6px; border-radius:50%; background:var(--red); margin:0 auto 10px;}
 .readme-tab.has-unread::before{display:block;}
+.readme-tab-ico{display:block; width:16px; height:16px; margin-bottom:8px; flex:none;}
+.readme-tab-txt{writing-mode:vertical-rl;}   /* 펼친 책 아이콘 (하단 바 읽어주세요와 동일) */
 .readme-tab:hover{color:var(--red); padding-left:13px;}
-@media (min-width:1360px){ .readme-tab{display:block;} }
+@media (min-width:1360px){ .readme-tab{display:flex;} }
 
 /* ---------- hero ---------- */
 .hero{position:relative; padding:72px 0 64px;}
@@ -336,6 +338,13 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
 .notes{margin-top:14px; display:grid; gap:4px;}
 .note-line{position:relative; padding-left:16px; font-size:.84rem; font-weight:500; line-height:1.65; color:var(--text);}
 .note-line::before{content:""; position:absolute; left:2px; top:calc(1.65em / 2 + 1px); width:5px; height:5px; border-radius:1px; background:var(--tc); transform:translateY(-50%) rotate(45deg);}
+/* 노트 마름모 점: 화면에 보이는 동안만 바깥으로 퍼지는 링 (카드 순서대로 시차) */
+@keyframes noteRing{0%{transform:translateY(-50%) rotate(45deg) scale(1); opacity:1} 70%{transform:translateY(-50%) rotate(45deg) scale(3.6); opacity:0} 100%{transform:translateY(-50%) rotate(45deg) scale(3.6); opacity:0}}
+.note-line::after{content:""; position:absolute; left:2px; top:calc(1.65em / 2 + 1px); width:5px; height:5px; border-radius:1px; pointer-events:none;
+  background:color-mix(in oklab, var(--tc) 75%, transparent); opacity:0; transform:translateY(-50%) rotate(45deg);}
+.notes.ring-on .note-line::after{animation:noteRing 3s ease-out infinite; animation-delay:var(--rd, 0s); will-change:transform, opacity;}
+html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
+@media (prefers-reduced-motion: reduce){ .notes.ring-on .note-line::after{animation:none;} }
 .note-head{font-size:.8rem; font-weight:800; color:var(--tc); letter-spacing:.02em;}
 
 .here-flag{
@@ -447,6 +456,15 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
   background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow-3); padding:24px;
   animation:pop .28s var(--ease);
 }
+/* 둥근 팝업·목록 안 스크롤바: 트랙을 투명하게 하고 위아래 여백을 줘서 모서리가 직각으로 잘려 보이지 않게 */
+.update-modal::-webkit-scrollbar, .guide-modal::-webkit-scrollbar, .custom-select-panel::-webkit-scrollbar{width:12px;}
+.update-modal::-webkit-scrollbar-track, .guide-modal::-webkit-scrollbar-track{background:transparent; margin:20px 0;}
+.custom-select-panel::-webkit-scrollbar-track{background:transparent; margin:16px 0;}
+.update-modal::-webkit-scrollbar-thumb, .guide-modal::-webkit-scrollbar-thumb, .custom-select-panel::-webkit-scrollbar-thumb{
+  background:color-mix(in srgb, var(--text-3) 45%, transparent); border-radius:999px; border:4px solid transparent; background-clip:padding-box;}
+@supports not selector(::-webkit-scrollbar){
+  .update-modal, .guide-modal, .custom-select-panel{scrollbar-width:thin; scrollbar-color:color-mix(in srgb, var(--text-3) 45%, transparent) transparent;}
+}
 @keyframes pop{from{opacity:0; transform:translateY(10px) scale(.98)} to{opacity:1; transform:none}}
 .modal-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px;}
 .modal-head h2{font-size:1.25rem; font-weight:800; letter-spacing:-.02em; margin-top:4px;}
@@ -523,7 +541,9 @@ footer.site-footer .nw{white-space:nowrap;}
   html.lock .dock{right:calc(12px + var(--sbw, 0px));}
   .custom-select{flex:1; min-width:0;}
   .progress-select{width:100%;}
-  .custom-select-panel{left:-6px; transform:none; width:calc(100vw - 24px);}
+  /* 목록은 하단 바(dock) 기준으로 펼쳐 바와 같은 폭·같은 좌우 여백을 갖게 함 */
+  .custom-select{position:static;}
+  .custom-select-panel{left:0; right:0; transform:none; width:auto;}
 }
 @media (min-width:768px){ .routes-section .card-dot, .routes-section .card-link{display:none;} }
 
@@ -534,7 +554,7 @@ footer.site-footer .nw{white-space:nowrap;}
 
 /* chapter background art */
 .card-art{position:absolute; inset:0; border-radius:inherit; pointer-events:none; overflow:hidden;}
-.card-art img{position:absolute; right:0; top:0; width:80%; height:100%; object-fit:cover; object-position:center center;
+.card-art img{position:absolute; right:0; top:0; width:66%; height:100%; object-fit:cover; object-position:center center;
   -webkit-mask-image:linear-gradient(to left, #000 0%, #000 45%, transparent 100%), linear-gradient(to bottom left, #000 0%, rgba(0,0,0,.7) 35%, transparent 80%); mask-image:linear-gradient(to left, #000 0%, #000 45%, transparent 100%), linear-gradient(to bottom left, #000 0%, rgba(0,0,0,.7) 35%, transparent 80%); -webkit-mask-composite:source-in; mask-composite:intersect;
   opacity:0; transition:opacity 1.2s ease;}
 .card-art img.is-on{opacity:1;}
@@ -663,7 +683,7 @@ footer.site-footer .nw{white-space:nowrap;}
   </div>
 </header>
 
-<button type="button" class="readme-tab" id="readmeTab" aria-controls="introDrawer">읽어주세요</button>
+<button type="button" class="readme-tab" id="readmeTab" aria-controls="introDrawer"><svg class="readme-tab-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="readme-tab-txt">읽어주세요</span></button>
 
 <!-- 읽어주세요: left drawer -->
 <div class="drawer-overlay" id="introOverlay">
@@ -1768,6 +1788,13 @@ initScrollTracking();
   setVw(); window.addEventListener("resize", setVw); window.addEventListener("load", setVw);
 })();
 initCardArt();
+/* 노트 링: 화면에 보이는 노트만 애니메이션, 순서대로 0.75초씩 엇갈림 (3초 주기 · 4단계) */
+(function(){
+  if(reduceMotion || !("IntersectionObserver" in window)) return;
+  const RING_STEP = 0.75, RING_PHASES = 4;
+  const io = new IntersectionObserver(es=> es.forEach(e=> e.target.classList.toggle("ring-on", e.isIntersecting)), {rootMargin:"40px 0px"});
+  document.querySelectorAll(".notes").forEach((n, i)=>{ n.style.setProperty("--rd", ((i % RING_PHASES) * RING_STEP) + "s"); io.observe(n); });
+})();
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=> updateScrollState());
 window.addEventListener("load", ()=> updateScrollState());
 </script>

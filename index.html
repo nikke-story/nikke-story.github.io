@@ -97,7 +97,15 @@ button{font-family:inherit; color:inherit;}
 .sr-only{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
 html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after{transition:background-color .25s ease, color .25s ease, border-color .25s ease !important;}
-::view-transition-old(root), ::view-transition-new(root){animation-duration:.28s;}
+/* 테마 전환: 화면 스냅샷의 크기·위치 보간을 끄고 투명도만 바꿈.
+   모바일은 주소창·상태바(theme-color) 변화로 전환 전후 스냅샷 크기가 달라져, 기본 애니메이션이 화면을 늘였다 줄이며 찌그러져 보였음 */
+::view-transition-group(root){animation:none;}
+::view-transition-image-pair(root){isolation:auto;}
+::view-transition-old(root), ::view-transition-new(root){width:100%; height:100%; object-fit:none; object-position:top left; mix-blend-mode:normal; animation-duration:.28s; animation-timing-function:ease;}
+::view-transition-old(root){animation-name:vtFadeOut;}
+::view-transition-new(root){animation-name:vtFadeIn;}
+@keyframes vtFadeOut{from{opacity:1} to{opacity:0}}
+@keyframes vtFadeIn{from{opacity:0} to{opacity:1}}
 
 /* ---------- small primitives ---------- */
 .eyebrow{font-family:var(--font-mono); font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3);}
@@ -297,7 +305,9 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
 #timelineGrid .card.passed, #timelineGrid .routes-section.passed{border-color:color-mix(in oklab, var(--tc) 35%, var(--line));}
 /* 호버 효과는 별도 레이어(::before 테두리, ::after 그림자)의 투명도만 바꿈.
    카드 자체의 border-color/box-shadow를 애니메이션하면 매 프레임 카드 전체(글자 글로우·배경 그림 포함)를 다시 그려 글자가 깜빡여 보였음 */
-.card::before, .card::after, .routes-section::before, .routes-section::after{content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .2s ease; will-change:opacity;}
+.card::before, .card::after, .routes-section::before, .routes-section::after{content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .2s ease;}
+/* 호버가 있는 기기(PC)에서만 별도 레이어로 분리 — 모바일에서 카드마다 레이어가 생기면 스크롤이 무거워짐 */
+@media (hover:hover){ .card::before, .card::after, .routes-section::before, .routes-section::after{will-change:opacity;} }
 .card::before{border:1px solid color-mix(in oklab, var(--tc) 55%, var(--line)); z-index:2;}
 .routes-section::before{border:1px solid color-mix(in oklab, var(--red) 50%, var(--line)); z-index:2;}
 .card::after, .routes-section::after{box-shadow:var(--shadow-2); z-index:-1;}
@@ -318,7 +328,7 @@ html.js .reveal.in-view{opacity:1; translate:0 0;}
 .side-r .card-dot{left:calc(var(--gutter) / -2 - 7px - 1px);}
 .side-r .card-link{left:calc(var(--gutter) / -2 + 7px - 1px); background:linear-gradient(to left, transparent, var(--tc));}
 .card:hover .card-dot{transform:scale(1.2);}
-.card-dot{will-change:transform;} .card-link{will-change:opacity;}   /* 호버 시 카드 전체를 다시 그리지 않도록 별도 레이어로 분리 */
+@media (hover:hover){ .card-dot{will-change:transform;} .card-link{will-change:opacity;} }   /* PC 호버 깜빡임 방지용 레이어 분리 (모바일 제외) */
 .card:hover .card-link{opacity:1;}
 .card.passed .card-dot{background:var(--tc);}
 
@@ -413,6 +423,11 @@ html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
 .dock .icon-btn{width:44px; height:44px; background:transparent; border-color:transparent;}
 .dock .icon-btn:hover{background:var(--surface-3);}
 .dock .icon-btn{position:relative;}
+/* 모바일: 상단 바·하단 바의 배경 흐림(backdrop-filter)은 스크롤할 때마다 뒤 화면을 다시 흐리게 계산해 무거움 → 거의 불투명한 배경으로 대체 */
+@media (max-width:767px){
+  .site-header{-webkit-backdrop-filter:none; backdrop-filter:none; background:color-mix(in srgb, var(--bg) 94%, transparent);}
+  .dock{-webkit-backdrop-filter:none; backdrop-filter:none; background:color-mix(in srgb, var(--surface) 96%, transparent);}
+}
 .dock-unread{position:absolute; top:9px; right:9px; width:8px; height:8px; border-radius:50%; background:var(--red); box-shadow:0 0 0 2px var(--glass-strong); display:none;}
 .has-unread .dock-unread{display:block;}
 .dock-sep{width:1px; height:24px; background:var(--line); margin:0 2px; flex-shrink:0;}

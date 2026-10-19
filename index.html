@@ -97,7 +97,12 @@ button{font-family:inherit; color:inherit;}
 .sr-only{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
 html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after{transition:background-color .25s ease, color .25s ease, border-color .25s ease !important;}
-/* 테마 전환: 브라우저 기본 화면 전환(교차 페이드) 사용 — 별도 설정 없음. 상태바 색은 전환이 끝난 뒤 변경(스크립트) */
+/* 테마 전환: 이전 화면은 그대로 두고, 새 화면이 테마 버튼 위치에서 원형으로 펼쳐짐. 크기·위치 보간 없음. 상태바 색은 전환이 끝난 뒤 변경(스크립트) */
+::view-transition-group(root){animation:none;}
+::view-transition-image-pair(root){isolation:auto;}
+::view-transition-old(root){animation:none; mix-blend-mode:normal;}
+::view-transition-new(root){animation:vtReveal .45s ease-in-out both; mix-blend-mode:normal;}
+@keyframes vtReveal{from{clip-path:circle(0 at var(--vx, 90%) var(--vy, 95%))} to{clip-path:circle(150vmax at var(--vx, 90%) var(--vy, 95%))}}
 
 /* ---------- small primitives ---------- */
 .eyebrow{font-family:var(--font-mono); font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3);}
@@ -1581,6 +1586,8 @@ document.getElementById("themeToggle").addEventListener("click", ()=>{
   const setIcon = ()=>{ document.getElementById("themeToggle").innerHTML = newTheme === "dark" ? SUN_ICON : MOON_ICON; };
   const setMeta = ()=> document.querySelectorAll('meta[name="theme-color"]').forEach(m=> m.setAttribute("content", newTheme === "dark" ? "#0B0C10" : "#F4F5F8"));
   const apply = ()=>{ html.setAttribute("data-theme", newTheme); setIcon(); };
+  const tr = document.getElementById("themeToggle").getBoundingClientRect();   // 원형 전환의 중심 = 테마 버튼
+  html.style.setProperty("--vx", (tr.left + tr.width / 2) + "px"); html.style.setProperty("--vy", (tr.top + tr.height / 2) + "px");
   if(reduceMotion){ apply(); setMeta(); }
   else if(document.startViewTransition){
     // 모바일 상태바 색(theme-color)은 전환이 끝난 뒤에 바꿈 — 전환 중에 바꾸면 화면 영역이 다시 계산돼 찌그러져 보였음

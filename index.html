@@ -97,14 +97,11 @@ button{font-family:inherit; color:inherit;}
 .sr-only{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
 html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after{transition:background-color .25s ease, color .25s ease, border-color .25s ease !important;}
-/* 테마 전환: 화면 스냅샷의 크기·위치 보간을 끄고 투명도만 바꿈.
-   모바일은 주소창·상태바(theme-color) 변화로 전환 전후 스냅샷 크기가 달라져, 기본 애니메이션이 화면을 늘였다 줄이며 찌그러져 보였음 */
+/* 테마 전환 (PC·모바일 공통): 이전 화면은 그대로 두고 새 화면만 서서히 나타남. 크기·위치 보간 없음 */
 ::view-transition-group(root){animation:none;}
 ::view-transition-image-pair(root){isolation:auto;}
-::view-transition-old(root), ::view-transition-new(root){width:100%; height:100%; object-fit:none; object-position:top left; mix-blend-mode:normal; animation-duration:.28s; animation-timing-function:ease;}
-::view-transition-old(root){animation-name:vtFadeOut;}
-::view-transition-new(root){animation-name:vtFadeIn;}
-@keyframes vtFadeOut{from{opacity:1} to{opacity:0}}
+::view-transition-old(root){animation:none; mix-blend-mode:normal;}
+::view-transition-new(root){animation:vtFadeIn .35s ease both; mix-blend-mode:normal;}
 @keyframes vtFadeIn{from{opacity:0} to{opacity:1}}
 
 /* ---------- small primitives ---------- */
@@ -1586,12 +1583,15 @@ function syncThemeIcon(){
 document.getElementById("themeToggle").addEventListener("click", ()=>{
   const html = document.documentElement;
   const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  const apply = ()=>{ html.setAttribute("data-theme", newTheme); syncThemeIcon(); };
-  if(reduceMotion) apply();
-  // 화면 스냅샷 전환(View Transition)은 PC에서만 사용.
-  // 모바일 브라우저는 주소창·상태바 영역 때문에 스냅샷 크기가 실제 화면과 달라 전환 중 화면이 늘어나 찌그러져 보임 → 색상만 부드럽게 바뀌는 방식 사용
-  else if(document.startViewTransition && !matchMedia("(hover: none), (max-width: 767px)").matches) document.startViewTransition(apply);
-  else { html.classList.add("theme-switching"); apply(); setTimeout(()=>html.classList.remove("theme-switching"), 350); }
+  const setIcon = ()=>{ document.getElementById("themeToggle").innerHTML = newTheme === "dark" ? SUN_ICON : MOON_ICON; };
+  const setMeta = ()=> document.querySelectorAll('meta[name="theme-color"]').forEach(m=> m.setAttribute("content", newTheme === "dark" ? "#0B0C10" : "#F4F5F8"));
+  const apply = ()=>{ html.setAttribute("data-theme", newTheme); setIcon(); };
+  if(reduceMotion){ apply(); setMeta(); }
+  else if(document.startViewTransition){
+    // 모바일 상태바 색(theme-color)은 전환이 끝난 뒤에 바꿈 — 전환 중에 바꾸면 화면 영역이 다시 계산돼 찌그러져 보였음
+    document.startViewTransition(apply).finished.then(setMeta, setMeta);
+  }
+  else { html.classList.add("theme-switching"); apply(); setMeta(); setTimeout(()=>html.classList.remove("theme-switching"), 350); }
   try{ localStorage.setItem(THEME_STORAGE_KEY, newTheme); }catch(e){}
 });
 syncThemeIcon();

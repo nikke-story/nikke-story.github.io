@@ -1588,7 +1588,9 @@ document.getElementById("themeToggle").addEventListener("click", ()=>{
   const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
   const apply = ()=>{ html.setAttribute("data-theme", newTheme); syncThemeIcon(); };
   if(reduceMotion) apply();
-  else if(document.startViewTransition) document.startViewTransition(apply);
+  // 화면 스냅샷 전환(View Transition)은 PC에서만 사용.
+  // 모바일 브라우저는 주소창·상태바 영역 때문에 스냅샷 크기가 실제 화면과 달라 전환 중 화면이 늘어나 찌그러져 보임 → 색상만 부드럽게 바뀌는 방식 사용
+  else if(document.startViewTransition && !matchMedia("(hover: none), (max-width: 767px)").matches) document.startViewTransition(apply);
   else { html.classList.add("theme-switching"); apply(); setTimeout(()=>html.classList.remove("theme-switching"), 350); }
   try{ localStorage.setItem(THEME_STORAGE_KEY, newTheme); }catch(e){}
 });

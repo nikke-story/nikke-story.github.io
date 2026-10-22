@@ -618,7 +618,7 @@ footer.site-footer .nw{white-space:nowrap;}
 
 /* 인연 카드 얼굴 배경: 1.5배 확대 · 세로 중앙 · 원형 얼굴에 살짝 걸침 */
 .face-bg{position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none;}
-.face-bg img{position:absolute; top:50%; height:150%; width:auto; aspect-ratio:1; object-fit:cover; transform:translateY(-50%); opacity:0.45; right:86px;
+.face-bg img{position:absolute; top:50%; height:180px; width:auto; aspect-ratio:1; object-fit:cover; transform:translateY(-50%); opacity:0.45; right:86px;
   -webkit-mask-image:linear-gradient(to left, transparent 0%, #000 15%, #000 45%, transparent 100%); mask-image:linear-gradient(to left, transparent 0%, #000 15%, #000 45%, transparent 100%);}
 @media (max-width:767px){ .face-bg img{right:70px;} }
 .card-face{position:absolute; right:20px; top:50%; transform:translateY(-50%); width:80px; height:80px; border-radius:50%; overflow:hidden;
@@ -912,7 +912,7 @@ const BLOCKS_BEFORE = [
     {type:"메인", title:"챕터 21 ~ 24", img:chImgs(21, 24)},
     {type:"이벤트", title:"RED ASH", season:"1주년", meta:["아카이브O","더빙O"], banner:"./images/events/red_ash.webp",
       note:"유실물 스토리 감상 필수<br>하드스테이지 좌측 상단 테이프의 빨간 버튼 이스터에그<br>미니게임 M.O.G는 소소한 떡밥이 있지만 안 봐도 무방"},
-    {type:"블라블라", title:"랩칠리언", meta:["서브퀘스트"], required:true,
+    {type:"블라블라", title:"랩칠리언", face:"./images/sprite/raptilion.webp", meta:["서브퀘스트"], required:true,
       desc:"26지 진입 전",
       note:"스토리 라인에서 감상 가능"}
   ]},

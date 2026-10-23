@@ -277,6 +277,38 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
   transition:background .3s, border-color .3s, color .3s;
 }
 .station-ch{display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:999px; background:var(--surface-3); font-family:var(--font-mono); font-size:.64rem; font-weight:600; letter-spacing:.1em; color:var(--text-3); transition:inherit;}
+/* PROLOGUE 줄 우측 텍스트 버튼: 체크 숨기기 / 전체 체크 */
+.done-tools{position:absolute; right:11px; top:50%; translate:0 -50%; display:flex; gap:6px;}
+.done-tools button{--sc:color-mix(in oklab, var(--red) var(--mix,100%), var(--blue));
+  height:26px; padding:0 11px; border-radius:999px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text-3);
+  font:700 .7rem/1 var(--font); letter-spacing:-.01em; white-space:nowrap; cursor:pointer; transition:background-color .2s, border-color .2s, color .2s;}
+.done-tools button:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+.done-tools{align-items:center;}
+.hide-done{display:inline-flex; align-items:center; gap:5px; padding-left:9px !important;}
+.hide-done svg{width:14px; height:14px; flex:none;}
+.hide-done .eye-slash{display:none;}
+.hide-done.is-on .eye-slash{display:inline;}
+/* 전체 체크: 아이콘 버튼 (없음=회색 / 일부=컬러 체크 / 전부=컬러 채움) */
+.done-tools .done-all{position:relative; width:26px; height:26px; padding:0; border-radius:50%; display:grid; place-items:center;
+  border:1px solid var(--line-strong); background:var(--surface); color:var(--text-3);}   /* 체크 카드 숨기기 버튼과 같은 바탕·테두리 */
+.done-all svg{width:13px; height:13px;}
+.done-all.has-done{color:var(--sc);}
+.done-all.all-done{background:var(--sc); border-color:var(--sc); color:#fff;}
+.done-count{display:none;}
+.show-count .done-all.has-done .done-count{display:grid; place-items:center; position:absolute; top:-7px; right:-9px; min-width:17px; height:17px; padding:0 4px; border-radius:999px;
+  background:var(--sc); color:#fff; font:700 .6rem/1 var(--font-mono); box-shadow:0 0 0 2px var(--bg);}
+.show-count .done-all.all-done .done-count{background:var(--surface); color:var(--sc);}
+.hide-done.is-on{background:var(--sc); border-color:var(--sc); color:#fff;}
+@media (hover:hover){
+  .done-tools button:hover{border-color:var(--sc); color:var(--sc);}
+  .done-tools .done-all:hover{background:var(--surface);}
+  .done-tools .done-all:hover svg{stroke-width:2.8;}
+  .done-tools .done-all.all-done:hover{background:var(--sc); color:#fff;}
+  .hide-done.is-on:hover{color:#fff; filter:brightness(1.08);}
+}
+/* 숨김 처리: 화면과 NOW 목록에서 제외 */
+.done-hidden{display:none !important;}
+.tl-item.is-leaving, .routes-section.is-leaving{opacity:0 !important; scale:.97; transition:opacity .22s ease, scale .22s ease !important;}
 .station-label{font-weight:800; font-size:.92rem; letter-spacing:-.01em; white-space:nowrap;}
 .station.passed .station-pill{background:var(--sc); border-color:var(--sc); color:#fff;}
 .station.passed .station-ch{background:rgba(255,255,255,.2); color:#fff;}
@@ -365,7 +397,6 @@ html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
 }
 
 .routes-section.current-position{border-color:var(--red); box-shadow:0 0 0 3px color-mix(in oklab, var(--red) 16%, transparent), var(--shadow-2);}
-.routes-section .here-flag{left:50%; transform:translateX(-50%);}
 .routes-head{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;}
 .routes-head h3{font-family:var(--font-display); font-size:1.5rem; font-weight:700; letter-spacing:-.03em; margin-top:10px;}
 .routes-head p{font-size:.9rem; color:var(--text-2); margin-top:4px;}
@@ -399,6 +430,14 @@ html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
   border-radius:999px; background:var(--glass-strong); -webkit-backdrop-filter:saturate(1.5) blur(18px); backdrop-filter:saturate(1.5) blur(18px);
   border:1px solid var(--line); box-shadow:var(--shadow-3);
 }
+/* 하단바 좌측 상단 "여기까지 감상" 라벨 — 카드의 here-flag와 같은 모양(그림자 없음) */
+.dock-here{position:absolute; top:-13px; left:18px; z-index:2; display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 11px; max-width:calc(100% - 36px);
+  border:0; border-radius:999px; background:var(--tc, var(--red)); color:#fff; font:700 .7rem/1 var(--font); cursor:pointer; white-space:nowrap;}
+.dock-here[hidden]{display:none;}
+.dock-here svg{width:12px; height:12px; flex:none;}
+.dock-here .dh-title{overflow:hidden; text-overflow:ellipsis; min-width:0;}
+.dock-here .dh-sep{width:1px; height:10px; background:rgba(255,255,255,.55); flex:none;}
+.dock-here .dh-txt{flex:none;}
 @media (min-width:768px){ html.lock .dock{left:calc(50% - var(--sbw, 0px) / 2);} }
 .dock .icon-btn{width:44px; height:44px; background:transparent; border-color:transparent;}
 .dock .icon-btn:hover{background:var(--surface-3);}
@@ -634,6 +673,32 @@ footer.site-footer .nw{white-space:nowrap;}
   -webkit-mask-image:linear-gradient(to left, #000 0%, #000 30%, rgba(0,0,0,.35) 60%, transparent 82%), linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%); mask-image:linear-gradient(to left, #000 0%, #000 30%, rgba(0,0,0,.35) 60%, transparent 82%), linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%); -webkit-mask-composite:source-in; mask-composite:intersect;}
 .routes-section > :not(.routes-art):not(.card-dot):not(.card-link):not(.here-flag){position:relative; z-index:1;}
 
+/* 감상 완료 체크 — 정적 필터만 사용(애니메이션 없음), 이미지·태그 같은 작은 요소에만 적용해 부하 최소화 */
+.done-btn{position:absolute !important; right:10px; bottom:10px; z-index:3 !important; width:26px; height:26px; padding:0; border-radius:50%; border:1.5px solid color-mix(in srgb, var(--text-3) 55%, transparent); background:color-mix(in srgb, var(--surface) 50%, transparent); color:color-mix(in srgb, var(--text-3) 70%, transparent); cursor:pointer; display:grid; place-items:center; transition:background-color .2s, border-color .2s, color .2s;}
+.done-btn svg{width:14px; height:14px;}
+.done-btn:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+/* 원형 테두리는 항상 표시, 원에 마우스를 올렸을 때만 카드 색 체크 표시 */
+@media (hover:hover){ .done-btn:hover{background:var(--surface); border-color:var(--tc); color:var(--tc);} .done-btn:hover svg{stroke-width:2.8;} }   /* 호버 시 바탕을 불투명하게 + 굵은 체크로 카드 색이 또렷하게 */
+/* 완료 시 카드 색(--tc)을 회색으로 — 테두리·연결선·◆까지 흑백. 마커(타임라인 점, 여기까지 감상)는 원래 색(--tco) 유지 */
+:is(.card,.routes-section).is-done{--tco:var(--c-main); --tc:var(--text-3);}
+.card.t-이벤트.is-done, .archive-grid .card.is-done{--tco:var(--c-event);}
+.card.t-사이드.is-done{--tco:var(--c-side);}
+.card.t-인연스토리.is-done, .card.t-블라블라.is-done{--tco:var(--c-bond);}
+.routes-section.is-done{--tco:var(--red);}
+.routes-section.is-done::before{border-color:color-mix(in oklab, var(--text-3) 50%, var(--line));}   /* 분기 호버 테두리는 빨강 고정값이라 따로 회색 처리 */
+.is-done :is(.card-dot,.here-flag){--tc:var(--tco);}
+.card.is-done.current-position{border-color:var(--tco); box-shadow:0 0 0 3px color-mix(in oklab, var(--tco) 16%, transparent), var(--shadow-2);}
+.is-done .done-btn{background:var(--text-3); border-color:var(--text-3); color:var(--surface);}
+@media (hover:hover){ .is-done .done-btn:hover{background:var(--tco); border-color:var(--tco); color:#fff;} }   /* 완료 상태에서 호버하면 원래 카드 색으로 채워짐(해제 가능 안내) */
+.card.is-done :is(.card-art,.ev-art,.card-banner,.face-bg,.card-face) img, .routes-section.is-done .routes-art img{filter:grayscale(1); opacity:.3;}
+.card.is-done .card-art img:not(.is-on){opacity:0;}
+.card.is-done .card-face img{opacity:.6;}
+.is-done :is(.card-tags,.meta-row,.upd-mini){filter:grayscale(1); opacity:.55;}
+.card.is-done :is(.card-title,.card-desc,.notes,.note-line){color:var(--text-3);}
+.routes-section.is-done :is(.routes-head,.routes-note,.note-line){color:var(--text-3);}
+.routes-section.is-done :is(.routes-head p,.route-card p){color:var(--text-3);}
+.routes-section.is-done .routes-grid{filter:grayscale(1); opacity:.6;}
+.is-done .note-line::after{animation:none !important;}
 /* archive event banner: full card width, fades toward bottom-left (same as OLD TALES) */
 .archive-grid .card.has-banner{position:relative;}   /* 배너는 .card-banner가 자체로 잘라냄 — 카드에 overflow:hidden을 두면 호버 그림자가 잘림 */
 .card-banner{position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none;}
@@ -736,7 +801,7 @@ footer.site-footer .nw{white-space:nowrap;}
       <ul class="stats" id="heroStats" aria-label="수록 콘텐츠 수"></ul>
     </div>
   </div>
-  <div class="timeline" id="timelineGrid"></div>
+  <div class="timeline show-count" id="timelineGrid"></div>
 
   <section class="section archive-section" id="archives">
     <div class="section-head">
@@ -790,6 +855,7 @@ footer.site-footer .nw{white-space:nowrap;}
 </main>
 
 <nav class="dock" aria-label="빠른 이동">
+  <button type="button" class="dock-here" id="dockHere" hidden></button>
   <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
   <div class="custom-select" id="progressSelectWrap">
     <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">
@@ -1091,6 +1157,8 @@ const INTRO_NOTICES = [
 ];
 
 const TYPE_VAR = {"메인":"--c-main","이벤트":"--c-event","사이드":"--c-side","인연스토리":"--c-bond","블라블라":"--c-bond"};
+const EYE_ICON = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/><path class="eye-slash" d="M2.5 2.5l11 11"/></svg>`;
+const DONE_ICON = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5"/></svg>`;
 const HERE_ICON = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5"/></svg>`;
 const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -1192,6 +1260,7 @@ function cardHTML(card, chapterKey, n){
     ${card.banner ? `<span class="ev-art" aria-hidden="true"><img${card.logoShift ? ' class="logo-shift"' : ""} src="${card.banner}" alt="" loading="lazy" decoding="async" onerror="this.closest('.card').classList.remove('has-ev-art'); this.parentElement.remove();"></span>` : ""}
     ${card.face && !card.noFaceBg ? `<span class="face-bg" aria-hidden="true"><img src="${card.face}" alt="" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></span>` : ""}
     ${card.face ? `<span class="card-face" aria-hidden="true"><img src="${card.face}" alt="" loading="lazy" decoding="async" onerror="const c=this.closest('.card'); c.classList.remove('has-face'); this.parentElement.remove();"></span>` : ""}
+    <button type="button" class="done-btn" aria-label="감상 완료 표시" aria-pressed="false">${DONE_ICON}</button>
     <div class="card-tags">${tagsHTML(card, true)}</div>
     <h3 class="card-title">${card.title}</h3>
     ${meta}${desc}${note}
@@ -1224,12 +1293,14 @@ function routesHTML(n){
     </div>
     <div class="routes-grid">${items}</div>
     <div class="notes routes-note"><span class="note-head">${ROUTES.noteTitle}</span>${noteLines(ROUTES.note)}</div>
+    <button type="button" class="done-btn" aria-label="감상 완료 표시" aria-pressed="false">${DONE_ICON}</button>
   </section>`;
 }
 
 function stationHTML(label, opts = {}){
   const ch = opts.cap ? "" : `<span class="station-ch">CH</span>`;
-  return `<div class="station reveal${opts.cap ? " station-cap" : ""}"${opts.id ? ` id="${opts.id}"` : ""}><span class="station-pill">${ch}<span class="station-label">${label}</span></span></div>`;
+  const all = opts.id === "prologue" ? `<span class="done-tools"><button type="button" class="hide-done" id="hideDoneBtn" aria-pressed="false">${EYE_ICON}<span>체크 카드 숨기기</span></button><button type="button" class="done-all" aria-label="전체 체크">${DONE_ICON}<span class="done-count" aria-hidden="true"></span></button></span>` : "";
+  return `<div class="station reveal${opts.cap ? " station-cap" : ""}"${opts.id ? ` id="${opts.id}"` : ""}><span class="station-pill">${ch}<span class="station-label">${label}</span></span>${all}</div>`;
 }
 
 /* Rule kept from v1: one card per row, unchanged release order, side decided only by type. */
@@ -1251,7 +1322,7 @@ function renderTimeline(){
   grid.innerHTML = html;
   // hue drift along the spine: red at the start → cobalt at the end
   const stations = grid.querySelectorAll(".station-pill");
-  stations.forEach((p,i)=> p.style.setProperty("--mix", Math.round(100 - (i/(stations.length-1))*100) + "%"));
+  stations.forEach((p,i)=> p.parentElement.style.setProperty("--mix", Math.round(100 - (i/(stations.length-1))*100) + "%"));   /* 구간 전체 체크 버튼도 같은 색을 쓰도록 부모(.station)에 지정 */
 }
 
 function renderArchive(){
@@ -1265,6 +1336,7 @@ function renderArchive(){
       <div class="card-tags"><span class="tag tag-type tt-이벤트">이벤트</span>${a.season ? `<span class="tag tag-season">${a.season}</span>` : ""}</div>
       <h3 class="card-title">${a.title}</h3>
       ${meta}${desc}${note}
+      <button type="button" class="done-btn" aria-label="감상 완료 표시" aria-pressed="false">${DONE_ICON}</button>
     </article>`;
   }).join("");
 }
@@ -1339,8 +1411,28 @@ function setProgressValue(value){
   progressValue = value;
   refreshProgressDisplay();
 }
+function updateDockHere(id){
+  const btn = document.getElementById("dockHere");
+  const el = id && document.getElementById(id);
+  if(!el){ btn.hidden = true; return; }
+  const type = el.dataset.type;
+  if(type && TYPE_VAR[type]) btn.style.setProperty("--tc", `var(${TYPE_VAR[type]})`); else btn.style.removeProperty("--tc");
+  const opt = progressOptions.find(o=> o.value === id);
+  const label = opt ? opt.baseLabel : (type ? `[${type}] ` : "") + (el.dataset.title || "");
+  btn.innerHTML = `${HERE_ICON}<span class="dh-title"></span><span class="dh-sep" aria-hidden="true"></span><span class="dh-txt">여기까지 감상</span>`;
+  btn.querySelector(".dh-title").textContent = label;
+  btn.setAttribute("aria-label", `${label} 여기까지 감상 — 해당 카드로 이동`);
+  btn.dataset.target = id;
+  btn.hidden = false;
+}
+document.getElementById("dockHere").addEventListener("click", (e)=>{
+  const t = document.getElementById(e.currentTarget.dataset.target);
+  if(t) scrollToFast(t);
+});
 function setProgressMarker(value){
   progressMarked = value;
+  updateDockHere(value);
+  if(typeof syncHidden === "function") syncHidden();
   refreshProgressDisplay();
   updateResumeButton();
 }
@@ -1376,7 +1468,7 @@ function renderProgressOptions(){
   };
   BLOCKS_BEFORE.forEach(addBlock);
   addCat("CH 31 – 32");
-  addOpt("routes", "[분기] 31~32 OLD TALES 분기", "메인");
+  addOpt("routes", "[분기] 31~32 OLD TALES", "메인");
   BLOCKS_AFTER.forEach(addBlock);
 }
 
@@ -1452,6 +1544,107 @@ document.getElementById("timelineGrid").addEventListener("click", (e)=>{
   persistCheckedCard(target.id);
   setProgressMarker(target.id);
 });
+
+/* ============ 감상 완료 체크 ============ */
+const DONE_STORAGE_KEY = "nikke-done-cards";
+function doneKey(card){ return card.id || ("ar:" + card.dataset.title); }
+function loadDone(){ try{ return new Set(JSON.parse(localStorage.getItem(DONE_STORAGE_KEY) || "[]")); }catch(e){ return new Set(); } }
+function saveDone(set){ try{ localStorage.setItem(DONE_STORAGE_KEY, JSON.stringify([...set])); }catch(e){} }
+function applyDone(card, on){
+  card.classList.toggle("is-done", on);
+  const b = card.querySelector(".done-btn");
+  if(b){ b.setAttribute("aria-pressed", on ? "true" : "false"); b.setAttribute("aria-label", on ? "감상 완료 해제" : "감상 완료 표시"); }
+}
+function restoreDone(){
+  const set = loadDone();
+  if(set.size) document.querySelectorAll(".card, .routes-section").forEach(c=>{ if(set.has(doneKey(c))) applyDone(c, true); });
+  refreshDoneAll(); syncHidden();
+}
+/* ============ 체크한 카드 숨기기 ============ */
+const HIDE_STORAGE_KEY = "nikke-hide-done";
+let hideDoneOn = false;
+try{ hideDoneOn = localStorage.getItem(HIDE_STORAGE_KEY) === "1"; }catch(e){}
+/* 숨김 대상 = 타임라인의 체크된 카드 중 "여기까지 감상" 카드 제외. 카드와 NOW 목록 항목을 함께 처리 */
+function syncHidden(){
+  const btn = document.getElementById("hideDoneBtn");
+  if(btn){ btn.classList.toggle("is-on", hideDoneOn); btn.setAttribute("aria-pressed", hideDoneOn ? "true" : "false"); }
+  document.querySelectorAll("#timelineGrid .card, #timelineGrid .routes-section").forEach(el=>{
+    if(el.classList.contains("is-leaving")) return;
+    const hide = hideDoneOn && el.classList.contains("is-done") && !el.classList.contains("current-position");
+    el.classList.toggle("done-hidden", hide);
+    const opt = progressOptions.find(o=> o.value === el.id);
+    if(opt) opt.el.classList.toggle("done-hidden", hide);
+  });
+  if(typeof updateScrollState === "function" && trackTargets.length) updateScrollState();
+}
+/* 숨김 모드에서 체크하면: 회색으로 바뀐 걸 잠깐 보여줌 → 제자리에서 흐려지며 사라짐 → 아래 카드들이 부드럽게 올라옴(transform만 사용) */
+function collapseOut(el){
+  setTimeout(()=>{
+    if(!hideDoneOn || !el.classList.contains("is-done") || el.classList.contains("current-position")) return;
+    el.classList.add("is-leaving");
+    setTimeout(()=>{
+      document.documentElement.style.overflowAnchor = "none";   // 브라우저 스크롤 보정이 끼어들면 화면이 튐 → 애니메이션 동안 끔
+      const limit = window.innerHeight * 1.5;
+      const followers = [];
+      for(let n = el.nextElementSibling; n; n = n.nextElementSibling){
+        if(!n.getClientRects().length) continue;
+        const top = n.getBoundingClientRect().top;
+        if(top > limit) break;
+        followers.push([n, top]);
+      }
+      el.classList.remove("is-leaving");
+      syncHidden();
+      followers.forEach(([n, top])=>{
+        const d = top - n.getBoundingClientRect().top;
+        if(d){ n.style.transition = "none"; n.style.transform = `translateY(${d}px)`; }
+      });
+      requestAnimationFrame(()=> requestAnimationFrame(()=>{
+        followers.forEach(([n])=>{ n.style.transition = "transform .4s var(--ease)"; n.style.transform = ""; });
+        setTimeout(()=>{ followers.forEach(([n])=>{ n.style.transition = ""; }); document.documentElement.style.overflowAnchor = ""; }, 450);
+      }));
+    }, 230);
+  }, 300);
+}
+document.addEventListener("click", (e)=>{
+  if(!e.target.closest("#hideDoneBtn")) return;
+  e.stopPropagation();
+  hideDoneOn = !hideDoneOn;
+  try{ localStorage.setItem(HIDE_STORAGE_KEY, hideDoneOn ? "1" : "0"); }catch(e){}
+  syncHidden();
+}, true);
+
+/* 전체 = 메인 타임라인의 카드 + OLD TALES 분기 (추천 아카이브 제외) */
+function allDoneTargets(){ return [...document.querySelectorAll("#timelineGrid .done-btn")].map(b=> b.closest(".card, .routes-section")); }
+function refreshDoneAll(){
+  document.querySelectorAll(".done-all").forEach(b=>{
+    const m = allDoneTargets();
+    const n = m.filter(el=> el.classList.contains("is-done")).length;
+    b.classList.toggle("has-done", n > 0);
+    b.classList.toggle("all-done", m.length > 0 && n === m.length);
+    b.querySelector(".done-count").textContent = n;
+    b.setAttribute("aria-label", n > 0 ? `전체 해제 (체크 ${n}개)` : "전체 체크");
+  });
+}
+document.addEventListener("click", (e)=>{
+  const all = e.target.closest(".done-all");
+  if(all){
+    e.stopPropagation();
+    const m = allDoneTargets();
+    const set = loadDone();
+    const on = !m.some(el=> set.has(doneKey(el)));   // 하나라도 체크돼 있으면 전체 해제, 하나도 없으면 전체 체크
+    m.forEach(el=>{ on ? set.add(doneKey(el)) : set.delete(doneKey(el)); applyDone(el, on); });
+    saveDone(set); refreshDoneAll(); syncHidden();
+    return;
+  }
+  const b = e.target.closest(".done-btn");
+  if(!b) return;
+  e.stopPropagation();
+  const card = b.closest(".card, .routes-section");
+  const set = loadDone(), k = doneKey(card), on = !set.has(k);
+  on ? set.add(k) : set.delete(k);
+  saveDone(set); applyDone(card, on); refreshDoneAll();
+  if(on && hideDoneOn && card.closest("#timelineGrid")) collapseOut(card); else syncHidden();
+}, true);
 
 function restoreCheckedCard(){
   let id;
@@ -1629,12 +1822,14 @@ function updateScrollState(force){
     fill.style.opacity = h > 0 ? "1" : "0";
   }
   for(const el of passTargets){
+    if(!el.getClientRects().length) continue;   // 숨긴 카드 제외
     const top = el.getBoundingClientRect().top + (el.classList.contains("station") ? 18 : 34);
     el.classList.toggle("passed", top < ref);
   }
   if(suppressScrollTracking && !force) return;
   let closest = null, closestDist = Infinity;
   for(const el of trackTargets){
+    if(!el.getClientRects().length) continue;
     const d = Math.abs(el.getBoundingClientRect().top - ref);
     if(d < closestDist){ closestDist = d; closest = el; }
   }
@@ -1770,6 +1965,7 @@ renderDrawerUpdates();
 startLogRotation();
 applyUpdateTags();
 restoreCheckedCard();
+restoreDone();
 initReveal();
 initScrollTracking();
 /* 스크롤바를 제외한 실제 화면 폭 → --vw (히어로 이미지 폭 계산용) */

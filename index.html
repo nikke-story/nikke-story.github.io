@@ -121,6 +121,13 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
 .btn-primary{background:var(--text); color:var(--bg); border-color:var(--text);}
 .btn-primary:hover{background:var(--red); border-color:var(--red); color:#fff;}
 .btn svg{width:16px; height:16px; flex-shrink:0;}
+/* 히어로 세 번째 버튼: 자매 사이트(뉴비 FAQ) — 주요 버튼보다 한 단계 가볍게 */
+.btn-sister{margin-left:auto; background:color-mix(in srgb, var(--surface) 55%, transparent); border-style:dashed; color:var(--text-2); text-decoration:none !important;}   /* 한 줄에 들어가면 오른쪽 끝에 따로 */
+.hero-actions.sister-wrapped .btn-sister{margin-left:0;}   /* 다음 줄로 넘어가면 왼쪽 정렬 */
+.btn-sister .btn-sub{font-size:.78rem;}
+.btn-sister svg{width:14px; height:14px; transition:translate .18s;}
+.btn-sister:hover{border-style:solid; border-color:var(--blue); color:var(--blue);}
+.btn-sister:hover svg{translate:2px -2px;}
 .btn .btn-sub{font-weight:500; color:var(--text-3); overflow:hidden; text-overflow:ellipsis;}
 
 .tag{
@@ -533,6 +540,7 @@ footer.site-footer .wrap{display:flex; flex-wrap:wrap; align-items:center; justi
 footer.site-footer .footer-copy{margin-top:4px; opacity:.85;}
 footer.site-footer .nw{white-space:nowrap;}
 .resource-link{display:inline-flex; align-items:center; gap:6px; font-size:.82rem; font-weight:600; color:var(--text-2); border:1px solid var(--line-strong); padding:8px 14px; border-radius:999px;}
+.footer-links{display:flex; flex-wrap:wrap; gap:8px;}
 .resource-link:hover{border-color:var(--blue); color:var(--blue); text-decoration:none;}
 
 /* ---------- responsive ---------- */
@@ -788,6 +796,7 @@ footer.site-footer .nw{white-space:nowrap;}
       <div class="hero-actions">
         <button type="button" class="btn btn-primary" id="heroReadme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg>읽어주세요 먼저 보기</button>
         <button type="button" class="btn" id="heroResume"></button>
+        <a class="btn btn-sister" href="https://nikke-faq.github.io/"><span class="btn-sub">니케가 처음이라면</span>뉴비 FAQ<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
       </div>
       <div class="hero-meta">최종 업데이트 <time id="lastUpdatedTime" datetime="2026-10-08"><strong id="lastUpdatedDate">2026.10.08</strong></time></div>
     </div>
@@ -849,7 +858,7 @@ footer.site-footer .nw{white-space:nowrap;}
 <li><strong>45 ~ 46지</strong><ul><li>[메인] 챕터 45 ~ 46</li><li>[이벤트] STAR ANIS (3.5주년) · 아카이브O, 더빙O — 스토리에서 무대 영상을 감상한 뒤, 맵으로 나가 무대 앞 카메라맨을 클릭하면 볼 수 있는 SD 버전 무대도 감상을 추천.</li><li>[이벤트] ARK RANGER · 아카이브X, 더빙O</li><li>[이벤트] SCHOOL OF LOCK — 선택 · 아카이브O, 더빙X — 스토리 라인에 포함된 이벤트가 아니라 넘어가도 상관없음. / WAVE TO YOU 이전에 보면 좋음.</li><li>[인연스토리] 나가</li><li>[이벤트] WAVE TO YOU (26' 여름) · 아카이브X, 더빙O</li><li>[이벤트] PROJECT MATIS · 아카이브X, 더빙O</li></ul></li>
 <li><strong>47 ~ 48지</strong><ul><li>[메인] 챕터 47 ~ 48</li><li>[이벤트] GREAT VILLAIN UNION · 아카이브X, 더빙X</li><li>[이벤트] COIN RUSH SHOWDOWN · 아카이브X, 더빙O</li><li>[사이드] GINGERBREAD HOUSE — WAVE TO YOU 이후 감상을 추천.</li></ul></li>
 </ol>
-<h3>추천 아카이브</h3><ul><li>[이벤트] MIRACLE SNOW (22' 겨울) · 아카이브O, 더빙O — 루피 · 메이든 인연스토리 선행 감상 추천 N102 인연스토리 선행 감상 필수</li><li>[이벤트] PERFECT MAID · 아카이브O, 더빙X</li><li>[이벤트] FULL FOOL DAY (23' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li><li>[이벤트] LIAR'S END (24' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li><li>[이벤트] Beauty Full Shot (24' 여름) · 아카이브O, 더빙O — 지나간 여름 이벤트 중 가장 볼만함.</li><li>[이벤트] Phantom Thief VS DETECTIVE · 아카이브O, 더빙X — 뇌 빼고 보기 좋음</li><li>[이벤트] Memories TELLER (콜라보) · 아카이브O, 더빙O — 스텔라블레이드 콜라보</li><li>[이벤트] FOOL BURST DAY (25' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li></ul>
+<h3>추천 아카이브</h3><ul><li>[이벤트] MIRACLE SNOW (22' 겨울) · 아카이브O, 더빙O — 루피 · 메이든 인연스토리 선행 감상 추천 N102 인연스토리 선행 감상 필수</li><li>[이벤트] PERFECT MAID · 아카이브O, 더빙X</li><li>[이벤트] FULL FOOL DAY (23' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li><li>[이벤트] LIAR'S END (24' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li><li>[이벤트] Beauty Full Shot (24' 여름) · 아카이브O, 더빙O — 지나간 여름 이벤트 중 가장 볼만함.</li><li>[이벤트] Phantom Thief VS DETECTIVE · 아카이브O, 더빙X — 뇌 빼고 보기 좋음</li><li>[이벤트] Memories TELLER (콜라보) · 아카이브O, 더빙O — 스텔라블레이드 콜라보 블라블라 롬 선행 감상 추천</li><li>[이벤트] FOOL BURST DAY (25' 만우절) · 아카이브O, 더빙X — 만우절 이벤트는 출시 순서대로 감상</li></ul>
 <h3>추천 콘텐츠</h3><ul><li>【전초기지, 오늘은 쉽니다】 — 21지 이후로 감상을 권장.<ul><li><a href="https://youtu.be/4aL5EzTkX0s">【전초기지, 오늘은 쉽니다 - 카운터스 편】</a></li><li><a href="https://youtu.be/vqh7x5YDyXo">【전초기지, 오늘은 쉽니다 - 마리안 편】</a></li><li><a href="https://youtu.be/y-FM5w6wNZg">【전초기지, 오늘은 쉽니다 - 도로시 편】</a></li><li><a href="https://youtu.be/A1PH5wRrcFQ">【전초기지, 오늘은 쉽니다 - 달란트 편】</a></li></ul></li><li>《MINIKKE 작은 동화집》 — OLD TALES 이후로 감상을 권장.<ul><li><a href="https://youtu.be/UI3a4hrB9uU">《MINIKKE 작은 동화집》 레드 후드 편 - 상</a></li><li><a href="https://youtu.be/02ukcUDb8zQ">《MINIKKE 작은 동화집》 레드 후드 편 - 하</a></li><li><a href="https://youtu.be/lEbU6InyGL0">《MINIKKE 작은 동화집》 스노우 화이트 편 - 상</a></li><li><a href="https://youtu.be/2-ePhm1l_nc">《MINIKKE 작은 동화집》 스노우 화이트 편 - 하</a></li><li><a href="https://youtu.be/0qri80l6oEA">《MINIKKE 작은 동화집》 크라운 편 - 상</a></li><li><a href="https://youtu.be/0VyJpudcbys">《MINIKKE 작은 동화집》 크라운 편 - 하</a></li><li><a href="https://youtu.be/IqfgkCTxdk8">《MINIKKE 작은 동화집》 신데렐라 편 - 상</a></li><li><a href="https://youtu.be/oWu3V0b05OI">《MINIKKE 작은 동화집》 신데렐라 편 - 하</a></li><li><a href="https://youtu.be/gNGCGu-LjgE">《MINIKKE 작은 동화집》 리틀 머메이드 편 - 상</a></li><li><a href="https://youtu.be/a95cjFgW2NM">《MINIKKE 작은 동화집》 리틀 머메이드 편 - 하</a></li></ul></li><li>중년게이머 김실장 — 46지 + STAR ANIS + MIRACLE SNOW + Memories TELLER 이후로 감상을 권장.<ul><li><a href="https://youtu.be/dnGkyG9sFgI">주년마다 유저들을 울리는 게임, 니케 스토리는 어떻게 탄생했나? (니케 시나리오팀 초대석)</a></li></ul></li></ul>
 </section>
 </noscript>
@@ -939,7 +948,10 @@ footer.site-footer .nw{white-space:nowrap;}
       <div class="footer-note">본 가이드는 니케의 스토리 감상 순서를 보다 쉽게 확인할 수 있도록 구성한 비공식 팬 가이드입니다.</div>
       <div class="footer-copy">사이트에 사용된 게임 이미지의 저작권은 <span class="nw">© SHIFT UP Corp.</span> 및 <span class="nw">© PROXIMA BETA PTE. LTD.</span>에 있으며, 비영리 정보 제공 목적으로만 사용합니다.</div>
     </div>
+    <div class="footer-links">
+    <a class="resource-link" href="https://nikke-faq.github.io/">↗ 니케 뉴비 FAQ</a>
     <a class="resource-link" href="https://docs.google.com/spreadsheets/d/1RfUML43ek5Vcrf3DPUGsueBF1ytCBb90InB4zKJr3FA/edit?gid=0#gid=0" target="_blank" rel="noopener">↗ 니케 스토리 출시 순서 정리 구글시트</a>
+    </div>
   </div>
 </footer>
 <script>
@@ -1109,7 +1121,7 @@ const ARCHIVE_ITEMS = [
   {title:"Phantom Thief VS DETECTIVE", meta:["아카이브O","더빙X"], banner:"./images/events/phantom_thief_vs_detective.webp", logoShift:true,
     desc:"뇌 빼고 보기 좋음"},
   {title:"Memories TELLER", season:"콜라보", meta:["아카이브O","더빙O"], banner:"./images/events/memories_teller.webp",
-    desc:"스텔라블레이드 콜라보"},
+    desc:"스텔라블레이드 콜라보", note:"블라블라 롬 선행 감상 추천"},
   {title:"FOOL BURST DAY", season:"25' 만우절", meta:["아카이브O","더빙X"], banner:"./images/events/fool_burst_day.webp",
     desc:"만우절 이벤트는 출시 순서대로 감상"}
 ];
@@ -1677,7 +1689,22 @@ function updateResumeButton(){
   }else{
     btn.textContent = "처음부터 보기 →";
   }
+  fitSisterBtn();
 }
+/* 뉴비 FAQ 버튼이 다음 줄로 넘어갔는지 확인해 정렬만 바꿈 (CSS만으로는 줄바꿈 여부를 알 수 없음) */
+function fitSisterBtn(){
+  const wrap = document.querySelector(".hero-actions"), sis = wrap && wrap.querySelector(".btn-sister");
+  if(!sis) return;
+  wrap.classList.remove("sister-wrapped");
+  if(sis.offsetTop > wrap.firstElementChild.offsetTop + 4) wrap.classList.add("sister-wrapped");
+}
+(function(){
+  const wrap = document.querySelector(".hero-actions");
+  if(!wrap) return;
+  let lastW = 0;
+  new ResizeObserver(([e])=>{ const w = Math.round(e.contentRect.width); if(w !== lastW){ lastW = w; fitSisterBtn(); } }).observe(wrap);
+  if(document.fonts) document.fonts.ready.then(fitSisterBtn);
+})();
 document.getElementById("heroResume").addEventListener("click", ()=>{
   const t = progressMarked ? document.getElementById(progressMarked) : document.getElementById("orderHead");
   scrollToFast(t, progressMarked ? undefined : 80);

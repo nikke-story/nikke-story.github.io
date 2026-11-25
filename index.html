@@ -233,9 +233,66 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
 .btn.has-unread::after{content:""; flex:none; width:7px; height:7px; margin-left:-2px; border-radius:50%; background:var(--red); align-self:flex-start; margin-top:12px;}
 .btn-primary.has-unread:hover::after{background:#fff;}
 .readme-tab-ico{display:block; width:16px; height:16px; margin-bottom:8px; flex:none;}
+/* 읽어주세요 아이콘: 시프티 얼굴 (이미지가 없으면 기존 책 아이콘) */
+.rd-face{position:relative; display:block; flex:none; border-radius:50%; background:color-mix(in srgb, var(--red) 12%, var(--surface)); box-shadow:0 0 0 1.5px color-mix(in srgb, currentColor 35%, transparent);}
+.rd-face img{width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block; border-radius:50%;}
+/* 새 업데이트 레드닷: 얼굴 오른쪽 위 바깥 (얼굴이 있을 때만, 기존 점은 숨김) */
+.has-unread .rd-face::after{content:""; position:absolute; top:-3px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--red); box-shadow:0 0 0 2px var(--surface);}
+.btn-primary.has-unread .rd-face::after{box-shadow:0 0 0 2px var(--text);}
+.btn-primary.has-unread:hover .rd-face::after{background:#fff; box-shadow:0 0 0 2px var(--red);}
+.dock .has-unread .rd-face::after, .dock .icon-btn.has-unread .rd-face::after{box-shadow:0 0 0 2px var(--glass-strong);}
+.btn.has-unread:has(.rd-face)::after, .readme-tab.has-unread:has(.rd-face)::before, .icon-btn:has(.rd-face) .dock-unread{display:none !important;}
+#drawerTour .rd-face{width:22px; height:22px; margin-left:-6px;}
+.rd-face + svg{display:none;}
+.btn .rd-face{width:24px; height:24px; margin-left:-6px;}
+.dock .icon-btn .rd-face{width:28px; height:28px;}
+.readme-tab .rd-face{width:24px; height:24px; margin:0 auto 8px;}
 .readme-tab-txt{writing-mode:vertical-rl;}   /* 펼친 책 아이콘 (하단 바 읽어주세요와 동일) */
 .readme-tab:hover{color:var(--red); padding-left:13px;}
 @media (min-width:1360px){ .readme-tab{display:flex;} }
+
+/* ---------- 사이트 둘러보기 (첫 방문 튜토리얼) ---------- */
+.tour-layer{position:fixed; inset:0; z-index:200; display:none;}
+.tour-layer.on{display:block;}
+.tour-hole{position:fixed; border-radius:16px; box-shadow:0 0 0 9999px rgba(8,10,16,.62), 0 0 0 2px rgba(255,255,255,.85) inset; pointer-events:none;
+  transition:top .35s var(--ease), left .35s var(--ease), width .35s var(--ease), height .35s var(--ease);}
+.tour-layer.no-hole .tour-hole{top:50% !important; left:50% !important; width:0 !important; height:0 !important; box-shadow:0 0 0 9999px rgba(8,10,16,.62);}
+.tour-bubble{position:fixed; width:min(360px, calc(100vw - 32px)); padding:16px 16px 14px; border-radius:18px; background:var(--surface); color:var(--text); border:1px solid var(--line);
+  box-shadow:var(--shadow-3); transition:top .35s var(--ease), left .35s var(--ease), opacity .2s; }
+.tour-bubble::before{content:""; position:absolute; left:var(--tail-x, 40px); width:14px; height:14px; background:inherit; border:inherit; border-right:0; border-bottom:0; translate:-50% 0;}
+.tour-bubble.tail-top::before{top:-8px; rotate:45deg;}
+.tour-bubble.tail-bottom::before{bottom:-8px; rotate:225deg;}
+.tour-bubble.tail-none::before{display:none;}
+.tour-head{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+.tour-face{width:42px; height:42px; border-radius:50%; overflow:hidden; flex:none; background:color-mix(in srgb, var(--c-bond) 14%, var(--surface)); box-shadow:0 0 0 2px var(--surface), 0 0 0 3.5px color-mix(in srgb, var(--c-bond) 55%, transparent);}
+.tour-face img{width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;}
+.tour-name{font-size:.8rem; font-weight:800;}
+.tour-step{font-family:var(--font-mono); font-size:.7rem; color:var(--text-3);}
+.tour-head .tour-skip{margin-left:auto; height:28px; padding:0 4px; border:0; background:none; color:var(--text-3); font:600 .76rem/1 var(--font); cursor:pointer;}
+.tour-head .tour-skip:hover{color:var(--text);}
+.tour-head .tour-skip[hidden]{display:none;}
+.done-btn.tour-demo-check{background:var(--surface); border-color:var(--tc); color:var(--tc);}
+.done-btn.tour-demo-check svg{stroke-width:2.8;}
+.tour-foot{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:12px;}
+.tour-foot:empty, .tour-foot.is-empty{display:none;}
+.tour-text{font-size:.92rem; line-height:1.65; color:var(--text);}
+.tour-text b{color:var(--red); font-weight:700;}
+.tour-actions{display:flex; align-items:center; gap:6px; margin-top:14px;}
+.tour-actions button{height:34px; padding:0 14px; border-radius:999px; font:700 .8rem/1 var(--font); cursor:pointer; border:1px solid var(--line-strong); background:var(--surface); color:var(--text-2);}
+.tour-actions .tour-next{margin-left:auto; background:var(--text); border-color:var(--text); color:var(--bg);}
+.tour-actions .tour-next:hover{background:var(--red); border-color:var(--red); color:#fff;}
+.tour-actions .tour-later{border-color:transparent; background:none; color:var(--text-3); padding:0 6px;}
+.tour-actions button:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+.tour-dots{display:flex; gap:4px;}
+.tour-dots i{width:6px; height:6px; border-radius:50%; background:var(--line-strong);}
+.tour-dots i.on{background:var(--red); width:16px; border-radius:999px;}
+@media (prefers-reduced-motion: reduce){ .tour-hole, .tour-bubble{transition:none;} }
+.tour-instant .tour-hole, .tour-instant .tour-bubble{transition:none !important;}
+/* 두 곳을 함께 비출 때(여기까지 감상 + 하단바): 어두운 막에 구멍 두 개를 뚫고, 테두리는 각 구멍에 */
+.tour-dim{position:fixed; inset:0; background:rgba(8,10,16,.62); display:none; pointer-events:none;}
+.tour-hole2{display:none;}
+.tour-layer.dual .tour-dim, .tour-layer.dual .tour-hole2{display:block;}
+.tour-layer.dual .tour-hole{box-shadow:0 0 0 2px rgba(255,255,255,.85) inset; transition:none;}   /* 화면이 이동한 단계는 위치를 바로 맞춤 */
 
 /* ---------- hero ---------- */
 .hero{position:relative; padding:72px 0 64px;}
@@ -491,24 +548,24 @@ html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
 .custom-select-option.active{background:var(--surface-3); font-weight:700;}
 
 /* ---------- modals ---------- */
-.update-modal-overlay, .guide-modal-overlay{
+.update-modal-overlay{
   display:none; position:fixed; inset:0; z-index:100; background:var(--scrim);
   align-items:center; justify-content:center; padding:20px;
 }
-.update-modal-overlay.open, .guide-modal-overlay.open{display:flex;}
-.update-modal, .guide-modal{
+.update-modal-overlay.open{display:flex;}
+.update-modal{
   width:min(560px, 100%); max-height:82vh; overflow-y:auto; overscroll-behavior:contain;
   background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow-3); padding:24px;
   animation:pop .28s var(--ease);
 }
 /* 둥근 팝업·목록 안 스크롤바: 트랙을 투명하게 하고 위아래 여백을 줘서 모서리가 직각으로 잘려 보이지 않게 */
-.update-modal::-webkit-scrollbar, .guide-modal::-webkit-scrollbar, .custom-select-panel::-webkit-scrollbar{width:12px;}
-.update-modal::-webkit-scrollbar-track, .guide-modal::-webkit-scrollbar-track{background:transparent; margin:20px 0;}
+.update-modal::-webkit-scrollbar, .custom-select-panel::-webkit-scrollbar{width:12px;}
+.update-modal::-webkit-scrollbar-track{background:transparent; margin:20px 0;}
 .custom-select-panel::-webkit-scrollbar-track{background:transparent; margin:16px 0;}
-.update-modal::-webkit-scrollbar-thumb, .guide-modal::-webkit-scrollbar-thumb, .custom-select-panel::-webkit-scrollbar-thumb{
+.update-modal::-webkit-scrollbar-thumb, .custom-select-panel::-webkit-scrollbar-thumb{
   background:color-mix(in srgb, var(--text-3) 45%, transparent); border-radius:999px; border:4px solid transparent; background-clip:padding-box;}
 @supports not selector(::-webkit-scrollbar){
-  .update-modal, .guide-modal, .custom-select-panel{scrollbar-width:thin; scrollbar-color:color-mix(in srgb, var(--text-3) 45%, transparent) transparent;}
+  .update-modal, .custom-select-panel{scrollbar-width:thin; scrollbar-color:color-mix(in srgb, var(--text-3) 45%, transparent) transparent;}
 }
 @keyframes pop{from{opacity:0; transform:translateY(10px) scale(.98)} to{opacity:1; transform:none}}
 .modal-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px;}
@@ -527,15 +584,6 @@ html.lock .notes.ring-on .note-line::after{animation-play-state:paused;}
 .log-text{font-size:.88rem; color:var(--text-2);}
 .log-text strong{color:var(--text); font-weight:700;}
 
-.guide-body{font-size:.88rem; line-height:1.75; color:var(--text-2);}
-.guide-body .guide-lead{color:var(--text); margin-bottom:6px;}
-.guide-body h3{font-size:.95rem; font-weight:800; color:var(--text); margin:0 0 8px; display:flex; align-items:center; gap:10px;}
-.guide-body h3 .gnum{font-family:var(--font-mono); font-size:.7rem; color:var(--red); font-weight:600;}
-.guide-body p{margin-bottom:8px;}
-.guide-body ul{margin:6px 0 10px 18px;}
-.guide-body li{margin-bottom:4px;}
-.guide-body strong{color:var(--text); font-weight:700;}
-.guide-body hr{border:none; border-top:1px solid var(--line); margin:20px 0;}
 
 /* ---------- footer ---------- */
 footer.site-footer{margin-top:120px; padding:32px 0 24px; border-top:1px solid var(--line); font-size:.8rem; color:var(--text-3);}
@@ -752,7 +800,7 @@ footer.site-footer .nw{white-space:nowrap;}
   </div>
 </header>
 
-<button type="button" class="readme-tab" id="readmeTab" aria-controls="introDrawer"><svg class="readme-tab-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="readme-tab-txt">읽어주세요</span></button>
+<button type="button" class="readme-tab" id="readmeTab" aria-controls="introDrawer"><span class="rd-face" aria-hidden="true"><img src="./images/sprite/si_c907_00_s.png" alt="" onerror="this.parentElement.remove()"></span><svg class="readme-tab-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="readme-tab-txt">읽어주세요</span></button>
 
 <!-- 읽어주세요: left drawer -->
 <div class="drawer-overlay" id="introOverlay">
@@ -783,7 +831,7 @@ footer.site-footer .nw{white-space:nowrap;}
       </section>
     </div>
     <div class="drawer-foot">
-      <button type="button" class="btn" id="drawerGuide">이용 가이드</button>
+      <button type="button" class="btn" id="drawerTour"><span class="rd-face" aria-hidden="true"><img src="./images/sprite/si_c907_00_s.png" alt="" onerror="this.parentElement.remove()"></span>사이트 둘러보기</button>
       <button type="button" class="btn btn-primary" id="drawerStart">감상 순서 보기 →</button>
     </div>
   </aside>
@@ -797,7 +845,7 @@ footer.site-footer .nw{white-space:nowrap;}
       <h1><span class="h1-en">NIKKE</span> 스토리 감상 순서 추천</h1>
       <p class="hero-lead">메인 · 사이드 · 이벤트로 구분되어 있지만 하나의 메인 스토리로 이어집니다. 카드를 눌러 감상 위치를 저장할 수 있어요.</p>
       <div class="hero-actions">
-        <button type="button" class="btn btn-primary" id="heroReadme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg>읽어주세요 먼저 보기</button>
+        <button type="button" class="btn btn-primary" id="heroReadme"><span class="rd-face" aria-hidden="true"><img src="./images/sprite/si_c907_00_s.png" alt="" onerror="this.parentElement.remove()"></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg>읽어주세요 먼저 보기</button>
         <button type="button" class="btn" id="heroResume"></button>
         <a class="btn btn-sister" href="https://nikke-faq.github.io/"><span class="btn-sub">니케가 처음이라면</span>뉴비 FAQ<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
       </div>
@@ -871,7 +919,7 @@ footer.site-footer .nw{white-space:nowrap;}
 
 <nav class="dock" aria-label="빠른 이동">
   <button type="button" class="dock-here" id="dockHere" hidden></button>
-  <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
+  <button class="icon-btn" id="dockReadme" aria-label="읽어주세요" title="읽어주세요"><span class="rd-face" aria-hidden="true"><img src="./images/sprite/si_c907_00_s.png" alt="" onerror="this.parentElement.remove()"></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><path d="M10 5.5C8.5 4.3 6.3 3.8 3 4v11c3.3-.2 5.5.3 7 1.5 1.5-1.2 3.7-1.7 7-1.5V4c-3.3-.2-5.5.3-7 1.5z"/><path d="M10 5.5v11"/></svg><span class="dock-unread" aria-hidden="true"></span></button>
   <div class="custom-select" id="progressSelectWrap">
     <button type="button" class="progress-select custom-select-trigger" id="progressSelectTrigger" aria-haspopup="listbox" aria-expanded="false">
       <span class="ps-label">NOW</span><span class="ps-value" id="progressSelectValue">진행도</span>
@@ -892,57 +940,15 @@ footer.site-footer .nw{white-space:nowrap;}
   </div>
 </div>
 
-<div class="guide-modal-overlay" id="guideModalOverlay">
-  <div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-label="NIKKE 스토리 가이드 이용 방법">
-    <div class="modal-head">
-      <div><div class="eyebrow">How to use</div><h2>이용 가이드</h2></div>
-      <button type="button" class="modal-close" id="guideModalClose" aria-label="닫기">×</button>
-    </div>
-    <div class="guide-body">
-      <p class="guide-lead">처음 방문하셨다면 아래 내용을 먼저 확인해주세요.<br>이 가이드는 <strong>승리의 여신: NIKKE의 스토리를 어떤 순서로 감상하면 되는지</strong> 한눈에 확인할 수 있도록 구성되어 있습니다.</p>
-      <hr>
-      <h3><span class="gnum">01</span>기본적인 감상 방법</h3>
-      <p>각 카드는 메인 스토리와 이벤트 스토리 등을 감상 순서에 맞춰 배치하고 있으며, 카드에 표시된 태그를 통해 해당 콘텐츠의 특징을 확인할 수 있습니다.</p>
-      <ul>
-        <li><strong>필수</strong> — 스토리 이해를 위해 감상을 권장하는 콘텐츠</li>
-        <li><strong>선택</strong> — 본편 감상에 필수는 아니지만 감상하면 좋은 콘텐츠</li>
-        <li><strong>아카이브</strong> — 해당 콘텐츠의 아카이브 지원 여부를 표시</li>
-        <li><strong>더빙</strong> — 해당 콘텐츠의 더빙 지원 여부를 표시</li>
-      </ul>
-      <p>카드의 세부 설명도 함께 확인하면서 진행해주세요.</p>
-      <hr>
-      <h3><span class="gnum">02</span>「읽어주세요」 먼저 확인하기</h3>
-      <p>페이지를 처음 이용한다면 가장 먼저 <strong>[읽어주세요]</strong>를 확인하는 것을 권장합니다.</p>
-      <p>여기에는 이 가이드의 기본적인 감상 기준과 함께,</p>
-      <ul>
-        <li>히스토리 순서와 실제 감상 순서의 차이</li>
-        <li>별도로 확인할 필요가 있는 스토리</li>
-      </ul>
-      <p>등의 중요한 내용이 정리되어 있습니다.</p>
-      <p>특히 <strong>필독 포인트</strong>에 있는 내용은 스토리를 보기 전에 확인하는 것이 좋습니다.</p>
-      <hr>
-      <h3><span class="gnum">03</span>진행도를 확인하면서 따라가기</h3>
-      <p>하단의 진행도를 선택하면 해당 위치로 이동할 수 있어 원하는 구간을 빠르게 찾을 수 있습니다.</p>
-      <hr>
-      <h3><span class="gnum">04</span>카드는 클릭해서 사용할 수 있습니다</h3>
-      <p>각 스토리 카드는 단순한 정보 표시뿐만 아니라 일부 기능을 제공합니다.</p>
-      <p>카드를 클릭하면 해당 카드에 마커를 남길 수 있으며 위치를 저장합니다.</p>
-      <p>다시 클릭하면 마커를 해제할 수 있습니다.</p>
-      <p>읽어주세요는 하단 바의 [읽어주세요] 버튼으로 언제든 열고 닫을 수 있습니다.</p>
-      <hr>
-      <h3><span class="gnum">05</span>OLD TALES 구간은 원하는 루트를 선택</h3>
-      <p>OLD TALES 구간은 31~32지와의 진행 순서에 따라 여러 감상 루트를 선택할 수 있습니다.</p>
-      <p>가이드에서는 각 루트를 별도로 안내하고 있으므로 해당 구간의 설명을 확인한 뒤 자신의 상황에 맞는 루트를 선택하면 됩니다.</p>
-      <hr>
-      <h3><span class="gnum">06</span>추천 아카이브</h3>
-      <p>[추천 아카이브]는 메인 스토리 진행과는 별도로, 감상하면 좋은 과거 이벤트를 모아둔 공간입니다.</p>
-      <p>현재 진행 중인 메인 스토리를 우선 따라가고 싶다면 나중에 감상해도 됩니다.</p>
-      <hr>
-      <h3><span class="gnum">07</span>추천 콘텐츠</h3>
-      <p>[추천 콘텐츠]에는 공식적으로 공개된 영상 콘텐츠가 정리되어 있습니다.</p>
-      <p>이곳의 영상들은 <strong>메인 스토리 진행 순서에 포함되는 콘텐츠가 아니라 추가로 감상할 수 있는 추천 콘텐츠</strong>입니다.</p>
-      <p>카드를 클릭하면 해당 YouTube 영상으로 이동할 수 있습니다.</p>
-    </div>
+<div class="tour-layer" id="tourLayer" aria-hidden="true">
+  <div class="tour-dim" id="tourDim"></div>
+  <div class="tour-hole" id="tourHole"></div>
+  <div class="tour-hole tour-hole2" id="tourHole2"></div>
+  <div class="tour-bubble" id="tourBubble" role="dialog" aria-modal="true" aria-labelledby="tourText">
+    <div class="tour-head"><span class="tour-face"><img src="./images/sprite/si_c907_00_s.png" alt="" onerror="this.parentElement.remove()"></span><span class="tour-name">시프티</span><button type="button" class="tour-skip" id="tourSkip">건너뛰기</button></div>
+    <div class="tour-text" id="tourText"></div>
+    <div class="tour-actions" id="tourActions"></div>
+    <div class="tour-foot"><span class="tour-dots" id="tourDots"></span><span class="tour-step" id="tourStep"></span></div>
   </div>
 </div>
 
@@ -1762,7 +1768,7 @@ document.getElementById("drawerStart").addEventListener("click", ()=>{
   closeIntro();
   setTimeout(()=> scrollToFast(document.getElementById("orderHead"), 80, 500), 120);
 });
-document.getElementById("drawerGuide").addEventListener("click", ()=>{ closeIntro(); openGuideModal(); });
+document.getElementById("drawerTour").addEventListener("click", ()=>{ closeIntro(); setTimeout(()=> Tour.start(), 250); });
 /* Red dot rule: the stored value is the "signature" of the latest update the visitor has seen
    (latest date + every title on that date). Closing 읽어주세요 or opening the update popup stores it.
    A new update (new date, or a new entry on the same date) changes the signature → the dot returns.
@@ -1787,27 +1793,166 @@ function markUpdatesSeen(){
   if(!seen){
     // true first visit: dot + auto-open (unless a saved position exists)
     setUnread(true);
-    if(!hasMarker) setTimeout(openIntro, 500);
+    // 첫 방문: 둘러보기 안내 → (끝나거나 건너뛰면) 읽어주세요
+    if(!hasMarker) setTimeout(()=> Tour.offer(openIntro), 500);
   }else if(seen !== updateSignature()){
     // returning visitor with an unseen update: dot only, no auto-open
     setUnread(true);
   }
 })();
 
-/* ============ Guide modal ============ */
-function openGuideModal(){ document.getElementById("guideModalOverlay").classList.add("open"); lockScroll(true); }
-function closeGuideModal(){
-  const o = document.getElementById("guideModalOverlay");
-  if(!o.classList.contains("open")) return;
-  o.classList.remove("open"); lockScroll(false);
-}
-document.getElementById("guideModalClose").addEventListener("click", closeGuideModal);
-document.getElementById("guideModalOverlay").addEventListener("click", (e)=>{ if(e.target.id === "guideModalOverlay") closeGuideModal(); });
-
 document.addEventListener("keydown", (e)=>{
   if(e.key !== "Escape") return;
-  closeProgressPanel(); closeGuideModal(); closeUpdateModal(); closeIntro();
+  if(Tour.active()) return;   // 둘러보기 중에는 Esc를 둘러보기 종료에만 사용
+  closeProgressPanel(); closeUpdateModal(); closeIntro();
 });
+
+/* ============ 사이트 둘러보기 (첫 방문 튜토리얼) ============ */
+const Tour = (function(){
+  const KEY = "nikke-tour-done";
+  const STEPS = [
+    {sel:null, text:"반가워요, 지휘관님! 저는 <b>시프티</b>예요. 이 사이트는 니케 스토리를 <b>어떤 순서로 보면 좋을지</b> 정리한 가이드예요. 지금부터 사용법을 하나씩 알려드릴게요."},
+    {sel:"#heroReadme", text:"지휘관님, 스토리를 보기 전에 꼭 알아둘 내용은 여기 <b>읽어주세요</b>에 정리되어 있어요. 새 업데이트가 있으면 빨간 점으로 알려드릴게요."},
+    {sel:"#timelineGrid .card", text:()=> innerWidth >= 768
+      ? "감상 순서는 위에서 아래로 이어져요. <b>왼쪽은 메인 · 사이드</b>, <b>오른쪽은 이벤트 · 인연스토리</b>예요."
+      : "감상 순서는 위에서 아래로 이어져요. 카드 왼쪽 위의 <b>태그 색</b>으로 메인 · 이벤트 · 사이드 · 인연스토리를 구분할 수 있어요."},
+    {sel:"#timelineGrid .card", demo:"here", also:".dock", pad:18, text:"카드를 누르면 이렇게 <b>여기까지 감상</b> 표시가 남아요. 아래 바에도 같은 표시가 떠서, 누르면 언제든 그 자리로 돌아갈 수 있어요."},
+    {sel:"#timelineGrid .card .done-btn", demo:"check", pad:8, round:"50%", text:"다 본 스토리는 카드 오른쪽 아래 <b>체크</b>를 눌러 주세요. 카드가 회색으로 바뀌어서 어디까지 봤는지 한눈에 보여요."},
+    {sel:".done-tools", pad:8, text:"체크한 카드는 <b>체크 카드 숨기기</b>로 감출 수 있어요. 오른쪽 버튼으로 한 번에 체크하거나 풀 수도 있고요."},
+    {sel:".dock", pad:6, text:"아래 바에서는 지금 보고 있는 위치가 보여요. 목록을 열면 원하는 스토리로 <b>바로 이동</b>할 수 있어요."},
+    {sel:"#archives .section-head", text:"감상 순서를 다 따라오셨다면 <b>추천 아카이브</b>도 확인해 주세요. 메인 스토리와 별개로 감상하면 좋은 지난 이벤트들이에요."},
+    {sel:"#contents .section-head", text:"<b>추천 콘텐츠</b>에는 감상 순서에는 없지만 함께 보면 좋은 콘텐츠를 모아 뒀어요."},
+    {sel:null, top:true, text:"안내는 여기까지예요. 그럼 즐거운 감상 되세요, 지휘관님! 다시 보고 싶으시면 읽어주세요 창의 <b>사이트 둘러보기</b>를 눌러 주세요."}
+  ];
+  const layer = document.getElementById("tourLayer"), hole = document.getElementById("tourHole"), bub = document.getElementById("tourBubble");
+  const skipEl = document.getElementById("tourSkip");
+  const textEl = document.getElementById("tourText"), stepEl = document.getElementById("tourStep"), actEl = document.getElementById("tourActions"), dotsEl = document.getElementById("tourDots");
+  let i = -1, mode = null, onEnd = null, raf = 0, returnFocus = null, demoEl = null;
+  // 3단계 예시: 첫 카드에 "여기까지 감상" 태그를 잠깐 보여줌(저장하지 않음)
+  const dock = document.querySelector(".dock"), dim = document.getElementById("tourDim"), hole2 = document.getElementById("tourHole2");
+  let dockDemo = false;
+  const rr = (x,y,w,h,r)=> `M${x+r} ${y}H${x+w-r}A${r} ${r} 0 0 1 ${x+w} ${y+r}V${y+h-r}A${r} ${r} 0 0 1 ${x+w-r} ${y+h}H${x+r}A${r} ${r} 0 0 1 ${x} ${y+h-r}V${y+r}A${r} ${r} 0 0 1 ${x+r} ${y}Z`;
+  function clearDemo(){
+    if(demoEl){ demoEl.classList.remove("current-position", "tour-demo-check"); demoEl = null; }
+    if(dockDemo){ dockDemo = false; if(typeof updateDockHere === "function") updateDockHere(progressMarked); }
+  }
+  function applyDemo(el){
+    const d = STEPS[i].demo;
+    if(!el || !d) return;
+    if(d === "here"){
+      if(!el.classList.contains("current-position")){ el.classList.add("current-position"); demoEl = el; }
+      if(typeof updateDockHere === "function"){ updateDockHere(el.id); dockDemo = true; }   // 하단바 라벨도 함께 보여줌(저장 안 함)
+    }
+    if(d === "check"){ el.classList.add("tour-demo-check"); demoEl = el; }   // 4단계 예시: 체크 버튼을 카드 색으로
+  }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const done = ()=>{ try{ return localStorage.getItem(KEY) === "1"; }catch(e){ return false; } };
+  const markDone = ()=>{ try{ localStorage.setItem(KEY, "1"); }catch(e){} };
+
+  function target(){ const st = STEPS[i]; return st && st.sel ? document.querySelector(st.sel) : null; }
+  function place(){
+    const el = mode === "tour" ? target() : null, st = STEPS[i] || {};
+    const vw = innerWidth, vh = innerHeight, bw = bub.offsetWidth, bh = bub.offsetHeight, gap = 14;
+    bub.classList.remove("tail-top", "tail-bottom", "tail-none");
+    if(!el){
+      layer.classList.remove("dual");
+      layer.classList.add("no-hole");
+      bub.style.left = Math.round((vw - bw) / 2) + "px"; bub.style.top = Math.round((vh - bh) / 2) + "px";
+      bub.classList.add("tail-none"); return;
+    }
+    layer.classList.remove("no-hole");
+    const r = el.getBoundingClientRect(), pad = st.pad ?? 10;
+    Object.assign(hole.style, {top:(r.top - pad) + "px", left:(r.left - pad) + "px", width:(r.width + pad * 2) + "px", height:(r.height + pad * 2) + "px", borderRadius: st.round || "16px"});
+    let left = Math.min(Math.max(16, r.left + r.width / 2 - bw / 2), vw - bw - 16);
+    if(r.width > bw * 1.4) left = Math.min(Math.max(16, r.left), vw - bw - 16);   // 넓은 대상은 왼쪽 정렬
+    const also = st.also ? document.querySelector(st.also) : null;
+    if(also){
+      // 하단바 위로 튀어나온 "여기까지 감상" 라벨까지 포함한 영역
+      const a0 = also.getBoundingClientRect(), lab = document.getElementById("dockHere"), lr = lab && !lab.hidden ? lab.getBoundingClientRect() : a0;
+      const a = {left:Math.min(a0.left, lr.left), top:Math.min(a0.top, lr.top), width:0, height:0, p2:0};
+      a.width = Math.max(a0.right, lr.right) - a.left; a.height = Math.max(a0.bottom, lr.bottom) - a.top;
+      const p2 = 6, R = 16;
+      const box = [r.left - pad, r.top - pad, r.width + pad * 2, r.height + pad * 2], box2 = [a.left - p2, a.top - p2, a.width + p2 * 2, a.height + p2 * 2];
+      Object.assign(hole2.style, {left:box2[0] + "px", top:box2[1] + "px", width:box2[2] + "px", height:box2[3] + "px", borderRadius:R + "px"});
+      dim.style.clipPath = `path(evenodd, "M0 0H${vw}V${vh}H0Z${rr(...box, R)}${rr(...box2, R)}")`;
+      layer.classList.add("dual");
+    }else layer.classList.remove("dual");
+    const reserve = also ? (vh - also.getBoundingClientRect().top + 28) : 8;   // 하단바를 함께 보여줄 땐 그 위까지만
+    let top, below = r.bottom + pad + gap + bh <= vh - reserve;
+    if(below){ top = r.bottom + pad + gap; bub.classList.add("tail-top"); }
+    else if(r.top - pad - gap - bh >= 8){ top = r.top - pad - gap - bh; bub.classList.add("tail-bottom"); }
+    else { top = Math.max(8, vh - bh - 8); bub.classList.add("tail-none"); }
+    bub.style.left = Math.round(left) + "px"; bub.style.top = Math.round(top) + "px";
+    bub.style.setProperty("--tail-x", Math.round(Math.min(Math.max(22, r.left + Math.min(r.width, 80) / 2 - left), bw - 22)) + "px");
+  }
+  function loop(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(()=>{ place(); }); }
+  function btn(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = cls; b.textContent = label; b.addEventListener("click", fn); return b; }
+  function render(){
+    actEl.innerHTML = ""; dotsEl.innerHTML = "";
+    const foot = stepEl.parentElement;
+    if(mode === "offer"){
+      stepEl.textContent = ""; skipEl.hidden = true; foot.classList.add("is-empty");
+      textEl.innerHTML = "처음 오셨군요, 지휘관님! 이 사이트 사용법을 <b>1분</b> 만에 안내해 드릴까요?";
+      actEl.append(btn("괜찮아요", "tour-later", ()=> end(true)), btn("둘러보기", "tour-next", ()=> start()));
+      return;
+    }
+    const st = STEPS[i], last = i === STEPS.length - 1;
+    foot.classList.remove("is-empty");
+    stepEl.textContent = (i + 1) + " / " + STEPS.length;
+    skipEl.hidden = last;
+    textEl.innerHTML = typeof st.text === "function" ? st.text() : st.text;
+    if(i > 0) actEl.append(btn("이전", "tour-prev", ()=> go(i - 1)));
+    actEl.append(btn(last ? "시작하기" : "다음", "tour-next", ()=> last ? end(true) : go(i + 1)));
+    dotsEl.innerHTML = STEPS.map((_, k)=> `<i class="${k === i ? "on" : ""}"></i>`).join("");
+  }
+  function go(n){
+    clearDemo();
+    i = n; render();
+    const el = target();
+    applyDemo(el);
+    // 화면 이동은 모두 즉시(부드러운 스크롤 중 말풍선·밝은 영역이 따라 움직이며 튕겨 보이는 것 방지)
+    let jumped = false;
+    if(STEPS[i].top){ if(scrollY > 0){ scrollTo({top:0, behavior:"instant"}); jumped = true; } }
+    else if(el && !getComputedStyle(el).position.includes("fixed")){
+      const r = el.getBoundingClientRect();
+      if(r.top < 80 || r.bottom > innerHeight - 220){ scrollTo({top: scrollY + r.top - Math.max(90, innerHeight * .28), behavior:"instant"}); jumped = true; }
+    }
+    if(jumped){ layer.classList.add("tour-instant"); place(); requestAnimationFrame(()=> requestAnimationFrame(()=> layer.classList.remove("tour-instant"))); }
+    else place();
+    bub.querySelector(".tour-next")?.focus({preventScroll:true, focusVisible:false});
+  }
+  function open(){
+    returnFocus = document.activeElement;
+    layer.classList.add("on"); layer.setAttribute("aria-hidden", "false");
+    addEventListener("scroll", loop, {passive:true}); addEventListener("resize", loop);
+  }
+  function offer(cb){
+    onEnd = cb || null;
+    if(done()){ onEnd && onEnd(); return; }
+    mode = "offer"; i = -1; open(); render(); place();
+    bub.querySelector(".tour-next")?.focus({preventScroll:true, focusVisible:false});
+  }
+  function start(){ if(mode !== "offer") open(); mode = "tour"; go(0); }
+  function end(markSeen){
+    if(!mode) return;
+    clearDemo();
+    mode = null; i = -1; markSeen && markDone();
+    layer.classList.remove("on"); layer.setAttribute("aria-hidden", "true");
+    removeEventListener("scroll", loop); removeEventListener("resize", loop);
+    if(returnFocus && returnFocus.focus) returnFocus.focus({preventScroll:true});
+    const cb = onEnd; onEnd = null; cb && setTimeout(cb, 200);
+  }
+  skipEl.addEventListener("click", ()=> end(true));
+  // 둘러보기 중 클릭은 말풍선 밖에서는 막음(뒤 카드가 눌리지 않게)
+  layer.addEventListener("click", e=>{ if(!bub.contains(e.target)) e.stopPropagation(); });
+  document.addEventListener("keydown", e=>{
+    if(!mode) return;
+    if(e.key === "Escape"){ e.preventDefault(); end(true); }
+    else if(mode === "tour" && e.key === "ArrowRight" && i < STEPS.length - 1) go(i + 1);
+    else if(mode === "tour" && e.key === "ArrowLeft" && i > 0) go(i - 1);
+  });
+  return {offer, start, active: ()=> !!mode};
+})();
 
 /* ============ Theme ============ */
 const THEME_STORAGE_KEY = "nikke-theme";

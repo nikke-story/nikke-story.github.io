@@ -1811,7 +1811,7 @@ document.addEventListener("keydown", (e)=>{
 const Tour = (function(){
   const KEY = "nikke-tour-done";
   const STEPS = [
-    {sel:null, text:"반가워요, 지휘관님! 저는 <b>시프티</b>예요. 이 사이트는 니케 스토리를 <b>어떤 순서로 보면 좋을지</b> 정리한 가이드예요. 지금부터 사용법을 하나씩 알려드릴게요."},
+    {sel:null, text:"반가워요, 지휘관님!&nbsp;저는 <b>시프티</b>예요. 이 사이트는 니케 스토리를 <b>어떤 순서로 보면 좋을지</b> 정리한 가이드예요. 지금부터 사용법을 하나씩 알려드릴게요."},
     {sel:"#heroReadme", text:"지휘관님, 스토리를 보기 전에 꼭 알아둘 내용은 여기 <b>읽어주세요</b>에 정리되어 있어요. 새 업데이트가 있으면 빨간 점으로 알려드릴게요."},
     {sel:"#timelineGrid .card", text:()=> innerWidth >= 768
       ? "감상 순서는 위에서 아래로 이어져요. <b>왼쪽은 메인 · 사이드</b>, <b>오른쪽은 이벤트 · 인연스토리</b>예요."
@@ -1822,6 +1822,7 @@ const Tour = (function(){
     {sel:".dock", pad:6, text:"아래 바에서는 지금 보고 있는 위치가 보여요. 목록을 열면 원하는 스토리로 <b>바로 이동</b>할 수 있어요."},
     {sel:"#archives .section-head", text:"감상 순서를 다 따라오셨다면 <b>추천 아카이브</b>도 확인해 주세요. 메인 스토리와 별개로 감상하면 좋은 지난 이벤트들이에요."},
     {sel:"#contents .section-head", text:"<b>추천 콘텐츠</b>에는 감상 순서에는 없지만 함께 보면 좋은 콘텐츠를 모아 뒀어요."},
+    {sel:".btn-sister", pad:8, text:"니케를 막 시작하셨다면 <b>뉴비 FAQ</b>도 함께 봐 주세요. 처음 지휘관님들이 자주 묻는 질문을 모아 둔 사이트예요."},
     {sel:null, top:true, text:"안내는 여기까지예요. 그럼 즐거운 감상 되세요, 지휘관님! 다시 보고 싶으시면 읽어주세요 창의 <b>사이트 둘러보기</b>를 눌러 주세요."}
   ];
   const layer = document.getElementById("tourLayer"), hole = document.getElementById("tourHole"), bub = document.getElementById("tourBubble");
@@ -1886,13 +1887,14 @@ const Tour = (function(){
     bub.style.setProperty("--tail-x", Math.round(Math.min(Math.max(22, r.left + Math.min(r.width, 80) / 2 - left), bw - 22)) + "px");
   }
   function loop(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(()=>{ place(); }); }
+  const brk = t=> t.replace(/([.!?])\s+/g, "$1<br>");   // 문장(마침표·느낌표·물음표) 끝마다 줄바꿈
   function btn(label, cls, fn){ const b = document.createElement("button"); b.type = "button"; b.className = cls; b.textContent = label; b.addEventListener("click", fn); return b; }
   function render(){
     actEl.innerHTML = ""; dotsEl.innerHTML = "";
     const foot = stepEl.parentElement;
     if(mode === "offer"){
       stepEl.textContent = ""; skipEl.hidden = true; foot.classList.add("is-empty");
-      textEl.innerHTML = "처음 오셨군요, 지휘관님! 이 사이트 사용법을 <b>1분</b> 만에 안내해 드릴까요?";
+      textEl.innerHTML = brk("처음 오셨군요, 지휘관님! 이 사이트 사용법을 <b>1분</b> 만에 안내해 드릴까요?");
       actEl.append(btn("괜찮아요", "tour-later", ()=> end(true)), btn("둘러보기", "tour-next", ()=> start()));
       return;
     }
@@ -1900,7 +1902,7 @@ const Tour = (function(){
     foot.classList.remove("is-empty");
     stepEl.textContent = (i + 1) + " / " + STEPS.length;
     skipEl.hidden = last;
-    textEl.innerHTML = typeof st.text === "function" ? st.text() : st.text;
+    textEl.innerHTML = brk(typeof st.text === "function" ? st.text() : st.text);
     if(i > 0) actEl.append(btn("이전", "tour-prev", ()=> go(i - 1)));
     actEl.append(btn(last ? "시작하기" : "다음", "tour-next", ()=> last ? end(true) : go(i + 1)));
     dotsEl.innerHTML = STEPS.map((_, k)=> `<i class="${k === i ? "on" : ""}"></i>`).join("");

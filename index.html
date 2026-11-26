@@ -277,6 +277,12 @@ html.theme-switching *, html.theme-switching *::before, html.theme-switching *::
 .tour-foot:empty, .tour-foot.is-empty{display:none;}
 .tour-text{font-size:.92rem; line-height:1.65; color:var(--text);}
 .tour-text b{color:var(--red); font-weight:700;}
+.tour-news{display:grid; gap:4px; margin:4px 0 2px; padding:10px 12px; border-radius:12px; background:var(--surface-2); border:1px solid var(--line); font-size:.86rem;}
+.tour-news span{display:flex; align-items:center; gap:7px; line-height:1.5;}
+.tour-news i{flex:none; width:6px; height:6px; border-radius:50%; background:var(--tc);}
+.tour-news b{color:var(--text);}
+.tour-news-more{color:var(--text-3); padding-left:13px;}
+.tour-news-date{display:block; margin-top:8px; font-family:var(--font-mono); font-size:.72rem; color:var(--text-3);}
 .tour-actions{display:flex; align-items:center; gap:6px; margin-top:14px;}
 .tour-actions button{height:34px; padding:0 14px; border-radius:999px; font:700 .8rem/1 var(--font); cursor:pointer; border:1px solid var(--line-strong); background:var(--surface); color:var(--text-2);}
 .tour-actions .tour-next{margin-left:auto; background:var(--text); border-color:var(--text); color:var(--bg);}
@@ -1786,6 +1792,10 @@ function markUpdatesSeen(){
   setUnread(false);
 }
 (function initUnread(){
+  // 확인용 주소: ?tour → 항상 둘러보기 안내, ?notice → 항상 업데이트 알림 (방문 기록과 무관, 기록도 바꾸지 않음)
+  const q = new URLSearchParams(location.search);
+  if(q.has("tour")){ setTimeout(()=> Tour.offer(openIntro, true), 500); return; }
+  if(q.has("notice")){ setUnread(true); setTimeout(()=> Tour.notice(true), 600); return; }
   let seen = null;
   try{ seen = localStorage.getItem(INTRO_SEEN_KEY); }catch(e){ seen = updateSignature(); }
   let hasMarker = null;
@@ -1796,8 +1806,9 @@ function markUpdatesSeen(){
     // 첫 방문: 둘러보기 안내 → (끝나거나 건너뛰면) 읽어주세요
     if(!hasMarker) setTimeout(()=> Tour.offer(openIntro), 500);
   }else if(seen !== updateSignature()){
-    // returning visitor with an unseen update: dot only, no auto-open
+    // returning visitor with an unseen update: dot + 시프티 업데이트 알림(업데이트마다 한 번)
     setUnread(true);
+    setTimeout(()=> Tour.notice(), 600);
   }
 })();
 
@@ -1898,6 +1909,14 @@ const Tour = (function(){
       actEl.append(btn("괜찮아요", "tour-later", ()=> end(true)), btn("둘러보기", "tour-next", ()=> start()));
       return;
     }
+    if(mode === "notice"){
+      stepEl.textContent = ""; skipEl.hidden = true; foot.classList.add("is-empty");
+      const latest = UPDATE_LOG[0].date, items = UPDATE_LOG.filter(e=> e.date === latest);
+      const verb = e=> e.action === "archive" ? "아카이브 태그 변경" : e.action === "dub" ? "더빙 태그 변경" : "추가";
+      textEl.innerHTML = `지휘관님, 새 소식이 있어요!<span class="tour-news-date">${latest} 업데이트</span><span class="tour-news">${items.slice(0, 4).map(e=> `<span><i style="--tc:var(${TYPE_VAR[e.type] || "--c-main"})"></i>[${e.type}] <b>${e.title}</b> ${verb(e)}</span>`).join("")}${items.length > 4 ? `<span class="tour-news-more">외 ${items.length - 4}건</span>` : ""}</span>`;
+      actEl.append(btn("닫기", "tour-next", ()=> end(false)));
+      return;
+    }
     const st = STEPS[i], last = i === STEPS.length - 1;
     foot.classList.remove("is-empty");
     stepEl.textContent = (i + 1) + " / " + STEPS.length;
@@ -1928,9 +1947,9 @@ const Tour = (function(){
     layer.classList.add("on"); layer.setAttribute("aria-hidden", "false");
     addEventListener("scroll", loop, {passive:true}); addEventListener("resize", loop);
   }
-  function offer(cb){
+  function offer(cb, force){
     onEnd = cb || null;
-    if(done()){ onEnd && onEnd(); return; }
+    if(!force && done()){ onEnd && onEnd(); return; }
     mode = "offer"; i = -1; open(); render(); place();
     bub.querySelector(".tour-next")?.focus({preventScroll:true, focusVisible:false});
   }
@@ -1953,7 +1972,17 @@ const Tour = (function(){
     else if(mode === "tour" && e.key === "ArrowRight" && i < STEPS.length - 1) go(i + 1);
     else if(mode === "tour" && e.key === "ArrowLeft" && i > 0) go(i - 1);
   });
-  return {offer, start, active: ()=> !!mode};
+  /* 새 업데이트 알림: 업데이트 후 첫 방문 때 한 번만 */
+  const NOTICE_KEY = "nikke-update-notice";
+  function notice(force){
+    let sig = updateSignature(), shown = null;
+    try{ shown = localStorage.getItem(NOTICE_KEY); }catch(e){}
+    if(mode || (!force && shown === sig)) return;
+    if(!force) try{ localStorage.setItem(NOTICE_KEY, sig); }catch(e){}
+    onEnd = null; mode = "notice"; i = -1; open(); render(); place();
+    bub.querySelector(".tour-next")?.focus({preventScroll:true, focusVisible:false});
+  }
+  return {offer, start, notice, active: ()=> !!mode};
 })();
 
 /* ============ Theme ============ */

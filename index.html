@@ -1993,7 +1993,11 @@ const Tour = (function(){
     if(returnFocus && returnFocus.focus) returnFocus.focus({preventScroll:true});
     const cb = onEnd; onEnd = null; cb && setTimeout(cb, 200);
   }
-  skipEl.addEventListener("click", ()=> end(true));
+  skipEl.addEventListener("click", ()=>{
+    const toTop = mode === "tour";   // 어느 단계에서 건너뛰어도 맨 위에서 시작
+    end(true);
+    if(toTop) scrollTo({top:0, behavior:"instant"});
+  });
   // 둘러보기 중 클릭은 말풍선 밖에서는 막음(뒤 카드가 눌리지 않게)
   layer.addEventListener("click", e=>{ if(!bub.contains(e.target)) e.stopPropagation(); });
   document.addEventListener("keydown", e=>{
